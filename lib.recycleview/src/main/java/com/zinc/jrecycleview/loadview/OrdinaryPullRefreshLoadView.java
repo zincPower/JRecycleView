@@ -111,7 +111,7 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
 
         if (this.mCurState == STATE_RELEASE_TO_ACTION) {//释放刷新->下拉刷新：把箭头往回转
             this.mIvArrow.startAnimation(this.mArrowToDownAnim);
-        } else if (this.mCurState == STATE_EXECUTING) {//刷新ing->下拉刷新   todo 这个有点奇怪
+        } else if (this.mCurState == STATE_EXECUTING) {//刷新ing->下拉刷新
             this.mIvArrow.clearAnimation();
         }
     }
