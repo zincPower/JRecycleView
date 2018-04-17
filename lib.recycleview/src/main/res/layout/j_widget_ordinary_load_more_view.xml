@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_end"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/jrecycle_pull_to_load"
+            android:textColor="@color/jrecycle_tip_color"
+            android:textSize="13.5sp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/tv_tip"
+            android:visibility="gone"
+            android:indeterminateDrawable="@drawable/jrecycle_loadmore_progressbar" />
+
+        <ImageView
+            android:id="@+id/iv_reload"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_tip"
+            android:src="@drawable/jrecycle_icon_reload"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>

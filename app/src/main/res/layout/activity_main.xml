@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_load_and_refresh"
+        android:text="下拉刷新和加载更多"
+        style="@style/MainPageItemStyle"
+        />
+
+    <TextView
+        android:id="@+id/tv_swipe"
+        android:text="侧滑"
+        style="@style/MainPageItemStyle"
+        />
+
+    <TextView
+        android:id="@+id/tv_anim"
+        android:text="动画进入"
+        style="@style/MainPageItemStyle"
+         />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_all"-->
+        <!--android:text="使用多个效果"-->
+        <!--style="@style/MainPageItemStyle"-->
+        <!--/>-->
+
+</LinearLayout>

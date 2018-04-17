@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#303030</color>
+    <color name="colorPrimaryDark">#292929</color>
+
+    <color name="colorPrimaryPress">#232323</color>
+
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#e1e1e1</color>
+
+    <color name="red500">#F44336</color>
+    <color name="blue500">#2196f3</color>
+    <color name="orange500">#FF9800</color>
+
+    <color name="primaryText">@color/primary_text_default_material_light</color>
+
+</resources>

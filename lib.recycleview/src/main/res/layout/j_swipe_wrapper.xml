@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zinc.jrecycleview.swipe.JSwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/swipe_item_layout"
+    android:layout_height="wrap_content">
+
+    <!--左菜单-->
+    <FrameLayout
+        android:id="@+id/fl_left_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left" />
+
+    <!--右菜单-->
+    <FrameLayout
+        android:id="@+id/fl_right_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right" />
+
+    <!--内容-->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.zinc.jrecycleview.swipe.JSwipeItemLayout>
