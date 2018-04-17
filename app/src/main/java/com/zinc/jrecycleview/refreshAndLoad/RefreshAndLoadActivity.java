@@ -61,7 +61,7 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
-        mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener() {
+        this.mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener() {
             @Override
             public void onRefreshing() {
                 mHandler.postDelayed(new Runnable() {
@@ -74,6 +74,8 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
+
+        this.mAdapter.setOpenAnim(true);
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mJRecycleView.setAdapter(mAdapter);

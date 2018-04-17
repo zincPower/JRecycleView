@@ -19,7 +19,7 @@ import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
  * @description 刷新和下拉加载更多包装
  */
 
-public class JRefreshAndLoadMoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder>{//RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private boolean mIsOpenRefresh = true;
     private boolean mIsOpenLoadMore = true;
