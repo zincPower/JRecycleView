@@ -209,22 +209,23 @@ adapter.setOpenAnim(true);
 
 ## 高级设置
 #### 1、自定义 刷新视图 和 加载更多 视图
-（1）继承 IBasePullRefreshLoadView（下拉刷新）或 IBaseLoadMoreView（上拉加载）类，重写父类方法
+（1）继承 IBasePullRefreshLoadView（下拉刷新）或 IBaseLoadMoreView（上拉加载）类
+
 IBasePullRefreshLoadView（下拉刷新）需重写以下方法
 ```
-//获取 刷新 或 加载更多 的视图
+//获取 刷新 的视图
 View getLoadView();
 
-//初始化 刷新 或 加载更多 的视图
+//初始化 刷新 的视图
 void initView();
 
-//下拉刷新(下拉超过视图高度前)
+//下拉刷新（下拉超过视图高度前）
 void onPullToAction();
 
 //释放刷新（下拉超过视图高度后）
 void onReleaseToAction();
 
-//执行中
+//执行刷新
 void onExecuting();
 
 //执行完
@@ -234,18 +235,19 @@ void onDone();
 //是为了更加细致的控制视图中的动画效果（可替换onPullToAction和onReleaseToAction）
 void onMoving(MoveInfo moveInfo);
 ```
+
 IBaseLoadMoreView（上拉加载）需重写以下方法
 ```
-//获取 刷新 或 加载更多 的视图
+//获取 加载更多 的视图
 View getLoadView();
 
-//初始化 刷新 或 加载更多 的视图
+//初始化 加载更多 的视图
 void initView();
 
-//下拉刷新(下拉超过视图高度前)
+//上拉加载（上拉超过视图高度前）
 void onPullToAction();
 
-//释放刷新（下拉超过视图高度后）
+//上拉刷新（上拉超过视图高度后）
 void onReleaseToAction();
 
 //执行中
