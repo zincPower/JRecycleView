@@ -17,21 +17,7 @@ public class JRecycleConfig {
     public static final int JHEAD = 0xABC101;
     //加载更多
     public static final int JFOOT = 0xABC103;
-    //侧滑的type
-    public static final int SWIPE_TYPE = 0xABC201;
 
     public static final int ANIM_DURATION = 500;
 
-//    private static final JRecycleConfig ourInstance = new JRecycleConfig();
-//
-//    public static JRecycleConfig getInstance() {
-//        return ourInstance;
-//    }
-//
-//    private JRecycleConfig() {
-//    }
-//
-//    public int getAnimDuration() {
-//        return ANIM_DURATION;
-//    }
 }

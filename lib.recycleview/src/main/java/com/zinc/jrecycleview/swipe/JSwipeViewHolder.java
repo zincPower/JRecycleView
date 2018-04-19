@@ -2,6 +2,7 @@ package com.zinc.jrecycleview.swipe;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.zinc.librecycleview.R;
  */
 
 public abstract class JSwipeViewHolder extends RecyclerView.ViewHolder {
+
+    protected static final int NONE = -1;
 
     protected FrameLayout flLeftMenu;
     protected FrameLayout flContent;
@@ -36,73 +39,68 @@ public abstract class JSwipeViewHolder extends RecyclerView.ViewHolder {
         flRightMenu.removeAllViews();
         flContent.removeAllViews();
 
-        LayoutInflater.from(itemView.getContext()).inflate(getLeftMenuLayout(), flLeftMenu, true);//null, false);
-        LayoutInflater.from(itemView.getContext()).inflate(getContentLayout(), flContent, true);
-        LayoutInflater.from(itemView.getContext()).inflate(getRightMenuLayout(), flRightMenu, true);
+        if (getLeftMenuLayout() != NONE) {
+            LayoutInflater.from(itemView.getContext()).inflate(getLeftMenuLayout(), flLeftMenu, true);//null, false);
+            initLeftMenuItem(flLeftMenu);
+            swipeItemLayout.getMenus().put(Gravity.LEFT, flLeftMenu);
+        }
 
-        initLeftMenuItem(flLeftMenu);
+        if(getRightMenuLayout() != NONE){
+            LayoutInflater.from(itemView.getContext()).inflate(getRightMenuLayout(), flRightMenu, true);
+            initRightMenuItem(flRightMenu);
+            swipeItemLayout.getMenus().put(Gravity.RIGHT, flRightMenu);
+        }
+
+        LayoutInflater.from(itemView.getContext()).inflate(getContentLayout(), flContent, true);
         initContentMenuItem(flContent);
-        initRightMenuItem(flRightMenu);
 
     }
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 获取左菜单布局
      * @version
-     *
      */
     public abstract int getLeftMenuLayout();
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 获取右菜单布局
      * @version
-     *
      */
     public abstract int getRightMenuLayout();
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 获取内容布局
      * @version
-     *
      */
     public abstract int getContentLayout();
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 初始化左菜单项
      * @version
-     *
      */
     public abstract void initLeftMenuItem(FrameLayout flLeftMenu);
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 初始化右菜单项
      * @version
-     *
      */
     public abstract void initRightMenuItem(FrameLayout flRightMenu);
 
     /**
-     *
      * @date 创建时间 2018/4/12
      * @author Jiang zinc
      * @Description 初始化内容项
      * @version
-     *
      */
     public abstract void initContentMenuItem(FrameLayout flContent);
 

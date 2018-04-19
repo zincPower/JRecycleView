@@ -88,18 +88,14 @@ public class JRecycleView extends RecyclerView {
                 this.mLastY = e.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
-//                Log.i(TAG, "onTouchEvent: move");
                 if (isScrolledTop()) {
                     float deltaY = e.getRawY() - mLastY;
                     this.getRefreshLoadView().onMove(deltaY / DRAG_FACTOR);
                     mLastY = e.getRawY();
 
-//                    Log.i(TAG, "onTouchEvent: outter");
-
                     //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，需要recycleview不捕获该事件，否则会有问题
                     if (this.getRefreshLoadView().getVisibleHeight() > 0 &&
                             this.getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
-//                        Log.i(TAG, "onTouchEvent: false");
                         return false;
                     }
                 }
@@ -108,7 +104,7 @@ public class JRecycleView extends RecyclerView {
                     float deltaY = mLastY - e.getRawY();
 
                     if (deltaY > 0) {   //向上滑动
-                        this.getLoadMoreView().onMove(deltaY/DRAG_FACTOR);
+                        this.getLoadMoreView().onMove(deltaY / DRAG_FACTOR);
                     } else {            //向下滑动
                         this.getLoadMoreView().onMove(deltaY);
                     }
@@ -134,7 +130,6 @@ public class JRecycleView extends RecyclerView {
         }
 
         boolean result = super.onTouchEvent(e);
-        Log.i(TAG, "onTouchEvent: return_" + result);
         return result;
     }
 

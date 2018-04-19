@@ -47,7 +47,13 @@ public class SwipeActivity extends Activity {
         this.data.clear();
         int count = 20;
         for (int i = 1; i <= count; ++i) {
-            data.add(new SwipeData(JRecycleConfig.SWIPE_TYPE, "zinc Power" + i, i));
+            if (i % 4 == 1) {
+                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_RIGHT, "只有右菜单" + i, i));
+            } else if (i % 4 == 2) {
+                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_LEFT, "只有左菜单" + i, i));
+            } else {
+                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE, "两个菜单" + i, i));
+            }
         }
         ++count;
         return data;

@@ -75,7 +75,7 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
             }
         });
 
-        this.mAdapter.setOpenAnim(true);
+//        this.mAdapter.setOpenAnim(true);
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mJRecycleView.setAdapter(mAdapter);

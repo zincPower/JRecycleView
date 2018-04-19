@@ -172,9 +172,9 @@ public class JSwipeItemLayout extends FrameLayout {
                 }
                 break;
         }
-        return mIsDragged || super.onTouchEvent(ev);
-//                // 此判断是因为当没有点击事件时，事件会给RecylcerView响应导致无法划开菜单。
-//                || (!isClickable() && mMenus.size() > 0);
+        return mIsDragged || super.onTouchEvent(ev)
+                // 当ContentView没有设置点击事件时，事件会给RecylcerView响应导致无法划开菜单
+                || (!isClickable() && mMenus.size() > 0);
     }
 
     //判断是否可以拖拽View
@@ -189,26 +189,26 @@ public class JSwipeItemLayout extends FrameLayout {
         boolean isRightDrag = dx > mTouchSlop && Math.abs(dx) > Math.abs(dy);
         boolean isLeftDrag = dx < -mTouchSlop && Math.abs(dx) > Math.abs(dy);
 
-//        if (mIsOpen) {
-//            // 开启状态下，点击在content上就捕获事件，点击在菜单上则判断touchSlop
-//            int downX = (int) mDownX;
-//            int downY = (int) mDownY;
-//            if (isTouchContent(downX, downY)) {
-//                mIsDragged = true;
-//            } else if (isTouchMenu(downX, downY)) {
-//                mIsDragged = (isLeftMenu() && isLeftDrag) || (isRightMenu() && isRightDrag);
-//            }
-//
-//        } else {
-        // 关闭状态，获取当前即将要开启的菜单。
-        if (isRightDrag) {
-            mCurrentMenu = mMenus.get(Gravity.LEFT);
-            mIsDragged = mCurrentMenu != null;
-        } else if (isLeftDrag) {
-            mCurrentMenu = mMenus.get(Gravity.RIGHT);
-            mIsDragged = mCurrentMenu != null;
+        if (mIsOpen) {
+            // 开启状态下，点击在content上就捕获事件，点击在菜单上则判断touchSlop
+            int downX = (int) mDownX;
+            int downY = (int) mDownY;
+            if (isTouchContent(downX, downY)) {
+                mIsDragged = true;
+            } else if (isTouchMenu(downX, downY)) {
+                mIsDragged = (isLeftMenu() && isLeftDrag) || (isRightMenu() && isRightDrag);
+            }
+
+        } else {
+            // 关闭状态，获取当前即将要开启的菜单。
+            if (isRightDrag) {
+                mCurrentMenu = mMenus.get(Gravity.LEFT);
+                mIsDragged = mCurrentMenu != null;
+            } else if (isLeftDrag) {
+                mCurrentMenu = mMenus.get(Gravity.RIGHT);
+                mIsDragged = mCurrentMenu != null;
+            }
         }
-//        }
 
         if (mIsDragged) {
             // 开始拖动后，分发down事件给DragHelper
@@ -222,22 +222,27 @@ public class JSwipeItemLayout extends FrameLayout {
         }
     }
 
-    //最后一个是内容，倒数第1第2个设置了layout_gravity = right or left的是菜单，其余的忽略
-    @Override
-    public void addView(View child, int index, ViewGroup.LayoutParams params) {
-        super.addView(child, index, params);
-        LayoutParams lp = (LayoutParams) child.getLayoutParams();
-        int gravity = GravityCompat.getAbsoluteGravity(lp.gravity, ViewCompat.getLayoutDirection(child));
-        switch (gravity) {
-            case Gravity.RIGHT:
-                mMenus.put(Gravity.RIGHT, child);
-                break;
-            case Gravity.LEFT:
-                mMenus.put(Gravity.LEFT, child);
-                break;
-            default:
-                break;
-        }
+//    //最后一个是内容，倒数第1第2个设置了layout_gravity = right or left的是菜单，其余的忽略
+//    @Override
+//    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+//        super.addView(child, index, params);
+//        LayoutParams lp = (LayoutParams) child.getLayoutParams();
+//        int gravity = GravityCompat.getAbsoluteGravity(lp.gravity, ViewCompat.getLayoutDirection(child));
+//        switch (gravity) {
+//            case Gravity.RIGHT:
+//                mMenus.put(Gravity.RIGHT, child);
+//                break;
+//            case Gravity.LEFT:
+//                mMenus.put(Gravity.LEFT, child);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+
+
+    public LinkedHashMap<Integer, View> getMenus() {
+        return mMenus;
     }
 
     public void setSwipeEnable(boolean enable) {
@@ -263,6 +268,16 @@ public class JSwipeItemLayout extends FrameLayout {
         return mCurrentMenu != null && mCurrentMenu == mMenus.get(Gravity.RIGHT);
     }
 
+    public boolean isTouchMenu(int x, int y) {
+        if (mCurrentMenu == null) {
+            return false;
+        }
+
+        Rect rect = new Rect();
+        mCurrentMenu.getHitRect(rect);
+        return rect.contains(x, y);
+    }
+
     //判断down是否点击在Content上
     public boolean isTouchContent(int x, int y) {
         View contentView = getContentView();
@@ -273,28 +288,6 @@ public class JSwipeItemLayout extends FrameLayout {
         contentView.getHitRect(rect);
         return rect.contains(x, y);
     }
-
-//    public boolean isTouchMenu(int x, int y) {
-//        if (mCurrentMenu == null) {
-//            return false;
-//        }
-//
-//        Rect rect = new Rect();
-//        mCurrentMenu.getHitRect(rect);
-//        return rect.contains(x, y);
-//    }
-
-    //检测view的gravity是否与传入的gravity一致
-//    private boolean checkAbsoluteGravity(View menu, int checkFor) {
-//        final int absGravity = getAbsoluteGravity(menu);
-//        return (absGravity & checkFor) == checkFor;
-//    }
-
-    //获取view的gravity
-//    private int getAbsoluteGravity(View menu) {
-//        final int gravity = ((LayoutParams) menu.getLayoutParams()).gravity;
-//        return GravityCompat.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(this));
-//    }
 
     /**
      * 关闭菜单

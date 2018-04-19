@@ -21,6 +21,6 @@ public class MyApp extends Application {
         ToastUtil.init(this);
 
         JRecycleViewManager.getInstance().setItemAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_RIGHT));
-        JRecycleViewManager.getInstance().setBasePullRefreshLoadView(new MyRefreshView(getBaseContext()));
+//        JRecycleViewManager.getInstance().setBasePullRefreshLoadView(new MyRefreshView(getBaseContext()));
     }
 }
