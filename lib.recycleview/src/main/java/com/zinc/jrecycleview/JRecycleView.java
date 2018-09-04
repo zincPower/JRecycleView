@@ -62,6 +62,7 @@ public class JRecycleView extends RecyclerView {
                 if (swipeItemLayout != null) {
                     //关闭侧滑
                     swipeItemLayout.close();
+                    //不拦截此次事件，此次事件只帮我们关闭菜单
                     return false;
                 }
             }
@@ -170,6 +171,8 @@ public class JRecycleView extends RecyclerView {
      */
     private boolean isScrolledBottom() {
 
+        //若正在下拉刷新状态则 item个数-2
+        //若不是正在下拉刷新状态则 item个数-3
         int itemTotal = getRefreshLoadView().getCurState() == IBaseWrapperView.STATE_EXECUTING ? getAdapter().getItemCount() - 2 : getAdapter().getItemCount() - 3;
 
         if (getLayoutManager() instanceof LinearLayoutManager &&

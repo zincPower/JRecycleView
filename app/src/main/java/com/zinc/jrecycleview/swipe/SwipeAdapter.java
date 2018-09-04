@@ -23,7 +23,7 @@ import java.util.List;
  * @description
  */
 
-public class SwipeAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {//RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int SWIPE_TYPE = 0x10001;
     public static final int SWIPE_TYPE_ONLY_RIGHT = 0x10002;
@@ -144,7 +144,9 @@ public class SwipeAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     ToastUtil.show("点击了右菜单");
                     //关闭菜单
-                    onlyRightViewHolder.swipeItemLayout.close();
+                    swipeData.remove(position);
+                    notifyDataSetChanged();
+                    onlyRightViewHolder.swipeItemLayout.close(true);
                 }
             });
 

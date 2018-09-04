@@ -293,11 +293,21 @@ public class JSwipeItemLayout extends FrameLayout {
      * 关闭菜单
      */
     public void close() {
+        close(false);
+    }
+
+    /**
+     * 关闭菜单
+     * @param isCloseQuickly 是否快速关闭 [主要用于删除时使用]
+     */
+    public void close(boolean isCloseQuickly) {
         if (mCurrentMenu == null) {
             mIsOpen = false;
             return;
         }
-        mDragHelper.smoothSlideViewTo(getContentView(), getPaddingLeft(), getPaddingTop());
+        if(!isCloseQuickly){
+            mDragHelper.smoothSlideViewTo(getContentView(), getPaddingLeft(), getPaddingTop());
+        }
         mIsOpen = false;
         if (mListeners != null) {
             int listenerCount = mListeners.size();
