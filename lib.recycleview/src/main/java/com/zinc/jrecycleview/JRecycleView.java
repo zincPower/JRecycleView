@@ -143,8 +143,15 @@ public class JRecycleView extends RecyclerView {
      * @version
      */
     private boolean isScrolledTop() {
-        if (getLayoutManager() instanceof LinearLayoutManager &&
-                ((LinearLayoutManager) getLayoutManager()).findFirstCompletelyVisibleItemPosition() <= 1) {
+        // 20181126 修复
+        // 修复原因如下：findFirstCompletelyVisibleItemPosition方法只有当整个view显示时才会返回该item的下标，
+        // 当item过大时，无法在一个界面显示时，会返回-1，具体可看：
+        // https://stackoverflow.com/questions/37363901/layoutmanager-findfirstcompletelyvisibleitemposition-always-returns-1
+//        if (getLayoutManager() instanceof LinearLayoutManager &&
+//                ((LinearLayoutManager) getLayoutManager()).findFirstCompletelyVisibleItemPosition() <= 1) {
+        if (getChildCount() > 2 &&
+                ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() <= 1 &&
+                getChildAt(1).getY() >= 0) {
             return true;
         } else {
             return false;

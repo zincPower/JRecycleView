@@ -60,7 +60,7 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
 
     @Override
     protected void onMoving(MoveInfo moveInfo) {
-        Log.i(OrdinaryPullRefreshLoadView.class.getSimpleName(), "onMoving: "+moveInfo.toString());
+        Log.i(OrdinaryPullRefreshLoadView.class.getSimpleName(), "onMoving: " + moveInfo.toString());
     }
 
     @Override

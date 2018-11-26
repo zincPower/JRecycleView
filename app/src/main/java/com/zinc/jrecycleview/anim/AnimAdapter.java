@@ -60,4 +60,5 @@ public class AnimAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {/
             mTvContent = itemView.findViewById(R.id.tv_content);
         }
     }
+
 }

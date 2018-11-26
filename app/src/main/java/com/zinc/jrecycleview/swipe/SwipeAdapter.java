@@ -137,6 +137,8 @@ public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             final OnlyRightViewHolder onlyRightViewHolder = (OnlyRightViewHolder) holder;
 
+            onlyRightViewHolder.swipeItemLayout.setSwipeEnable(false);
+
             onlyRightViewHolder.tvContent.setText(swipeData.get(position).getContent());
 
             onlyRightViewHolder.tvRightMenu.setOnClickListener(new View.OnClickListener() {
