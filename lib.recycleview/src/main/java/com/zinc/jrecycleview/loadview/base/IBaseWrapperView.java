@@ -60,7 +60,7 @@ public abstract class IBaseWrapperView extends LinearLayout {
         return this.mHeight;
     }
 
-    public void setmHeight(int mHeight) {
+    public void setHeight(int mHeight) {
         this.mHeight = mHeight;
     }
 

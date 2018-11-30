@@ -91,10 +91,13 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 if (isScrolledTop()) {
                     float deltaY = e.getRawY() - mLastY;
+
                     this.getRefreshLoadView().onMove(deltaY / DRAG_FACTOR);
+
                     mLastY = e.getRawY();
 
-                    //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，需要recycleview不捕获该事件，否则会有问题
+                    //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，
+                    // 需要RecycleView不捕获该事件，否则会有问题
                     if (this.getRefreshLoadView().getVisibleHeight() > 0 &&
                             this.getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
                         return false;
@@ -130,8 +133,7 @@ public class JRecycleView extends RecyclerView {
                 break;
         }
 
-        boolean result = super.onTouchEvent(e);
-        return result;
+        return super.onTouchEvent(e);
     }
 
     //========================下拉刷新更多 start==============================
@@ -149,7 +151,9 @@ public class JRecycleView extends RecyclerView {
         // https://stackoverflow.com/questions/37363901/layoutmanager-findfirstcompletelyvisibleitemposition-always-returns-1
 //        if (getLayoutManager() instanceof LinearLayoutManager &&
 //                ((LinearLayoutManager) getLayoutManager()).findFirstCompletelyVisibleItemPosition() <= 1) {
-        if (getChildCount() > 2 &&
+
+        if (getChildCount() > 1 &&
+                getChildAt(0) instanceof IBasePullRefreshLoadView &&
                 ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() <= 1 &&
                 getChildAt(1).getY() >= 0) {
             return true;

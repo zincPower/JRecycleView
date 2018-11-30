@@ -19,7 +19,7 @@ import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
  * @description 刷新和下拉加载更多包装
  */
 
-public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder>{//RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {//RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private boolean mIsOpenRefresh = true;
     private boolean mIsOpenLoadMore = true;
@@ -114,24 +114,20 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
     }
 
     /**
-     *
      * @date 创建时间 2018/4/17
      * @author Jiang zinc
      * @Description
      * @version
-     *
      */
     public void setRefreshLoadView(IBasePullRefreshLoadView mRefreshLoadView) {
         this.mRefreshLoadView = mRefreshLoadView;
     }
 
     /**
-     *
      * @date 创建时间 2018/4/17
      * @author Jiang zinc
      * @Description
      * @version
-     *
      */
     public void setLoadMoreView(IBaseLoadMoreView mLoadMoreView) {
         this.mLoadMoreView = mLoadMoreView;
@@ -181,7 +177,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         } else if (holder instanceof JLoadMoreViewHolder) {
 
         } else {
-            this.mRealAdapter.onBindViewHolder(holder, getRealPosition(position));
+            this.mRealAdapter.onBindViewHolder(holder, _getRealPosition(position));
         }
     }
 
@@ -203,7 +199,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      * @Description 获取真正数据的下标
      * @version
      */
-    public int getRealPosition(int position) {
+    private int _getRealPosition(int position) {
         return this.mIsOpenRefresh ? position - 1 : position;
     }
 
@@ -214,7 +210,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         } else if (position == getItemCount() - 1 && this.mIsOpenLoadMore) {
             return JRecycleConfig.JFOOT;
         } else {
-            return mRealAdapter.getItemViewType(getRealPosition(position));
+            return mRealAdapter.getItemViewType(_getRealPosition(position));
         }
     }
 
@@ -245,11 +241,12 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         }
     }
 
+    //================================设置加载更多的状态 start========================================
+    //==================================   1、加载更多   ============================================
+    //==================================   2、加载出错   ============================================
+    //==================================   3、加载出错   ============================================
     /**
-     * @date 创建时间 2018/3/19
-     * @author Jiang zinc
-     * @Description 加载完，但还没加载全部【加载更多】
-     * @version
+     * 加载完，但还没加载全部【加载更多】
      */
     public void setLoadComplete() {
         if (mIsOpenLoadMore) {
@@ -257,6 +254,9 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         }
     }
 
+    /**
+     * 加载出错
+     */
     public void setLoadError() {
         if (mIsOpenLoadMore) {
             this.mLoadMoreView.loadError();
@@ -286,15 +286,16 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
             this.mLoadMoreView.noMore();
         }
     }
+    //================================设置加载更多的状态 end==========================================
 
-    class JRefreshViewHolder extends RecyclerView.ViewHolder {
-        public JRefreshViewHolder(View itemView) {
+    static class JRefreshViewHolder extends RecyclerView.ViewHolder {
+        JRefreshViewHolder(View itemView) {
             super(itemView);
         }
     }
 
-    class JLoadMoreViewHolder extends RecyclerView.ViewHolder {
-        public JLoadMoreViewHolder(View itemView) {
+    static class JLoadMoreViewHolder extends RecyclerView.ViewHolder {
+        JLoadMoreViewHolder(View itemView) {
             super(itemView);
         }
     }
@@ -304,7 +305,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      * @date 创建时间：2018/3/18
      * @description 刷新回调接口
      */
-    public static interface OnRefreshListener {
+    public interface OnRefreshListener {
         /**
          * @date 创建时间 2018/4/17
          * @author Jiang zinc
@@ -312,7 +313,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
          * 如果想刷新可以使用{@link JRefreshAndLoadMoreAdapter#setRefreshComplete(boolean isRefreshRightNow)}，传递true）
          * @version
          */
-        public void onRefreshing();
+        void onRefreshing();
     }
 
     /**
@@ -320,7 +321,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      * @date 创建时间：2018/3/19
      * @description 加载更多接口
      */
-    public static interface OnLoadMoreListener {
+    public interface OnLoadMoreListener {
         /**
          * @date 创建时间 2018/4/17
          * @author Jiang zinc
@@ -330,7 +331,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
          * 3、数据异常{@link JRefreshAndLoadMoreAdapter#setLoadError()}
          * @version
          */
-        public void onLoading();
+        void onLoading();
     }
 
 }
