@@ -19,14 +19,12 @@ import java.util.List;
 
 public class RefreshAndLoadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
     private List<String> mData;
     private LayoutInflater mLayoutInflater;
 
     public RefreshAndLoadAdapter(Context context, List<String> data) {
         this.mData = data;
-        this.mContext = context;
-        mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     public void setData(List<String> mData) {

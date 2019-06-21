@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JBaseRecycleAdapter;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -18,16 +19,15 @@ import java.util.List;
  * @description
  */
 
-public class AnimAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {//RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AnimAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
     private List<String> mData;
     private LayoutInflater mLayoutInflater;
 
-    public AnimAdapter(Context context, List<String> data) {
+    public AnimAdapter(Context context,
+                       List<String> data) {
         this.mData = data;
-        this.mContext = context;
-        mLayoutInflater = LayoutInflater.from(mContext);
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     public void setData(List<String> mData) {

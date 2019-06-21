@@ -76,19 +76,12 @@ public class BallSpinFadeLoader extends View {
 
         int[] delays = {0, 120, 240, 360, 480, 600, 720, 780, 840};
         for (int i = 0; i < 8; i++) {
-            final int index = i;
+
             ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.4f, 1);
             scaleAnim.setDuration(1000);
             scaleAnim.setRepeatMode(ValueAnimator.RESTART);
             scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    scaleFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
-            });
             scaleAnimList.add(scaleAnim);
 
             ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 77, 255);
@@ -96,13 +89,6 @@ public class BallSpinFadeLoader extends View {
             alphaAnim.setRepeatMode(ValueAnimator.RESTART);
             alphaAnim.setRepeatCount(ValueAnimator.INFINITE);
             alphaAnim.setStartDelay(delays[i]);
-            alphaAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    alphas[index] = (int) valueAnimator.getAnimatedValue();
-                    postInvalidate();
-                }
-            });
             alphaAnimList.add(alphaAnim);
         }
 
@@ -160,22 +146,39 @@ public class BallSpinFadeLoader extends View {
     }
 
     public void startAnimator() {
-        post(new Runnable() {
-            @Override
-            public void run() {
 
-                for (ValueAnimator valueAnimator : scaleAnimList) {
-                    valueAnimator.start();
+        for (int i = 0; i < scaleAnimList.size(); i++) {
+            ValueAnimator valueAnimator = scaleAnimList.get(i);
+
+            final int index = i;
+
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    scaleFloats[index] = (float) animation.getAnimatedValue();
+                    postInvalidate();
                 }
+            });
+            valueAnimator.start();
+        }
 
-                for (ValueAnimator valueAnimator : alphaAnimList) {
-                    valueAnimator.start();
+        for (int i = 0; i < alphaAnimList.size(); i++) {
+            ValueAnimator valueAnimator = alphaAnimList.get(i);
+
+            final int index = i;
+
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    alphas[index] = (int) animation.getAnimatedValue();
+                    postInvalidate();
                 }
+            });
 
-                mAnimatorEnable = true;
+            valueAnimator.start();
+        }
 
-            }
-        });
+        mAnimatorEnable = true;
 
     }
 
@@ -186,10 +189,12 @@ public class BallSpinFadeLoader extends View {
     public void stopAnimator() {
         if (isLoading()) {
             for (ValueAnimator valueAnimator : scaleAnimList) {
+                valueAnimator.removeAllUpdateListeners();
                 valueAnimator.cancel();
             }
 
             for (ValueAnimator valueAnimator : alphaAnimList) {
+                valueAnimator.removeAllUpdateListeners();
                 valueAnimator.cancel();
             }
         }
