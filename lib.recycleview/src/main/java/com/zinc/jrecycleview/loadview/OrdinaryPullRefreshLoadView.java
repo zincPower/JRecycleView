@@ -147,6 +147,7 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
         this.mIvArrow.setVisibility(GONE);
         this.mBallLoader.setVisibility(GONE);
         this.mTvRefreshStatus.setText(getContext().getString(R.string.jrecycle_refreshed));
+        this.mBallLoader.stopAnimator();
     }
 
 }
