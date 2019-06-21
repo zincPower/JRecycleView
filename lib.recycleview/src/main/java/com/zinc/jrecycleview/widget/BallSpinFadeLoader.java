@@ -15,7 +15,6 @@ import java.lang.ref.WeakReference;
 
 public class BallSpinFadeLoader extends View {
 
-    private Context mContext;
     private Paint mPaint;
 
     private float mCenterX;
@@ -63,7 +62,6 @@ public class BallSpinFadeLoader extends View {
     }
 
     private void init(Context context) {
-        mContext = context;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
@@ -103,7 +101,7 @@ public class BallSpinFadeLoader extends View {
 
 
     public int dip2px(float dpValue) {
-        final float scale = mContext.getResources().getDisplayMetrics().density;
+        final float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
