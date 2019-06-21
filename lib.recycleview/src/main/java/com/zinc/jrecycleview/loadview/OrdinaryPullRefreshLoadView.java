@@ -60,7 +60,7 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
 
     @Override
     protected void onMoving(MoveInfo moveInfo) {
-        Log.i(OrdinaryPullRefreshLoadView.class.getSimpleName(), "onMoving: " + moveInfo.toString());
+//        Log.i(OrdinaryPullRefreshLoadView.class.getSimpleName(), "onMoving: " + moveInfo.toString());
     }
 
     @Override
@@ -129,10 +129,10 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
     @Override
     protected void onExecuting() {
         this.mBallLoader.setVisibility(VISIBLE);
-        //如果loading没有开启，则开启动画
-        if (!mBallLoader.isLoading()) {
-            mBallLoader.startAnimator();
-        }
+//        //如果loading没有开启，则开启动画
+//        if (!mBallLoader.isLoading()) {
+//            mBallLoader.startAnimator();
+//        }
 
         //需要先清空箭头状态，后在进行视图隐藏，否则会有问题
         this.mIvArrow.clearAnimation();
@@ -147,7 +147,7 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
         this.mIvArrow.setVisibility(GONE);
         this.mBallLoader.setVisibility(GONE);
         this.mTvRefreshStatus.setText(getContext().getString(R.string.jrecycle_refreshed));
-        this.mBallLoader.stopAnimator();
+//        this.mBallLoader.stopAnimator();
     }
 
 }
