@@ -81,7 +81,7 @@ public class BallSpinFadeLoader extends View {
             scaleAnim.setRepeatMode(ValueAnimator.RESTART);
             scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.addUpdateListener(new MyUpdateListener(BallSpinFadeLoader.this) {
+            scaleAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     scaleFloats[index] = (float) animation.getAnimatedValue();
@@ -89,14 +89,13 @@ public class BallSpinFadeLoader extends View {
                 }
             });
             scaleAnimList.add(scaleAnim);
-//            scaleAnim.start();
 
             ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 77, 255);
             alphaAnim.setDuration(1000);
             alphaAnim.setRepeatMode(ValueAnimator.RESTART);
             alphaAnim.setRepeatCount(ValueAnimator.INFINITE);
             alphaAnim.setStartDelay(delays[i]);
-            alphaAnim.addUpdateListener(new MyUpdateListener(BallSpinFadeLoader.this) {
+            alphaAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator valueAnimator) {
                     alphas[index] = (int) valueAnimator.getAnimatedValue();
@@ -104,7 +103,6 @@ public class BallSpinFadeLoader extends View {
                 }
             });
             alphaAnimList.add(alphaAnim);
-//            alphaAnim.start();
         }
 
     }
@@ -197,22 +195,4 @@ public class BallSpinFadeLoader extends View {
 
         mAnimatorEnable = false;
     }
-
-    private static class MyUpdateListener implements ValueAnimator.AnimatorUpdateListener {
-
-        private WeakReference<BallSpinFadeLoader> mWeakReference;
-
-        public MyUpdateListener(BallSpinFadeLoader ballSpinFadeLoader) {
-            mWeakReference = new WeakReference<BallSpinFadeLoader>(ballSpinFadeLoader);
-        }
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-            BallSpinFadeLoader ball = mWeakReference.get();
-            if (ball == null) {
-                return;
-            }
-        }
-    }
-
 }
