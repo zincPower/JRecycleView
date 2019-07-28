@@ -1,5 +1,6 @@
 package com.zinc.jrecycleview;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.base.IBaseWrapperView;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.stick.IStick;
 import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 
 /**
@@ -41,6 +43,9 @@ public class JRecycleView extends RecyclerView {
 
     public JRecycleView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        addOnScrollListener(new ScrollerListener());
+
         setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
@@ -73,6 +78,9 @@ public class JRecycleView extends RecyclerView {
         return super.dispatchTouchEvent(e);
     }
 
+    private boolean mIsTouching = false;
+    private boolean mIsAction = false;
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
@@ -89,6 +97,8 @@ public class JRecycleView extends RecyclerView {
                 this.mLastY = e.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                this.mIsTouching = true;
+
                 if (isScrolledTop()) {
                     float deltaY = e.getRawY() - mLastY;
 
@@ -120,20 +130,107 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_OUTSIDE:
                 this.mLastY = -1;
-                if (this.getRefreshLoadView().releaseAction()) {
+
+                if (this.getRefreshLoadView() != null
+                        && this.getRefreshLoadView().releaseAction()) {
+//                    isInAction = true;
                     if (this.getRefreshLoadView().getOnRefreshListener() != null) {
                         this.getRefreshLoadView().getOnRefreshListener().onRefreshing();
                     }
                 }
-                if (this.getLoadMoreView().releaseAction()) {
+
+                if (this.getLoadMoreView() != null
+                        && this.getLoadMoreView().releaseAction()) {
+//                    isInAction = true;
                     if (this.getLoadMoreView().getOnLoadMoreListener() != null) {
                         this.getLoadMoreView().getOnLoadMoreListener().onLoading();
                     }
                 }
+
+                Log.i(TAG, "onTouchEvent: up");
+                this.mIsTouching = false;
+
+                if (isScrolling) {
+
+                    boolean isInAction = false;
+
+                    if (this.getRefreshLoadView() != null
+                            && this.getRefreshLoadView().releaseAction()) {
+                        isInAction = true;
+                    }
+
+                    if (this.getLoadMoreView() != null
+                            && this.getLoadMoreView().releaseAction()) {
+                        isInAction = true;
+                    }
+                    // 没有处于 刷新 或 加载更多 的状态
+                    if (isInAction) {
+                        return false;
+                    }
+
+                    View theFirstView = getChildAt(0);
+
+                    ViewHolder childViewHolder = getChildViewHolder(theFirstView);
+
+                    if (childViewHolder instanceof IStick) {
+
+                        float y = theFirstView.getY();
+                        int height = theFirstView.getHeight();
+//                        Log.i(TAG, "theFirstView [offset: " + y + "; height: " + height + "]");
+
+                        boolean isShowAll = Math.abs(y) > (height / 2);
+                        float offset = isShowAll ? height + y : y;
+
+                        smoothScrollBy(0, (int) offset);
+
+                        return true;
+                    }
+                }
+
                 break;
         }
 
         return super.onTouchEvent(e);
+    }
+
+    private boolean isScrollStick() {
+
+        boolean isInAction = false;
+
+        if (this.getRefreshLoadView() != null
+                && this.getRefreshLoadView().releaseAction()) {
+            isInAction = true;
+        }
+
+        if (this.getLoadMoreView() != null
+                && this.getLoadMoreView().releaseAction()) {
+            isInAction = true;
+        }
+
+        // 没有处于 刷新 或 加载更多 的状态
+        if (isInAction) {
+            return false;
+        }
+
+        View theFirstView = getChildAt(0);
+
+        ViewHolder childViewHolder = getChildViewHolder(theFirstView);
+
+        if (childViewHolder instanceof IStick) {
+
+            float y = theFirstView.getY();
+            int height = theFirstView.getHeight();
+//            Log.i(TAG, "theFirstView [offset: " + y + "; height: " + height + "]");
+
+            boolean isShowAll = Math.abs(y) > (height / 2);
+            float offset = isShowAll ? height + y : y;
+
+            smoothScrollBy(0, (int) offset);
+
+            return true;
+        }
+
+        return false;
     }
 
     //========================下拉刷新更多 start==============================
@@ -270,4 +367,35 @@ public class JRecycleView extends RecyclerView {
     }
 
     //========================侧滑效果分割线 end================================
+
+    private boolean isScrolling = false;
+
+    private class ScrollerListener extends OnScrollListener {
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            switch (newState) {
+                case SCROLL_STATE_IDLE:
+                    isScrolling = false;
+                    break;
+                case SCROLL_STATE_DRAGGING:
+                    isScrolling = true;
+                    break;
+                case SCROLL_STATE_SETTLING:
+                    isScrolling = true;
+                    break;
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (mIsTouching) {
+                return;
+            }
+            Log.i(TAG, "onScrolled: " + mIsTouching);
+            isScrollStick();
+        }
+
+    }
+
 }

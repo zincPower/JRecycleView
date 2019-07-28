@@ -109,7 +109,7 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
         if (getVisibleHeight() >= super.mHeight || delta >0) {
             setVisibleHeight((int) (getVisibleHeight() + delta));
 
-            Log.i(IBaseLoadMoreView.class.getSimpleName(), "visiHeight:" + getVisibleHeight() + ";height:" + mHeight);
+//            Log.i(IBaseLoadMoreView.class.getSimpleName(), "visiHeight:" + getVisibleHeight() + ";height:" + mHeight);
 
             //当前状态为1、下拉刷新；2、释放刷新
             if (this.mCurState <= STATE_RELEASE_TO_ACTION) {

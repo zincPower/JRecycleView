@@ -8,8 +8,9 @@ import android.view.View;
 
 import com.zinc.jrecycleview.anim.AnimActivity;
 import com.zinc.jrecycleview.refreshAndLoad.RefreshAndLoadActivity;
+import com.zinc.jrecycleview.stick.content.StickContentActivity;
+import com.zinc.jrecycleview.stick.header.StickHeaderActivity;
 import com.zinc.jrecycleview.swipe.SwipeActivity;
-import com.zinc.jrecycleview.swipe.SwipeAdapter;
 
 /**
  * @author Jiang zinc
@@ -28,12 +29,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 //        findViewById(R.id.tv_all).setOnClickListener(this);
         findViewById(R.id.tv_anim).setOnClickListener(this);
         findViewById(R.id.tv_swipe).setOnClickListener(this);
+        findViewById(R.id.tv_stick_header).setOnClickListener(this);
+        findViewById(R.id.tv_stick_content).setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_load_and_refresh:
                 go(RefreshAndLoadActivity.class);
                 break;
@@ -43,13 +46,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.tv_anim:
                 go(AnimActivity.class);
                 break;
-//            case R.id.all:
-//
-//                break;
+            case R.id.tv_stick_header:
+                go(StickHeaderActivity.class);
+                break;
+            case R.id.tv_stick_content:
+                go(StickContentActivity.class);
+                break;
         }
     }
 
-    private void go(Class to){
+    private void go(Class to) {
         Intent intent = new Intent(this, to);
         startActivity(intent);
     }

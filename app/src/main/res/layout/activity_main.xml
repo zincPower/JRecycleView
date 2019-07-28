@@ -22,10 +22,16 @@
         style="@style/MainPageItemStyle"
          />
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_all"-->
-        <!--android:text="使用多个效果"-->
-        <!--style="@style/MainPageItemStyle"-->
-        <!--/>-->
+    <TextView
+        android:id="@+id/tv_stick_header"
+        android:text="粘性头"
+        style="@style/MainPageItemStyle"
+        />
+
+    <TextView
+        android:id="@+id/tv_stick_content"
+        android:text="粘性内容"
+        style="@style/MainPageItemStyle"
+        />
 
 </LinearLayout>

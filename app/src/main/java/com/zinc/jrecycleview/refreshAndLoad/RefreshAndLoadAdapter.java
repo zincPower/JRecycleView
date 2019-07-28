@@ -2,10 +2,12 @@ package com.zinc.jrecycleview.refreshAndLoad;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zinc.jrecycleview.R;
 
@@ -22,9 +24,12 @@ public class RefreshAndLoadAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private List<String> mData;
     private LayoutInflater mLayoutInflater;
 
+    private Context context;
+
     public RefreshAndLoadAdapter(Context context, List<String> data) {
         this.mData = data;
         mLayoutInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     public void setData(List<String> mData) {
@@ -38,9 +43,16 @@ public class RefreshAndLoadAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        String content = mData.get(position);
+        final String content = mData.get(position);
         TestHolder testHolder = (TestHolder) holder;
         testHolder.mTvContent.setText(content);
+        testHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("zincPower", "onClick: " + content);
+                Toast.makeText(context, content, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
