@@ -152,37 +152,8 @@ public class JRecycleView extends RecyclerView {
 
                 if (isScrolling) {
 
-                    boolean isInAction = false;
-
-                    if (this.getRefreshLoadView() != null
-                            && this.getRefreshLoadView().releaseAction()) {
-                        isInAction = true;
-                    }
-
-                    if (this.getLoadMoreView() != null
-                            && this.getLoadMoreView().releaseAction()) {
-                        isInAction = true;
-                    }
-                    // 没有处于 刷新 或 加载更多 的状态
-                    if (isInAction) {
-                        return false;
-                    }
-
-                    View theFirstView = getChildAt(0);
-
-                    ViewHolder childViewHolder = getChildViewHolder(theFirstView);
-
-                    if (childViewHolder instanceof IStick) {
-
-                        float y = theFirstView.getY();
-                        int height = theFirstView.getHeight();
-//                        Log.i(TAG, "theFirstView [offset: " + y + "; height: " + height + "]");
-
-                        boolean isShowAll = Math.abs(y) > (height / 2);
-                        float offset = isShowAll ? height + y : y;
-
-                        smoothScrollBy(0, (int) offset);
-
+                    boolean scrollStick = isScrollStick();
+                    if (scrollStick) {
                         return true;
                     }
                 }
@@ -194,6 +165,14 @@ public class JRecycleView extends RecyclerView {
     }
 
     private boolean isScrollStick() {
+
+        View theFirstView = getChildAt(0);
+
+        ViewHolder childViewHolder = getChildViewHolder(theFirstView);
+
+        if (!(childViewHolder instanceof IStick)) {
+            return false;
+        }
 
         boolean isInAction = false;
 
@@ -212,25 +191,16 @@ public class JRecycleView extends RecyclerView {
             return false;
         }
 
-        View theFirstView = getChildAt(0);
+        float y = theFirstView.getY();
+        int height = theFirstView.getHeight();
 
-        ViewHolder childViewHolder = getChildViewHolder(theFirstView);
+        boolean isShowAll = Math.abs(y) > (height / 2);
+        float offset = isShowAll ? height + y : y;
 
-        if (childViewHolder instanceof IStick) {
+        smoothScrollBy(0, (int) offset);
 
-            float y = theFirstView.getY();
-            int height = theFirstView.getHeight();
-//            Log.i(TAG, "theFirstView [offset: " + y + "; height: " + height + "]");
+        return true;
 
-            boolean isShowAll = Math.abs(y) > (height / 2);
-            float offset = isShowAll ? height + y : y;
-
-            smoothScrollBy(0, (int) offset);
-
-            return true;
-        }
-
-        return false;
     }
 
     //========================下拉刷新更多 start==============================
