@@ -2,57 +2,74 @@ package com.zinc.jrecycleview.config;
 
 import com.zinc.jrecycleview.anim.IBaseAnimation;
 import com.zinc.jrecycleview.anim.SlideInBottomAnimation;
-import com.zinc.jrecycleview.loadview.OrdinaryLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/17
- * @description
+ * author       : Jiang zinc
+ * time         : 2019-04-17 12:31
+ * email        : 56002982@qq.com
+ * desc         : JRecycleView 的配置管理
+ * version      : 1.0.0
  */
 
 public class JRecycleViewManager {
 
-    private static final JRecycleViewManager ourInstance = new JRecycleViewManager();
+    private static final JRecycleViewManager INSTANCE = new JRecycleViewManager();
 
-    //下拉刷新视图
-    private IBasePullRefreshLoadView basePullRefreshLoadView;
-    //上拉更多视图
-    private IBaseLoadMoreView baseLoadMoreView;
+    // 下拉刷新视图
+    private IBasePullRefreshLoadView mPullRefreshLoadView;
+    // 上拉更多视图
+    private IBaseLoadMoreView mLoadMoreView;
 
-    //动画
-    private IBaseAnimation[] itemAnimations;
+    // 动画
+    private IBaseAnimation[] mItemAnimations;
+
+    // 是否处于 debug
+    private boolean mIsDebug;
 
     public static JRecycleViewManager getInstance() {
-        return ourInstance;
+        return INSTANCE;
     }
 
     private JRecycleViewManager() {
-        itemAnimations = new IBaseAnimation[]{new SlideInBottomAnimation()};
+        mItemAnimations = new IBaseAnimation[]{new SlideInBottomAnimation()};
+        mIsDebug = false;
     }
 
-    public IBasePullRefreshLoadView getBasePullRefreshLoadView() {
-        return basePullRefreshLoadView;
+    public IBasePullRefreshLoadView getPullRefreshLoadView() {
+        return mPullRefreshLoadView;
     }
 
-    public void setBasePullRefreshLoadView(IBasePullRefreshLoadView basePullRefreshLoadView) {
-        this.basePullRefreshLoadView = basePullRefreshLoadView;
+    public JRecycleViewManager setPullRefreshLoadView(IBasePullRefreshLoadView pullRefreshLoadView) {
+        this.mPullRefreshLoadView = pullRefreshLoadView;
+        return this;
     }
 
-    public IBaseLoadMoreView getBaseLoadMoreView() {
-        return baseLoadMoreView;
+    public IBaseLoadMoreView getLoadMoreView() {
+        return mLoadMoreView;
     }
 
-    public void setBaseLoadMoreView(IBaseLoadMoreView baseLoadMoreView) {
-        this.baseLoadMoreView = baseLoadMoreView;
+    public JRecycleViewManager setLoadMoreView(IBaseLoadMoreView loadMoreView) {
+        this.mLoadMoreView = loadMoreView;
+        return this;
     }
 
     public IBaseAnimation[] getItemAnimations() {
-        return itemAnimations;
+        return mItemAnimations;
     }
 
-    public void setItemAnimations(IBaseAnimation[] itemAnimations) {
-        this.itemAnimations = itemAnimations;
+    public JRecycleViewManager setItemAnimations(IBaseAnimation[] itemAnimations) {
+        this.mItemAnimations = itemAnimations;
+        return this;
+    }
+
+    public boolean isDebug() {
+        return mIsDebug;
+    }
+
+    public JRecycleViewManager setIsDebug(boolean isDebug) {
+        this.mIsDebug = isDebug;
+        return this;
     }
 }

@@ -1,28 +1,27 @@
 package com.zinc.jrecycleview.adapter;
 
 import android.animation.AnimatorSet;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.zinc.jrecycleview.anim.IBaseAnimation;
 import com.zinc.jrecycleview.config.JRecycleConfig;
 import com.zinc.jrecycleview.config.JRecycleViewManager;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/12
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-12 10:28
+ * email        : 56002982@qq.com
+ * desc         : JBaseRecycleAdapter
+ * version      : 1.0.0
  */
+public abstract class JBaseRecycleAdapter<T extends RecyclerView.ViewHolder>
+        extends RecyclerView.Adapter<T> {
 
-public abstract class JBaseRecycleAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> {
-
-    private static final String TAG = "Test";
     //是否开启动画
-    public boolean mOpenAnim = false;
+    private boolean mOpenAnim = false;
     //是否第一次使用动画
-    public boolean mOnlyFirstAnimEnable = true;
+    private boolean mOnlyFirstAnimEnable = true;
 
     //最后显示的item位置
     private int mLastPosition = -1;
@@ -31,34 +30,27 @@ public abstract class JBaseRecycleAdapter<T extends RecyclerView.ViewHolder> ext
     private IBaseAnimation[] mAnimations = JRecycleViewManager.getInstance().getItemAnimations();
 
     @Override
-    public void onViewAttachedToWindow(T holder) {
+    public void onViewAttachedToWindow(@NonNull T holder) {
         super.onViewAttachedToWindow(holder);
 
         addAnimForItem(holder);
-
     }
 
-    public JBaseRecycleAdapter setOpenAnim(boolean mOpenAnim) {
-        this.mOpenAnim = mOpenAnim;
-        return this;
+    public void setOpenAnim(boolean openAnim) {
+        this.mOpenAnim = openAnim;
     }
 
-    public JBaseRecycleAdapter setOnlyFirstAnimEnable(boolean mOnlyFirstAnimEnable) {
-        this.mOnlyFirstAnimEnable = mOnlyFirstAnimEnable;
-        return this;
+    public void setOnlyFirstAnimEnable(boolean onlyFirstAnimEnable) {
+        this.mOnlyFirstAnimEnable = onlyFirstAnimEnable;
     }
 
-    public JBaseRecycleAdapter setAnimations(IBaseAnimation[] mAnimations) {
-        this.mAnimations = mAnimations;
+    public void setAnimations(IBaseAnimation[] animations) {
+        this.mAnimations = animations;
         this.mOpenAnim = true;
-        return this;
     }
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 给每个item添加动画
-     * @version
+     * 给每个item添加动画
      */
     protected void addAnimForItem(T holder) {
 
@@ -67,23 +59,25 @@ public abstract class JBaseRecycleAdapter<T extends RecyclerView.ViewHolder> ext
             return;
         }
 
-//        //是否有动画
-//        if (this.mAnimations.length <= 0) {
-//            return;
-//        }
+        //是否有动画
+        if (this.mAnimations == null || this.mAnimations.length <= 0) {
+            return;
+        }
 
         int itemType = holder.getItemViewType();
-        if (itemType == JRecycleConfig.JFOOT || itemType == JRecycleConfig.JHEAD) {
+        if (itemType == JRecycleConfig.FOOT || itemType == JRecycleConfig.HEAD) {
             return;
         }
 
         //是否只有第一次起作用 或是 第一次进入页面
         if (!this.mOnlyFirstAnimEnable || holder.getLayoutPosition() > mLastPosition) {
+
             this.mLastPosition = holder.getLayoutPosition();
             int animLength = this.mAnimations.length;
             int curAnimPosition = holder.getLayoutPosition() % animLength;
             AnimatorSet animators = this.mAnimations[curAnimPosition].getAnimators(holder.itemView);
             animators.start();
+
         }
 
     }

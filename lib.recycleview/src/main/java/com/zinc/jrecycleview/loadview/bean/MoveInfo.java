@@ -1,27 +1,23 @@
 package com.zinc.jrecycleview.loadview.bean;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/17
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-17 16:07
+ * email        : 56002982@qq.com
+ * desc         : 移动信息
+ * version      : 1.0.0
  */
 
 public class MoveInfo {
 
-    //视图的高度
+    // 视图的高度
     private int viewHeight;
-    //下拉高度
+    // 下拉高度
     private int dragHeight;
-    //百分比(最大100，最小0)
+    // 百分比(最大100，最小0)
     private int percent;
 
     public MoveInfo() {
-    }
-
-    public MoveInfo(int viewHeight, int dragHeight, int percent) {
-        this.viewHeight = viewHeight;
-        this.dragHeight = dragHeight;
-        this.percent = percent;
     }
 
     public int getViewHeight() {

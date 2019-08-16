@@ -1,17 +1,14 @@
 package com.zinc.jrecycleview.anim;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
-import android.view.animation.AnimationSet;
-
-import com.zinc.jrecycleview.config.JRecycleConfig;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/12
- * @description 透明度动画
+ * author       : Jiang zinc
+ * time         : 2018-04-12 12:15
+ * email        : 56002982@qq.com
+ * desc         : 透明度动画
+ * version      : 1.0.0
  */
 
 public class AlphaAnimation extends IBaseAnimation {

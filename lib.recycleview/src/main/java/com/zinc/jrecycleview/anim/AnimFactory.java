@@ -1,12 +1,11 @@
 package com.zinc.jrecycleview.anim;
 
-import android.animation.AnimatorSet;
-import android.view.View;
-
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/12
- * @description 动画工厂
+ * author       : Jiang zinc
+ * time         : 2018-04-12 12:24
+ * email        : 56002982@qq.com
+ * desc         : 动画工厂
+ * version      : 1.0.0
  */
 
 public class AnimFactory {

@@ -3,23 +3,27 @@ package com.zinc.jrecycleview.loadview.base;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
+import com.zinc.jrecycleview.utils.LogUtils;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/3/19
- * @description 加载更多，抽象类
+ * author       : Jiang zinc
+ * time         : 2018-03-19 12:34
+ * email        : 56002982@qq.com
+ * desc         : 加载更多，抽象类
+ * version      : 1.0.0
  */
 
 public abstract class IBaseLoadMoreView extends IBaseWrapperView {
 
-    //加载出错
-    public final static int STATE_ERROR = 1;
+    protected static final String TAG = "IBaseLoadMoreView";
 
-    //没有更多
-    public final static int STATE_NO_MORE = 20;
+    // 加载出错
+    public final static int STATE_ERROR = INDEX;
+
+    // 没有更多
+    public final static int STATE_NO_MORE = INDEX << 6;
 
     protected JRefreshAndLoadMoreAdapter.OnLoadMoreListener mOnLoadMoreListener;
 
@@ -27,16 +31,19 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
         super(context);
     }
 
-    public IBaseLoadMoreView(Context context, @Nullable AttributeSet attrs) {
+    public IBaseLoadMoreView(Context context,
+                             @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public IBaseLoadMoreView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IBaseLoadMoreView(Context context,
+                             @Nullable AttributeSet attrs,
+                             int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setOnLoadMoreListener(JRefreshAndLoadMoreAdapter.OnLoadMoreListener onLoadMoreListener) {
-        this.mOnLoadMoreListener = onLoadMoreListener;
+    public void setOnLoadMoreListener(JRefreshAndLoadMoreAdapter.OnLoadMoreListener listener) {
+        this.mOnLoadMoreListener = listener;
     }
 
     public JRefreshAndLoadMoreAdapter.OnLoadMoreListener getOnLoadMoreListener() {
@@ -44,11 +51,9 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     }
 
     /**
+     * 释放动作，会进入两种状态：1、等待刷新；2、正在刷新；
+     *
      * @return 返回是否正在刷新
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 释放动作，会进入两种状态：1、等待刷新；2、正在刷新；
-     * @version
      */
     public boolean releaseAction() {
         //是否正在刷新
@@ -67,49 +72,57 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
         return isOnRefresh;
     }
 
+    /**
+     * 加载完毕
+     */
     public void loadComplete() {
         setState(STATE_DONE);
         reset(super.mHeight);
     }
 
-    public void reset(){
+    /**
+     * 重置
+     */
+    public void reset() {
         super.reset(super.mHeight);
     }
 
-    public void loadError(){
+    /**
+     * 加载错误
+     */
+    public void loadError() {
         setState(STATE_ERROR);
     }
 
-    public void noMore(){
+    /**
+     * 没有更多
+     */
+    public void noMore() {
         setState(STATE_NO_MORE);
         smoothScrollTo(super.mHeight);
     }
 
     @Override
     protected void onOther(int state) {
-       switch (state){
-           case STATE_NO_MORE:
-               onNoMore();
-               break;
-           case STATE_ERROR:
-               onError();
-               break;
-       }
+        switch (state) {
+            case STATE_NO_MORE:
+                onNoMore();
+                break;
+            case STATE_ERROR:
+                onError();
+                break;
+        }
     }
 
     /**
      * @param delta 垂直增量
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description
-     * @version
      */
     public void onMove(float delta) {
         //需要符合：1、可见高度大于控件高度；2、拉动距离要大于0
-        if (getVisibleHeight() >= super.mHeight || delta >0) {
+        if (getVisibleHeight() >= super.mHeight || delta > 0) {
             setVisibleHeight((int) (getVisibleHeight() + delta));
 
-//            Log.i(IBaseLoadMoreView.class.getSimpleName(), "visiHeight:" + getVisibleHeight() + ";height:" + mHeight);
+            LogUtils.i(TAG, "visibleHeight:" + getVisibleHeight() + ";height:" + mHeight);
 
             //当前状态为1、下拉刷新；2、释放刷新
             if (this.mCurState <= STATE_RELEASE_TO_ACTION) {
@@ -127,22 +140,12 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     }
 
     /**
-     *
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 没有更多状态
-     * @version
-     *
+     * 没有更多状态
      */
     protected abstract void onNoMore();
 
     /**
-     *
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 加载出错
-     * @version
-     *
+     * 加载出错
      */
     protected abstract void onError();
 

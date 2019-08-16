@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -27,7 +26,7 @@ import com.zinc.librecycleview.R;
  *
  * @date 创建时间：2018/4/12
  * @author Jiang zinc
- * @description
+ * @description 仿 QQ 粘性点
  *
  */
 

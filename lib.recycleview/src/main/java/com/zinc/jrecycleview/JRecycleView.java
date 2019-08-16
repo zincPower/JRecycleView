@@ -1,6 +1,5 @@
 package com.zinc.jrecycleview;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -20,11 +19,15 @@ import com.zinc.jrecycleview.stick.IStick;
 import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/3/17
- * @description 丰富的RecycleView:1、带下拉刷新和上拉加载更多；2、侧滑
+ * author       : Jiang zinc
+ * time         : 2018-03-17
+ * email        : 56002982@qq.com
+ * desc         : 丰富的RecycleView:
+ * 1、带下拉刷新和上拉加载更多；
+ * 2、侧滑
+ * 3、带粘性（需要粘性的 item 的 ViewHolder 需要实现 {@link IStick}）
+ * version      : 1.0.0
  */
-
 public class JRecycleView extends RecyclerView {
 
     private static final String TAG = JRecycleView.class.getSimpleName();
@@ -269,17 +272,6 @@ public class JRecycleView extends RecyclerView {
         return null;
     }
 
-    /**
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 刷新结束
-     * @version
-     */
-//    public void setLoadMoreComplete() {
-//        if (this.getLoadMoreView() != null) {
-//            this.getLoadMoreView().refreshComplete();
-//        }
-//    }
     //========================上拉加载更多 end  ==============================
 
     //========================侧滑效果分割线 start==============================

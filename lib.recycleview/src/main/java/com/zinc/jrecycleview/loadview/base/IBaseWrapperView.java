@@ -9,43 +9,59 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/16
- * @description 上拉和下拉基类
+ * author       : Jiang zinc
+ * time         : 2018-04-16 14:28
+ * email        : 56002982@qq.com
+ * desc         : 上拉和下拉基类
+ * version      : 1.0.0
  */
 
 public abstract class IBaseWrapperView extends LinearLayout {
 
-    //下拉刷新或上拉更多状态：1、还没操作；2、下拉的高度未超过显示的高度；
-    public final static int STATE_PULL_TO_ACTION = 0;
-    //释放执行
-    public final static int STATE_RELEASE_TO_ACTION = 4;
-    //执行中
-    public final static int STATE_EXECUTING = 8;
-    //执行完毕
-    public final static int STATE_DONE = 16;
+    protected final static int INDEX = 1;
 
-    //当前状态
+    private static final int SCROLL_DURATION = 300;
+
+    // 下拉刷新或上拉更多状态：
+    // 1、还没操作；
+    // 2、下拉的高度未超过显示的高度；
+    public final static int STATE_PULL_TO_ACTION = INDEX << 1;
+    // 释放执行
+    public final static int STATE_RELEASE_TO_ACTION = INDEX << 2;
+    // 执行中
+    public final static int STATE_EXECUTING = INDEX << 3;
+    // 执行完毕
+    public final static int STATE_DONE = INDEX << 4;
+
+    // 当前状态
     protected int mCurState;
 
-    //本视图高度
+    // 本视图高度
     protected int mHeight;
 
     public IBaseWrapperView(Context context) {
         this(context, null, 0);
     }
 
-    public IBaseWrapperView(Context context, @Nullable AttributeSet attrs) {
+    public IBaseWrapperView(Context context,
+                            @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public IBaseWrapperView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IBaseWrapperView(Context context,
+                            @Nullable AttributeSet attrs,
+                            int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
+        init(context);
+    }
+
+    private void init(Context context) {
         this.mCurState = STATE_PULL_TO_ACTION;
 
         //初始化本视图
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        LayoutParams layoutParams =
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 0, 0);
         setLayoutParams(layoutParams);
         setPadding(0, 0, 0, 0);
@@ -56,42 +72,41 @@ public abstract class IBaseWrapperView extends LinearLayout {
         this.mHeight = getMeasuredHeight();
     }
 
-    public int getMeasureHeight() {
+    public int getViewHeight() {
         return this.mHeight;
     }
 
-    public void setHeight(int mHeight) {
-        this.mHeight = mHeight;
+    public void setHeight(int height) {
+        this.mHeight = height;
     }
 
+    /**
+     * 获取当前状态
+     */
     public int getCurState() {
         return mCurState;
     }
 
     /**
-     * @date 创建时间 2018/3/20
-     * @author Jiang zinc
-     * @Description 获取刷新的根视图
-     * @version
+     * 获取刷新的根视图
      */
     protected abstract View getLoadView();
 
     /**
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 获取加载视图的高度
-     * @version
+     * 获取加载视图的高度
+     *
+     * @return 可见高度
      */
     public int getVisibleHeight() {
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) this.getLoadView().getLayoutParams();
+        LinearLayout.LayoutParams layoutParams
+                = (LinearLayout.LayoutParams) this.getLoadView().getLayoutParams();
         return layoutParams.height;
     }
 
     /**
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 设置加载View的高度
-     * @version
+     * 设置加载View的高度
+     *
+     * @param height 设置可见高度
      */
     protected void setVisibleHeight(int height) {
         if (height <= 0) {
@@ -103,10 +118,9 @@ public abstract class IBaseWrapperView extends LinearLayout {
     }
 
     /**
-     * @date 创建时间 2018/3/17
-     * @author Jiang zinc
-     * @Description 设置当前状态
-     * @version
+     * 设置当前状态
+     *
+     * @param state 当前状态
      */
     public void setState(int state) {
         //如果与当前状态相同，不做任何处理
@@ -143,10 +157,9 @@ public abstract class IBaseWrapperView extends LinearLayout {
     }
 
     /**
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 重置状态
-     * @version
+     * 重置状态
+     *
+     * @param destHeight 目标高度
      */
     protected void reset(int destHeight) {
         smoothScrollTo(destHeight);
@@ -159,20 +172,23 @@ public abstract class IBaseWrapperView extends LinearLayout {
     }
 
     /**
-     * @param destheight 目标高度
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 平滑滚动至某个高度
-     * @version
+     * 平滑滚动至某个高度
+     *
+     * @param destHeight 目标高度
      */
-    protected void smoothScrollTo(int destheight) {
-        smoothScrollTo(destheight, 300);
+    protected void smoothScrollTo(int destHeight) {
+        smoothScrollTo(destHeight, SCROLL_DURATION);
     }
 
-    protected void smoothScrollTo(int destheight, int durTime) {
-
-        //设置从可见高度->目标高度
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(getVisibleHeight(), destheight);
+    /**
+     * 平滑滚动至某个高度
+     *
+     * @param destHeight 目标高度
+     * @param durTime    时长
+     */
+    protected void smoothScrollTo(int destHeight, int durTime) {
+        // 设置从可见高度->目标高度
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(getVisibleHeight(), destHeight);
         valueAnimator.setDuration(durTime);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -184,50 +200,37 @@ public abstract class IBaseWrapperView extends LinearLayout {
     }
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 等待上拉 或 等待下拉的状态 视图表现
-     * @version
+     * 等待上拉 或 等待下拉的状态 视图表现
      */
     protected abstract void onPullToAction();
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 释放执行（释放刷新 或 释放加载更多）视图表现
-     * @version
+     * 释放执行（释放刷新 或 释放加载更多）视图表现
      */
     protected abstract void onReleaseToAction();
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 执行中 视图表现
-     * @version
+     * 执行中 视图表现
      */
     protected abstract void onExecuting();
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 执行完视图表现
-     * @version
+     * 执行完视图表现
      */
     protected abstract void onDone();
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 扩展方法，主要用于后面扩展一写细节的状态，现用于LoadMore增加{@link IBaseLoadMoreView#STATE_NO_MORE}状态
-     * @version
+     * 扩展方法，主要用于后面扩展一写细节的状态，
+     * 现用于LoadMore增加{@link IBaseLoadMoreView#STATE_NO_MORE}状态
+     *
+     * @param state 当前状态
      */
     protected abstract void onOther(int state);
 
     /**
-     * @date 创建时间 2018/4/17
-     * @author Jiang zinc
-     * @Description 初始化视图，用于加载自己的视图
-     * @version
+     * 初始化视图，用于加载自己的视图
+     *
+     * @param context 上下文
      */
     protected abstract void initView(Context context);
 

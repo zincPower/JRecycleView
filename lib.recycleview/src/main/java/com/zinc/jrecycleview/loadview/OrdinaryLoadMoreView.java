@@ -2,13 +2,10 @@ package com.zinc.jrecycleview.loadview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,9 +15,19 @@ import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.librecycleview.R;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/3/19
- * @description 普通的加载更多，可用于自己扩展做例子
+ * author       : Jiang zinc
+ * time         : 2018-03-19 16:09
+ * email        : 56002982@qq.com
+ * desc         : 普通的加载更多
+ * <p>
+ * 自定义流程
+ * 1、只需要继承 {@link IBaseLoadMoreView}，实现相应的方法。
+ * 2、全局设置，可以通过
+ * {@link com.zinc.jrecycleview.config.JRecycleViewManager#setLoadMoreView(IBaseLoadMoreView)}
+ * 3、单个设置，可以通过
+ * {@link com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter#setLoadMoreView(IBaseLoadMoreView)}
+ * <p>
+ * version      : 1.0.0
  */
 
 public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
@@ -36,11 +43,14 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
         this(context, null, 0);
     }
 
-    public OrdinaryLoadMoreView(Context context, @Nullable AttributeSet attrs) {
+    public OrdinaryLoadMoreView(Context context,
+                                @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public OrdinaryLoadMoreView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public OrdinaryLoadMoreView(Context context,
+                                @Nullable AttributeSet attrs,
+                                int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -99,7 +109,8 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
 
     @Override
     protected void initView(Context context) {
-        this.mLoadMoreView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.j_widget_ordinary_load_more_view, null, false);
+        this.mLoadMoreView = (LinearLayout) LayoutInflater.from(context)
+                .inflate(R.layout.j_widget_ordinary_load_more_view, this, false);
         this.mProgressBar = this.mLoadMoreView.findViewById(R.id.progress_bar);
         this.mTvTip = this.mLoadMoreView.findViewById(R.id.tv_tip);
         this.mIvReload = this.mLoadMoreView.findViewById(R.id.iv_reload);

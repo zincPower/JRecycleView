@@ -3,11 +3,13 @@ package com.zinc.jrecycleview.utils;
 import android.graphics.PointF;
 
 /**
- * Created by MQ on 2017/6/16.
+ * author       : Jiang zinc
+ * time         : 2019-08-16 10:26
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
-
 public class MathUtil {
-
 
     /**
      * 获得两点之间的直线距离
