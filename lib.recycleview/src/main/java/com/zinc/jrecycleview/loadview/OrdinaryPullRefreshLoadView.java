@@ -69,12 +69,12 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
     }
 
     @Override
-    protected void initView(Context context) {
+    protected View initView(Context context) {
         this.mLoadView = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.j_widget_ordinary_load_refresh_view, null, false);
 
         //将loadView视图添加进RecycleView，且将其高度设置为0
-        addView(mLoadView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
-        setGravity(Gravity.BOTTOM);
+//        addView(mLoadView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
+//        setGravity(Gravity.BOTTOM);
 
         this.mRelativeContainer = (RelativeLayout) mLoadView.findViewById(R.id.relative_container);
         this.mLinearHeader = (LinearLayout) mLoadView.findViewById(R.id.linear_header);
@@ -100,7 +100,9 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
         this.mArrowToDownAnim.setDuration(animDuration);
         this.mArrowToDownAnim.setFillAfter(true);
 
-        measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        return mLoadView;
     }
 
     @Override

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.zinc.jrecycleview.utils.LogUtils;
+
 /**
  * author       : Jiang zinc
  * time         : 2018-04-16 14:28
@@ -22,6 +24,10 @@ public abstract class IBaseWrapperView extends LinearLayout {
 
     private static final int SCROLL_DURATION = 300;
 
+    private String TAG = this.getClass().getSimpleName();
+
+    // 加载出错
+    public final static int STATE_ERROR = INDEX;
     // 下拉刷新或上拉更多状态：
     // 1、还没操作；
     // 2、下拉的高度未超过显示的高度；
@@ -32,6 +38,8 @@ public abstract class IBaseWrapperView extends LinearLayout {
     public final static int STATE_EXECUTING = INDEX << 3;
     // 执行完毕
     public final static int STATE_DONE = INDEX << 4;
+    // 没有更多
+    public final static int STATE_NO_MORE = INDEX << 5;
 
     // 当前状态
     protected int mCurState;
@@ -59,18 +67,23 @@ public abstract class IBaseWrapperView extends LinearLayout {
     private void init(Context context) {
         this.mCurState = STATE_PULL_TO_ACTION;
 
-        //初始化本视图
         LayoutParams layoutParams =
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0, 0, 0, 0);
         setLayoutParams(layoutParams);
         setPadding(0, 0, 0, 0);
 
-        this.initView(context);
+        View view = this.initView(context);
 
-        measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        View resultView = wrapper(context, view);
+
+        addView(resultView);
+
+        measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         this.mHeight = getMeasuredHeight();
     }
+
+    protected abstract View wrapper(Context context, View view);
 
     public int getViewHeight() {
         return this.mHeight;
@@ -127,6 +140,8 @@ public abstract class IBaseWrapperView extends LinearLayout {
         if (state == this.mCurState) {
             return;
         }
+
+        LogUtils.i(TAG, "state: " + state);
 
         switch (state) {
             //下拉执行
@@ -231,7 +246,8 @@ public abstract class IBaseWrapperView extends LinearLayout {
      * 初始化视图，用于加载自己的视图
      *
      * @param context 上下文
+     * @return 视图
      */
-    protected abstract void initView(Context context);
+    protected abstract View initView(Context context);
 
 }

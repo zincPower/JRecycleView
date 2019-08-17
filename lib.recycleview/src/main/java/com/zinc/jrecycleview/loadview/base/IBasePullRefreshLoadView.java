@@ -3,6 +3,8 @@ package com.zinc.jrecycleview.loadview.base;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
@@ -36,6 +38,12 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
         super(context, attrs, defStyleAttr);
 
         mMoveInfo = new MoveInfo();
+    }
+
+    @Override
+    protected View wrapper(Context context, View view) {
+
+        return view;
     }
 
     public void setOnRefreshListener(JRefreshAndLoadMoreAdapter.OnRefreshListener listener) {

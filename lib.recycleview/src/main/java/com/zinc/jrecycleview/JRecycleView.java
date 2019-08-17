@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,22 +33,29 @@ public class JRecycleView extends RecyclerView {
     //最后拖动Y的坐标
     private float mLastY = -1;
 
-    private static final int DRAG_FACTOR = 2;
+    private static final float DRAG_FACTOR = 1.5f;
+
+    private final Rect mFrame;
+    private boolean mIsTouching = false;
 
     public JRecycleView(Context context) {
         this(context, null, 0);
     }
 
-    public JRecycleView(Context context, @Nullable AttributeSet attrs) {
+    public JRecycleView(Context context,
+                        @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public JRecycleView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public JRecycleView(Context context,
+                        @Nullable AttributeSet attrs,
+                        int defStyle) {
         super(context, attrs, defStyle);
 
         addOnScrollListener(new ScrollerListener());
-
         setOverScrollMode(OVER_SCROLL_NEVER);
+
+        mFrame = new Rect();
     }
 
     @Override
@@ -66,6 +72,7 @@ public class JRecycleView extends RecyclerView {
 
             //判断是否有侧滑 且 当前点击区域不在该侧滑的项中
             if (openItemView != null && openItemView != getTouchItem(x, y)) {
+
                 JSwipeItemLayout swipeItemLayout = findSwipeItemLayout(openItemView);
                 if (swipeItemLayout != null) {
                     //关闭侧滑
@@ -73,6 +80,7 @@ public class JRecycleView extends RecyclerView {
                     //不拦截此次事件，此次事件只帮我们关闭菜单
                     return false;
                 }
+
             }
         } else if (action == MotionEvent.ACTION_POINTER_DOWN) {
             return false;
@@ -81,15 +89,8 @@ public class JRecycleView extends RecyclerView {
         return super.dispatchTouchEvent(e);
     }
 
-    private boolean mIsTouching = false;
-    private boolean mIsAction = false;
-
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-
-        if (getRefreshLoadView() == null) {
-            return super.onTouchEvent(e);
-        }
 
         if (this.mLastY == -1) {
             this.mLastY = e.getRawY();
@@ -102,7 +103,7 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 this.mIsTouching = true;
 
-                if (isScrolledTop()) {
+                if (getRefreshLoadView() != null && isScrolledTop()) {
                     float deltaY = e.getRawY() - mLastY;
 
                     this.getRefreshLoadView().onMove(deltaY / DRAG_FACTOR);
@@ -117,14 +118,18 @@ public class JRecycleView extends RecyclerView {
                     }
                 }
 
-                if (isScrolledBottom()) {
+                if (getLoadMoreView() != null && isScrolledBottom()) {
                     float deltaY = mLastY - e.getRawY();
 
-                    if (deltaY > 0) {   //向上滑动
-                        this.getLoadMoreView().onMove(deltaY / DRAG_FACTOR);
-                    } else {            //向下滑动
-                        this.getLoadMoreView().onMove(deltaY);
+                    int visibleHeight = getLoadMoreVisibleHeight();
+                    if (visibleHeight != -1) {
+                        if (deltaY > 0) {   //向上滑动
+                            this.getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                        } else {            //向下滑动
+                            this.getLoadMoreView().onMove(visibleHeight, deltaY);
+                        }
                     }
+
                     mLastY = e.getRawY();
 
                 }
@@ -134,23 +139,17 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_OUTSIDE:
                 this.mLastY = -1;
 
-                if (this.getRefreshLoadView() != null
-                        && this.getRefreshLoadView().releaseAction()) {
-//                    isInAction = true;
-                    if (this.getRefreshLoadView().getOnRefreshListener() != null) {
-                        this.getRefreshLoadView().getOnRefreshListener().onRefreshing();
+                if (this.getRefreshLoadView() != null) {
+                    if (this.getRefreshLoadView().releaseAction()) {
+
+                        if (this.getRefreshLoadView().getOnRefreshListener() != null) {
+                            this.getRefreshLoadView().getOnRefreshListener().onRefreshing();
+                        }
                     }
                 }
 
-                if (this.getLoadMoreView() != null
-                        && this.getLoadMoreView().releaseAction()) {
-//                    isInAction = true;
-                    if (this.getLoadMoreView().getOnLoadMoreListener() != null) {
-                        this.getLoadMoreView().getOnLoadMoreListener().onLoading();
-                    }
-                }
+                handleLoadMore();
 
-                Log.i(TAG, "onTouchEvent: up");
                 this.mIsTouching = false;
 
                 if (isScrolling) {
@@ -165,6 +164,59 @@ public class JRecycleView extends RecyclerView {
         }
 
         return super.onTouchEvent(e);
+    }
+
+    /**
+     * 处理加载更多的逻辑
+     *
+     * @return true 说明进行处理；false 不进行处理
+     */
+    private boolean handleLoadMore() {
+
+        if (this.getLoadMoreView() == null) {
+            return false;
+        }
+
+        int visibleHeight = getLoadMoreVisibleHeight();
+
+        if (visibleHeight == -1) {
+            return false;
+        }
+
+        if (this.getLoadMoreView().releaseAction(visibleHeight)) {
+            if (this.getLoadMoreView().getOnLoadMoreListener() != null) {
+                this.getLoadMoreView().getOnLoadMoreListener().onLoading();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private int getLoadMoreVisibleHeight() {
+        if (this.getLoadMoreView() == null) {
+            return -1;
+        }
+
+        int childCount = getLayoutManager().getChildCount();
+        if (childCount <= 0) {
+            return -1;
+        }
+
+        View view = getLayoutManager().getChildAt(childCount - 1);
+        if (view == null) {
+            return -1;
+        }
+
+        if (view != getLoadMoreView()) {
+            return -1;
+        }
+
+        int layoutHeight = getLayoutManager().getHeight();
+        int top = view.getTop();
+
+        return layoutHeight - top;
     }
 
     private boolean isScrollStick() {
@@ -184,8 +236,7 @@ public class JRecycleView extends RecyclerView {
             isInAction = true;
         }
 
-        if (this.getLoadMoreView() != null
-                && this.getLoadMoreView().releaseAction()) {
+        if (handleLoadMore()) {
             isInAction = true;
         }
 
@@ -222,6 +273,12 @@ public class JRecycleView extends RecyclerView {
 //        if (getLayoutManager() instanceof LinearLayoutManager &&
 //                ((LinearLayoutManager) getLayoutManager()).findFirstCompletelyVisibleItemPosition() <= 1) {
 
+        /**
+         * 1、子视图数量大于一
+         * 2、第一个子视图 是 {@link IBasePullRefreshLoadView}
+         * 3、第一个可见视图 <= 1
+         * 4、第二个视图 y 坐标要大于等于 0
+         */
         if (getChildCount() > 1 &&
                 getChildAt(0) instanceof IBasePullRefreshLoadView &&
                 ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() <= 1 &&
@@ -232,6 +289,9 @@ public class JRecycleView extends RecyclerView {
         }
     }
 
+    /**
+     * 获取下拉刷新视图
+     */
     private IBasePullRefreshLoadView getRefreshLoadView() {
         if (getAdapter() instanceof JRefreshAndLoadMoreAdapter) {
             JRefreshAndLoadMoreAdapter jAdapter = (JRefreshAndLoadMoreAdapter) getAdapter();
@@ -245,25 +305,34 @@ public class JRecycleView extends RecyclerView {
     //========================上拉加载更多 start==============================
 
     /**
-     * @date 创建时间 2018/4/16
-     * @author Jiang zinc
-     * @Description 是否是最后一个view
-     * @version
+     * 是否是最后一个view
+     *
+     * @return true：最后一个view；false：不是最后一个
      */
     private boolean isScrolledBottom() {
 
-        //若正在下拉刷新状态则 item个数-2
-        //若不是正在下拉刷新状态则 item个数-3
-        int itemTotal = getRefreshLoadView().getCurState() == IBaseWrapperView.STATE_EXECUTING ? getAdapter().getItemCount() - 2 : getAdapter().getItemCount() - 3;
+        int itemTotal;
+        // 若正在下拉刷新状态则 item个数-2
+        // 若不是正在下拉刷新状态则 item个数-3
+        if (getRefreshLoadView() == null
+                || getRefreshLoadView().getCurState() != IBaseWrapperView.STATE_EXECUTING) {
+            itemTotal = getAdapter().getItemCount() - 3;
+        } else {
+            itemTotal = getAdapter().getItemCount() - 2;
+        }
 
         if (getLayoutManager() instanceof LinearLayoutManager &&
-                ((LinearLayoutManager) getLayoutManager()).findLastCompletelyVisibleItemPosition() >= itemTotal) {
+                ((LinearLayoutManager) getLayoutManager())
+                        .findLastCompletelyVisibleItemPosition() >= itemTotal) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * 获取加载更多视图
+     */
     private IBaseLoadMoreView getLoadMoreView() {
         if (getAdapter() instanceof JRefreshAndLoadMoreAdapter) {
             JRefreshAndLoadMoreAdapter jAdapter = (JRefreshAndLoadMoreAdapter) getAdapter();
@@ -276,10 +345,11 @@ public class JRecycleView extends RecyclerView {
 
     //========================侧滑效果分割线 start==============================
 
-    //查找已经开启侧滑的项
+    /**
+     * 查找已经开启侧滑的项
+     */
     @Nullable
     private View findOpenItem() {
-        //获取
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             JSwipeItemLayout jswipeItemLayout = findSwipeItemLayout(getChildAt(i));
@@ -290,8 +360,13 @@ public class JRecycleView extends RecyclerView {
         return null;
     }
 
-    //获取view中的JSwipeItemLayout
-    //有可能view就是JSwipeItemLayout，也有可能是view下的子view
+    /**
+     * 获取view中的JSwipeItemLayout
+     * 有可能view就是JSwipeItemLayout，也有可能是view下的子view
+     *
+     * @param view 根View
+     * @return JSwipeItemLayout
+     */
     @Nullable
     private JSwipeItemLayout findSwipeItemLayout(View view) {
         if (view instanceof JSwipeItemLayout) {
@@ -312,15 +387,14 @@ public class JRecycleView extends RecyclerView {
     //获取当前点击的坐标的item
     @Nullable
     private View getTouchItem(int x, int y) {
-        Rect frame = new Rect();
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             //是可见的
             if (child.getVisibility() == VISIBLE) {
                 //获取范围
-                child.getHitRect(frame);
+                child.getHitRect(mFrame);
                 //判断点击点是否已经在其范围内
-                if (frame.contains(x, y)) {
+                if (mFrame.contains(x, y)) {
                     return child;
                 }
             }
@@ -354,7 +428,7 @@ public class JRecycleView extends RecyclerView {
             if (mIsTouching) {
                 return;
             }
-            Log.i(TAG, "onScrolled: " + mIsTouching);
+
             isScrollStick();
         }
 

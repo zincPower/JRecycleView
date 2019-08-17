@@ -79,15 +79,17 @@ public class MyRefreshView extends IBasePullRefreshLoadView {
     }
 
     @Override
-    protected void initView(Context context) {
+    protected View initView(Context context) {
         this.mLoadView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.view_my_refresh, null, false);
 
         //将loadView视图添加进RecycleView，且将其高度设置为0
-        addView(mLoadView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
-        setGravity(Gravity.BOTTOM);
+//        addView(mLoadView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
+//        setGravity(Gravity.BOTTOM);
 
         this.mIvMeituan = this.mLoadView.findViewById(R.id.iv_meituan);
         this.mIvMeituan.setBackgroundResource(R.drawable.meituan_pull_image);
+
+        return mLoadView;
     }
 
     @Override

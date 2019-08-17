@@ -3,15 +3,13 @@ package com.zinc.jrecycleview.loadview;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
+import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
 import com.zinc.librecycleview.R;
 
 /**
@@ -34,8 +32,8 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
 
     private String TAG = OrdinaryPullRefreshLoadView.class.getSimpleName();
 
-    private LinearLayout mLoadMoreView;
-    private ProgressBar mProgressBar;
+    private View mLoadMoreView;
+    private BallSpinFadeLoader mProgressBar;
     private TextView mTvTip;
     private ImageView mIvReload;
 
@@ -108,16 +106,16 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     }
 
     @Override
-    protected void initView(Context context) {
-        this.mLoadMoreView = (LinearLayout) LayoutInflater.from(context)
-                .inflate(R.layout.j_widget_ordinary_load_more_view, this, false);
-        this.mProgressBar = this.mLoadMoreView.findViewById(R.id.progress_bar);
+    protected View initView(Context context) {
+        this.mLoadMoreView = LayoutInflater.from(context)
+                .inflate(R.layout.j_widget_ordinary_load_more_view,
+                        this,
+                        false);
+        this.mProgressBar = this.mLoadMoreView.findViewById(R.id.ball_loader);
         this.mTvTip = this.mLoadMoreView.findViewById(R.id.tv_tip);
         this.mIvReload = this.mLoadMoreView.findViewById(R.id.iv_reload);
 
-        setGravity(Gravity.TOP);
-        addView(this.mLoadMoreView, new LayoutParams(LayoutParams.MATCH_PARENT, 100));
-
+        return this.mLoadMoreView;
     }
 
 }

@@ -2,7 +2,11 @@ package com.zinc.jrecycleview.loadview.base;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.utils.LogUtils;
@@ -18,12 +22,6 @@ import com.zinc.jrecycleview.utils.LogUtils;
 public abstract class IBaseLoadMoreView extends IBaseWrapperView {
 
     protected static final String TAG = "IBaseLoadMoreView";
-
-    // 加载出错
-    public final static int STATE_ERROR = INDEX;
-
-    // 没有更多
-    public final static int STATE_NO_MORE = INDEX << 6;
 
     protected JRefreshAndLoadMoreAdapter.OnLoadMoreListener mOnLoadMoreListener;
 
@@ -42,6 +40,19 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected View wrapper(Context context, View view) {
+
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setLayoutParams(
+                new LinearLayoutCompat.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+        linearLayout.addView(view);
+
+        return linearLayout;
+    }
+
     public void setOnLoadMoreListener(JRefreshAndLoadMoreAdapter.OnLoadMoreListener listener) {
         this.mOnLoadMoreListener = listener;
     }
@@ -53,16 +64,17 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     /**
      * 释放动作，会进入两种状态：1、等待刷新；2、正在刷新；
      *
+     * @param visible 可见高度
      * @return 返回是否正在刷新
      */
-    public boolean releaseAction() {
+    public boolean releaseAction(int visible) {
         //是否正在刷新
         boolean isOnRefresh = false;
-        //可见高度
-        int height = getVisibleHeight();
+
+        LogUtils.i(TAG, "visible: " + visible + "; height: " + mHeight);
 
         //如果释放的时候，大于刷新视图的高度值且未进入刷新状态，则需要进入刷新状态
-        if (height > this.mHeight && this.mCurState < STATE_EXECUTING) {
+        if (visible > this.mHeight && this.mCurState < STATE_EXECUTING) {
             setState(STATE_EXECUTING);
             isOnRefresh = true;
         }
@@ -115,28 +127,36 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     }
 
     /**
-     * @param delta 垂直增量
+     * @param visibleHeight 可视高度
+     * @param delta         垂直增量
      */
-    public void onMove(float delta) {
+    public void onMove(int visibleHeight, float delta) {
         //需要符合：1、可见高度大于控件高度；2、拉动距离要大于0
-        if (getVisibleHeight() >= super.mHeight || delta > 0) {
-            setVisibleHeight((int) (getVisibleHeight() + delta));
-
-            LogUtils.i(TAG, "visibleHeight:" + getVisibleHeight() + ";height:" + mHeight);
-
-            //当前状态为1、下拉刷新；2、释放刷新
-            if (this.mCurState <= STATE_RELEASE_TO_ACTION) {
-
-                //小于loadView高度
-                if (getVisibleHeight() <= this.mHeight) {
-                    setState(STATE_PULL_TO_ACTION);
-                } else {
-                    setState(STATE_RELEASE_TO_ACTION);
-                }
-
-            }
-
+        float viewHeight = visibleHeight + delta;
+        if (viewHeight < mHeight) {
+            viewHeight = mHeight;
         }
+        setVisibleHeight((int) viewHeight);
+
+        LogUtils.i(TAG,
+                "visibleHeight: " + visibleHeight + "; " +
+                        "height: " + mHeight + "; " +
+                        "viewHeight: " + viewHeight);
+
+        //当前状态为: 1、上拉刷新; 2、释放刷新
+        if (this.mCurState <= STATE_RELEASE_TO_ACTION) {
+            //小于loadView高度
+            if (visibleHeight <= mHeight) {
+                if (this.mCurState == STATE_ERROR) {
+                    setState(STATE_ERROR);
+                } else {
+                    setState(STATE_PULL_TO_ACTION);
+                }
+            } else {
+                setState(STATE_RELEASE_TO_ACTION);
+            }
+        }
+
     }
 
     /**
