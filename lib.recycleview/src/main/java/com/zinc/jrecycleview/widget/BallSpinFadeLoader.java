@@ -16,6 +16,14 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author       : Jiang zinc
+ * time         : 2018-03-17 15:35
+ * email        : 56002982@qq.com
+ * desc         : loading
+ * version      : 1.0.0
+ */
+
 public class BallSpinFadeLoader extends View {
 
     private Paint mPaint;
@@ -48,18 +56,21 @@ public class BallSpinFadeLoader extends View {
     public static final float SCALE = 1.0f;
     public static final int ALPHA = 255;
 
-    private List<ValueAnimator> scaleAnimList;
-    private List<ValueAnimator> alphaAnimList;
+    private final List<ValueAnimator> scaleAnimList = new ArrayList<>();
+    private final List<ValueAnimator> alphaAnimList = new ArrayList<>();
 
     public BallSpinFadeLoader(Context context) {
         this(context, null);
     }
 
-    public BallSpinFadeLoader(Context context, AttributeSet attrs) {
+    public BallSpinFadeLoader(Context context,
+                              AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BallSpinFadeLoader(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BallSpinFadeLoader(Context context,
+                              AttributeSet attrs,
+                              int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -70,9 +81,6 @@ public class BallSpinFadeLoader extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(dip2px(1));
         mPaint.setColor(ContextCompat.getColor(context, R.color.j_recycle_balling_color));
-
-        scaleAnimList = new ArrayList<>();
-        alphaAnimList = new ArrayList<>();
 
         int[] delays = {0, 120, 240, 360, 480, 600, 720, 780, 840};
         for (int i = 0; i < 8; i++) {
@@ -120,8 +128,8 @@ public class BallSpinFadeLoader extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mRadius = w / 10;
-        mCenterX = w / 2;
-        mCenterY = h / 2;
+        mCenterX = w >> 1;
+        mCenterY = h >> 1;
     }
 
 
@@ -136,8 +144,8 @@ public class BallSpinFadeLoader extends View {
 
         for (int i = 0; i < alphas.length; i++) {
             canvas.save();
-            canvas.translate(mCenterX + (getWidth() / 2 - mRadius) * (float) Math.cos(Math.toRadians(i * 45)),
-                    mCenterY + (getWidth() / 2 - mRadius) * (float) Math.sin(Math.toRadians(i * 45)));
+            canvas.translate(mCenterX + ((getWidth() >> 1) - mRadius) * (float) Math.cos(Math.toRadians(i * 45)),
+                    mCenterY + ((getWidth() >> 1) - mRadius) * (float) Math.sin(Math.toRadians(i * 45)));
             canvas.scale(scaleFloats[i], scaleFloats[i]);
             mPaint.setAlpha(alphas[i]);
             canvas.drawCircle(0, 0, mRadius, mPaint);

@@ -23,27 +23,31 @@ import com.zinc.jrecycleview.utils.PointEvaluator;
 import com.zinc.librecycleview.R;
 
 /**
- *
- * @date 创建时间：2018/4/12
- * @author Jiang zinc
- * @description 仿 QQ 粘性点
- *
+ * author       : Jiang zinc
+ * time         : 2018-04-12 15:37
+ * email        : 56002982@qq.com
+ * desc         : 粘性点
+ * version      : 1.0.0
  */
 
-public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
+public class StickDotView extends android.support.v7.widget.AppCompatTextView {
+
     public DragView dragView;
     private float mWidth, mHeight;//View的宽和高
     private onDragStatusListener onDragListener;
 
-    public QQBezierView(Context context) {
+    public StickDotView(Context context) {
         this(context, null);
     }
 
-    public QQBezierView(Context context, AttributeSet attrs) {
+    public StickDotView(Context context,
+                        AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public QQBezierView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public StickDotView(Context context,
+                        AttributeSet attrs,
+                        int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -116,7 +120,6 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
     public void setOnDragListener(onDragStatusListener onDragListener) {
         this.onDragListener = onDragListener;
     }
-
 
     /**
      * 拖拽时的椭圆
@@ -322,6 +325,7 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
          */
         private void startResetAnimator() {
             if (mState == STATE_DRAG) {
+
                 ValueAnimator animator = ValueAnimator.ofObject(
                         new PointEvaluator(), new PointF(dragPointF.x, dragPointF.y), new PointF(stickyPointF.x, stickyPointF.y));
                 animator.setDuration(500);
@@ -333,6 +337,7 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
                         return (float) (Math.pow(2, -4 * input) * Math.sin((input - f / 4) * (2 * Math.PI) / f) + 1);
                     }
                 });
+
                 animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
                     public void onAnimationUpdate(ValueAnimator animation) {
@@ -341,6 +346,7 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
                         invalidate();
                     }
                 });
+
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -350,8 +356,10 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
                         }
                     }
                 });
+
                 animator.start();
             } else if (mState == STATE_MOVE) {
+
                 //先拖拽到范围之外 在拖拽回范围之内
                 dragPointF.set(stickyPointF.x, stickyPointF.y);
                 invalidate();
@@ -359,6 +367,7 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
                 if (onDragListener != null) {
                     onDragListener.onRestore();
                 }
+
             }
 
         }
@@ -366,7 +375,7 @@ public class QQBezierView extends android.support.v7.widget.AppCompatTextView {
         private void clearDragView() {
             ViewGroup viewGroup = (ViewGroup) getParent();
             viewGroup.removeView(DragView.this);
-            QQBezierView.this.setVisibility(VISIBLE);
+            StickDotView.this.setVisibility(VISIBLE);
         }
     }
 

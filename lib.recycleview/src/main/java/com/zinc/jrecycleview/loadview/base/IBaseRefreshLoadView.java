@@ -2,18 +2,12 @@ package com.zinc.jrecycleview.loadview.base;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 import com.zinc.jrecycleview.utils.LogUtils;
-import com.zinc.librecycleview.R;
 
 /**
  * author       : Jiang zinc

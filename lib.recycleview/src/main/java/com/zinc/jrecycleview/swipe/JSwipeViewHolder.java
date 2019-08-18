@@ -1,31 +1,29 @@
 package com.zinc.jrecycleview.swipe;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 import com.zinc.librecycleview.R;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/8
- * @description 侧滑的ViewHolder
+ * author       : Jiang zinc
+ * time         : 2018-04-08 14:37
+ * email        : 56002982@qq.com
+ * desc         : 侧滑的ViewHolder
+ * version      : 1.0.0
  */
 
 public abstract class JSwipeViewHolder extends RecyclerView.ViewHolder {
 
-    protected static final int NONE = -1;
+    private static final int NONE = -1;
 
-    protected FrameLayout flLeftMenu;
-    protected FrameLayout flContent;
-    protected FrameLayout flRightMenu;
+    private FrameLayout flLeftMenu;
+    private FrameLayout flContent;
+    private FrameLayout flRightMenu;
 
-    public JSwipeItemLayout swipeItemLayout;
+    private JSwipeItemLayout swipeItemLayout;
 
     public JSwipeViewHolder(View itemView) {
         super(itemView);
@@ -40,68 +38,95 @@ public abstract class JSwipeViewHolder extends RecyclerView.ViewHolder {
         flContent.removeAllViews();
 
         if (getLeftMenuLayout() != NONE) {
-            LayoutInflater.from(itemView.getContext()).inflate(getLeftMenuLayout(), flLeftMenu, true);//null, false);
+            LayoutInflater
+                    .from(itemView.getContext())
+                    .inflate(getLeftMenuLayout(), flLeftMenu, true);
+
             initLeftMenuItem(flLeftMenu);
-            swipeItemLayout.getMenus().put(Gravity.LEFT, flLeftMenu);
+            swipeItemLayout
+                    .getMenus()
+                    .put(JSwipeConstant.LEFT, flLeftMenu);
         }
 
-        if(getRightMenuLayout() != NONE){
-            LayoutInflater.from(itemView.getContext()).inflate(getRightMenuLayout(), flRightMenu, true);
+        if (getRightMenuLayout() != NONE) {
+            LayoutInflater
+                    .from(itemView.getContext())
+                    .inflate(getRightMenuLayout(), flRightMenu, true);
+
             initRightMenuItem(flRightMenu);
-            swipeItemLayout.getMenus().put(Gravity.RIGHT, flRightMenu);
+            swipeItemLayout
+                    .getMenus()
+                    .put(JSwipeConstant.RIGHT, flRightMenu);
         }
 
-        LayoutInflater.from(itemView.getContext()).inflate(getContentLayout(), flContent, true);
-        initContentMenuItem(flContent);
+        LayoutInflater.from(itemView.getContext())
+                .inflate(getContentLayout(), flContent, true);
+        initContentItem(flContent);
+
+        initItem(swipeItemLayout);
 
     }
 
-    /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 获取左菜单布局
-     * @version
-     */
-    public abstract int getLeftMenuLayout();
+    public JSwipeItemLayout getSwipeItemLayout() {
+        return swipeItemLayout;
+    }
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 获取右菜单布局
-     * @version
+     * 获取左菜单布局
+     *
+     * @return 左菜单的 xml
      */
-    public abstract int getRightMenuLayout();
+    public int getLeftMenuLayout() {
+        return NONE;
+    }
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 获取内容布局
-     * @version
+     * 获取右菜单布局
+     *
+     * @return 右菜单的 xml
+     */
+    public int getRightMenuLayout() {
+        return NONE;
+    }
+
+    /**
+     * 获取内容布局
+     *
+     * @return 内容的 xml
      */
     public abstract int getContentLayout();
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 初始化左菜单项
-     * @version
+     * 初始化左菜单项
+     *
+     * @param flLeftMenu 左菜单视图
      */
-    public abstract void initLeftMenuItem(FrameLayout flLeftMenu);
+    public void initLeftMenuItem(FrameLayout flLeftMenu) {
+
+    }
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 初始化右菜单项
-     * @version
+     * 初始化右菜单项
+     *
+     * @param flRightMenu 右菜单视图
      */
-    public abstract void initRightMenuItem(FrameLayout flRightMenu);
+    public void initRightMenuItem(FrameLayout flRightMenu) {
+
+    }
 
     /**
-     * @date 创建时间 2018/4/12
-     * @author Jiang zinc
-     * @Description 初始化内容项
-     * @version
+     * 初始化内容项
+     *
+     * @param flContent 内容视图
      */
-    public abstract void initContentMenuItem(FrameLayout flContent);
+    public void initContentItem(FrameLayout flContent) {
+    }
+
+    /**
+     * 初始化视图
+     *
+     * @param frameLayout 包含[左菜单视图，内容视图，右菜单视图]
+     */
+    public abstract void initItem(FrameLayout frameLayout);
 
 }

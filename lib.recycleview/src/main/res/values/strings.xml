@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">lib.recycleview</string>
 
-    <string name="j_recycle_last_update">最后更新:</string>
-
     <string name="j_recycle_loading">正在加载中…</string>
     <string name="j_recycle_no_more">----没有更多了----</string>
     <string name="j_recycle_reload">上拉重新加载</string>

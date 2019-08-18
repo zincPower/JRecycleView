@@ -27,6 +27,13 @@ task clean(type: Delete) {
 }
 
 ext {
+    // app 版本信息
+    versionName = '1.0.0'
+    versionCode = 1000
+    minSdkVersion = 19
+    targetSdkVersion = 27
+    compileSdkVersion = 27
+
     // v7包版本
     v7_version = '27.1.1'
     junitVersion = '4.12'

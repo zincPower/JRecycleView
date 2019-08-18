@@ -39,8 +39,12 @@ public class JRecycleView extends RecyclerView {
     // 刷新视图的下标
     private int mRefreshViewPos = 0;
 
+    // 用于获取 item 范围
     private final Rect mFrame;
+    // 是否正在触碰
     private boolean mIsTouching = false;
+    // 是否正在滚动
+    private boolean isScrolling = false;
 
     public JRecycleView(Context context) {
         this(context, null, 0);
@@ -156,9 +160,7 @@ public class JRecycleView extends RecyclerView {
                 mIsTouching = false;
 
                 if (isScrolling) {
-
-                    boolean scrollStick = isScrollStick();
-                    if (scrollStick) {
+                    if (isScrollStick()) {
                         return true;
                     }
                 }
@@ -285,11 +287,23 @@ public class JRecycleView extends RecyclerView {
         return layoutHeight - top;
     }
 
+    /**
+     * 是否进行粘性滚动
+     *
+     * @return true：进行粘性滚动；false：不进行粘性滚动
+     */
     private boolean isScrollStick() {
 
         View theFirstView = getChildAt(0);
 
+        if (theFirstView == null) {
+            return false;
+        }
+
         ViewHolder childViewHolder = getChildViewHolder(theFirstView);
+        if (childViewHolder == null) {
+            return false;
+        }
 
         if (!(childViewHolder instanceof IStick)) {
             return false;
@@ -469,20 +483,21 @@ public class JRecycleView extends RecyclerView {
 
     //========================侧滑效果分割线 end================================
 
-    private boolean isScrolling = false;
-
     private class ScrollerListener extends OnScrollListener {
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             switch (newState) {
-                case SCROLL_STATE_IDLE:
+
+                case SCROLL_STATE_IDLE: // 停止滚动
                     isScrolling = false;
                     break;
-                case SCROLL_STATE_DRAGGING:
+
+                case SCROLL_STATE_DRAGGING: // 正在被外部拖拽,一般为用户正在用手指滚动
                     isScrolling = true;
                     break;
-                case SCROLL_STATE_SETTLING:
+
+                case SCROLL_STATE_SETTLING: // 自动滚动开始
                     isScrolling = true;
                     break;
             }
