@@ -1,30 +1,17 @@
 package com.zinc.jrecycleview.refreshAndLoad;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.zinc.jrecycleview.R;
-import com.zinc.jrecycleview.anim.AnimFactory;
-import com.zinc.jrecycleview.anim.IBaseAnimation;
-import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
-import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
 
 /**
  * @author Jiang zinc
@@ -32,7 +19,7 @@ import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
  * @description
  */
 
-public class MyRefreshView extends IBasePullRefreshLoadView {
+public class MyRefreshView extends IBaseRefreshLoadView {
 
     private RelativeLayout mLoadView;
     private View mIvMeituan;

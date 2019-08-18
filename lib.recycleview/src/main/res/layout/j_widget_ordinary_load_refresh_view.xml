@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
     android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/iv_arrow"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="15dp"
-        android:src="@drawable/j_recycle_icon_refresh_arrow"
-        android:visibility="visible" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
-    <com.zinc.jrecycleview.widget.BallSpinFadeLoader
-        android:id="@+id/ball_loader"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="15dp"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/j_recycle_icon_refresh_arrow"
+            android:visibility="visible" />
 
-    <TextView
-        android:id="@+id/tv_refresh_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/j_recycle_text_color"
-        android:textSize="@dimen/j_recycle_refresh_tip_text_size"
-        android:text="@string/j_recycle_pull_to_refresh" />
+        <com.zinc.jrecycleview.widget.BallSpinFadeLoader
+            android:id="@+id/ball_loader"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="15dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_refresh_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/j_recycle_pull_to_refresh"
+            android:textColor="@color/j_recycle_text_color"
+            android:textSize="@dimen/j_recycle_refresh_tip_text_size" />
+
+    </LinearLayout>
 
 </LinearLayout>
 

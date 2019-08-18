@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.base.IBaseWrapperView;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
-import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.stick.IStick;
 import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 import com.zinc.jrecycleview.utils.LogUtils;
@@ -34,7 +34,7 @@ public class JRecycleView extends RecyclerView {
     // 最后拖动Y的坐标
     private float mLastY = -1;
 
-    private static final float DRAG_FACTOR = 1.5f;
+    private static final float DRAG_FACTOR = 2f;
 
     // 刷新视图的下标
     private int mRefreshViewPos = 0;
@@ -123,7 +123,7 @@ public class JRecycleView extends RecyclerView {
 
                     //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，
                     // 需要RecycleView不捕获该事件，否则会有问题
-                    if (getRefreshLoadView().getVisibleHeight() > 0 &&
+                    if (visibleHeight > 0 &&
                             getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
                         return false;
                     }
@@ -137,7 +137,7 @@ public class JRecycleView extends RecyclerView {
                         if (deltaY > 0) {   //向上滑动
                             getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
                         } else {            //向下滑动
-                            getLoadMoreView().onMove(visibleHeight, deltaY);
+                            getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
                         }
                     }
 
@@ -340,12 +340,12 @@ public class JRecycleView extends RecyclerView {
 
         /**
          * 1、子视图数量大于一
-         * 2、第一个子视图 是 {@link IBasePullRefreshLoadView}
+         * 2、第一个子视图 是 {@link IBaseRefreshLoadView}
          * 3、第一个可见视图 <= 1
          * 4、第二个视图 y 坐标要大于等于 0
          */
         if (getChildCount() > 1 &&
-                getChildAt(0) instanceof IBasePullRefreshLoadView &&
+                getChildAt(0) instanceof IBaseRefreshLoadView &&
                 ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition() <= 1 &&
                 getChildAt(1).getY() >= 0) {
             return true;
@@ -357,7 +357,7 @@ public class JRecycleView extends RecyclerView {
     /**
      * 获取下拉刷新视图
      */
-    private IBasePullRefreshLoadView getRefreshLoadView() {
+    private IBaseRefreshLoadView getRefreshLoadView() {
         if (getAdapter() instanceof JRefreshAndLoadMoreAdapter) {
             JRefreshAndLoadMoreAdapter jAdapter = (JRefreshAndLoadMoreAdapter) getAdapter();
             return jAdapter.getRefreshLoadView();

@@ -41,14 +41,7 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     @Override
     protected void wrapper(Context context, View view) {
 
-        LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setLayoutParams(
-                new LinearLayoutCompat.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-        linearLayout.addView(view);
-
-        addView(linearLayout);
+        addView(view);
 
         measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         this.mHeight = getMeasuredHeight();

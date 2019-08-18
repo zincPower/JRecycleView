@@ -3,7 +3,7 @@ package com.zinc.jrecycleview.config;
 import com.zinc.jrecycleview.anim.IBaseAnimation;
 import com.zinc.jrecycleview.anim.SlideInBottomAnimation;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
-import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 
 /**
  * author       : Jiang zinc
@@ -18,7 +18,7 @@ public class JRecycleViewManager {
     private static final JRecycleViewManager INSTANCE = new JRecycleViewManager();
 
     // 下拉刷新视图
-    private IBasePullRefreshLoadView mPullRefreshLoadView;
+    private IBaseRefreshLoadView mRefreshLoadView;
     // 上拉更多视图
     private IBaseLoadMoreView mLoadMoreView;
 
@@ -37,12 +37,12 @@ public class JRecycleViewManager {
         mIsDebug = false;
     }
 
-    public IBasePullRefreshLoadView getPullRefreshLoadView() {
-        return mPullRefreshLoadView;
+    public IBaseRefreshLoadView getRefreshLoadView() {
+        return mRefreshLoadView;
     }
 
-    public JRecycleViewManager setPullRefreshLoadView(IBasePullRefreshLoadView pullRefreshLoadView) {
-        this.mPullRefreshLoadView = pullRefreshLoadView;
+    public JRecycleViewManager setRefreshLoadView(IBaseRefreshLoadView refreshLoadView) {
+        this.mRefreshLoadView = refreshLoadView;
         return this;
     }
 

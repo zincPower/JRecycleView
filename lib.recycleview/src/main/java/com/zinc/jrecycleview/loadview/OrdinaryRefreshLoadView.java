@@ -2,15 +2,17 @@ package com.zinc.jrecycleview.loadview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 import com.zinc.jrecycleview.utils.LogUtils;
 import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
@@ -21,10 +23,18 @@ import com.zinc.librecycleview.R;
  * time         : 2018-03-17 14:35
  * email        : 56002982@qq.com
  * desc         : 最为普通的下拉刷新头部
+ * <p>
+ * 自定义流程
+ * 1、只需要继承 {@link IBaseRefreshLoadView}，实现相应的方法。
+ * 2、全局设置，可以通过
+ * {@link com.zinc.jrecycleview.config.JRecycleViewManager#setRefreshLoadView(IBaseRefreshLoadView)}
+ * 3、单个设置，可以通过
+ * {@link com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter#setRefreshLoadView(IBaseRefreshLoadView)}
+ * <p>
  * version      : 1.0.0
  */
 
-public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
+public class OrdinaryRefreshLoadView extends IBaseRefreshLoadView {
 
     private View mLoadView;
 
@@ -41,18 +51,18 @@ public class OrdinaryPullRefreshLoadView extends IBasePullRefreshLoadView {
     //向下转动画
     private RotateAnimation mArrowToDownAnim;
 
-    public OrdinaryPullRefreshLoadView(Context context) {
+    public OrdinaryRefreshLoadView(Context context) {
         this(context, null, 0);
     }
 
-    public OrdinaryPullRefreshLoadView(Context context,
-                                       @Nullable AttributeSet attrs) {
+    public OrdinaryRefreshLoadView(Context context,
+                                   @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public OrdinaryPullRefreshLoadView(Context context,
-                                       @Nullable AttributeSet attrs,
-                                       int defStyleAttr) {
+    public OrdinaryRefreshLoadView(Context context,
+                                   @Nullable AttributeSet attrs,
+                                   int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

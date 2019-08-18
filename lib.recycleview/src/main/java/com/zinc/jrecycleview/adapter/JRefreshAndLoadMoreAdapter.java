@@ -11,8 +11,8 @@ import com.zinc.jrecycleview.config.JRecycleConfig;
 import com.zinc.jrecycleview.config.JRecycleViewManager;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.OrdinaryLoadMoreView;
-import com.zinc.jrecycleview.loadview.OrdinaryPullRefreshLoadView;
-import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
+import com.zinc.jrecycleview.loadview.OrdinaryRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 
 /**
  * author       : Jiang zinc
@@ -27,7 +27,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
     private boolean mIsOpenRefresh = true;
     private boolean mIsOpenLoadMore = true;
 
-    private IBasePullRefreshLoadView mRefreshLoadView;
+    private IBaseRefreshLoadView mRefreshLoadView;
     private IBaseLoadMoreView mLoadMoreView;
 
     private RecyclerView.Adapter mRealAdapter;
@@ -40,10 +40,10 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         this.mRealAdapter = adapter;
 
         if (this.mRefreshLoadView == null) {
-            if (JRecycleViewManager.getInstance().getPullRefreshLoadView() == null) {
-                this.mRefreshLoadView = new OrdinaryPullRefreshLoadView(context);
+            if (JRecycleViewManager.getInstance().getRefreshLoadView() == null) {
+                this.mRefreshLoadView = new OrdinaryRefreshLoadView(context);
             } else {
-                this.mRefreshLoadView = JRecycleViewManager.getInstance().getPullRefreshLoadView();
+                this.mRefreshLoadView = JRecycleViewManager.getInstance().getRefreshLoadView();
             }
         }
 
@@ -94,7 +94,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
     /**
      * 获取下拉刷新视图
      */
-    public IBasePullRefreshLoadView getRefreshLoadView() {
+    public IBaseRefreshLoadView getRefreshLoadView() {
         return mRefreshLoadView;
     }
 
@@ -108,7 +108,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
     /**
      * 设置刷新视图
      */
-    public void setRefreshLoadView(IBasePullRefreshLoadView refreshLoadView) {
+    public void setRefreshLoadView(IBaseRefreshLoadView refreshLoadView) {
         this.mRefreshLoadView = refreshLoadView;
     }
 

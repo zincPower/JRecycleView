@@ -101,8 +101,6 @@ public abstract class IBaseWrapperView extends LinearLayout {
 
     /**
      * 获取加载视图的高度
-     *
-     * @return 可见高度
      */
     public int getVisibleHeight() {
         LinearLayout.LayoutParams layoutParams
@@ -120,9 +118,9 @@ public abstract class IBaseWrapperView extends LinearLayout {
             height = 0;
         }
         LinearLayout.LayoutParams layoutParams
-                = (LinearLayout.LayoutParams) this.getLoadView().getLayoutParams();
+                = (LinearLayout.LayoutParams) getLoadView().getLayoutParams();
         layoutParams.height = height;
-        this.getLoadView().setLayoutParams(layoutParams);
+        getLoadView().setLayoutParams(layoutParams);
     }
 
     /**

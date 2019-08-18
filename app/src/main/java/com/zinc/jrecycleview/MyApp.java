@@ -24,6 +24,6 @@ public class MyApp extends Application {
                 .setItemAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_RIGHT))
                 .setIsDebug(true);
 //        JRecycleViewManager.getInstance()
-//                .setBasePullRefreshLoadView(new MyRefreshView(getBaseContext()));
+//                .setBaseRefreshLoadView(new MyRefreshView(getBaseContext()));
     }
 }

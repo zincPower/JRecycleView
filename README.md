@@ -209,9 +209,9 @@ adapter.setOpenAnim(true);
 
 ## 高级设置
 #### 1、自定义 刷新视图 和 加载更多 视图
-（1）继承 IBasePullRefreshLoadView（下拉刷新）或 IBaseLoadMoreView（上拉加载）类
+（1）继承 IBaseRefreshLoadView（下拉刷新）或 IBaseLoadMoreView（上拉加载）类
 
-IBasePullRefreshLoadView（下拉刷新）需重写以下方法
+IBaseRefreshLoadView（下拉刷新）需重写以下方法
 ```
 //获取 刷新 的视图
 View getLoadView();
@@ -271,7 +271,7 @@ void onNoMore();
 全局设置，可在任何地方设置，包括Application，但是只有运行该代码后才有效果，否则运行该代码前使用的还是默认视图
 ```
 //下拉刷新
-JRecycleViewManager.getInstance().setBasePullRefreshLoadView(new MyRefreshView(getBaseContext()));
+JRecycleViewManager.getInstance().setBaseRefreshLoadView(new MyRefreshView(getBaseContext()));
 //上拉加载
 JRecycleViewManager.getInstance().setBaseLoadMoreView(LoadMoreView);
 ```

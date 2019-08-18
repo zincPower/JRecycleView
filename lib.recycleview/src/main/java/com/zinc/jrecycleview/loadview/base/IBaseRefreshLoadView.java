@@ -5,12 +5,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
+import com.zinc.jrecycleview.utils.LogUtils;
+import com.zinc.librecycleview.R;
 
 /**
  * author       : Jiang zinc
@@ -20,24 +23,24 @@ import com.zinc.jrecycleview.loadview.bean.MoveInfo;
  * version      : 1.0.0
  */
 
-public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
+public abstract class IBaseRefreshLoadView extends IBaseWrapperView {
 
     private MoveInfo mMoveInfo;
 
     private JRefreshAndLoadMoreAdapter.OnRefreshListener mOnRefreshListener;
 
-    public IBasePullRefreshLoadView(Context context) {
+    public IBaseRefreshLoadView(Context context) {
         this(context, null, 0);
     }
 
-    public IBasePullRefreshLoadView(Context context,
-                                    @Nullable AttributeSet attrs) {
+    public IBaseRefreshLoadView(Context context,
+                                @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public IBasePullRefreshLoadView(Context context,
-                                    @Nullable AttributeSet attrs,
-                                    int defStyleAttr) {
+    public IBaseRefreshLoadView(Context context,
+                                @Nullable AttributeSet attrs,
+                                int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         mMoveInfo = new MoveInfo();
@@ -46,20 +49,11 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
     @Override
     protected void wrapper(Context context, View view) {
 
-        LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setLayoutParams(
-                new LinearLayoutCompat.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+        addView(view);
 
-        linearLayout.addView(view);
-        linearLayout.setGravity(Gravity.BOTTOM);
-        linearLayout.setOrientation(VERTICAL);
-
-        addView(linearLayout);
-
-        measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         this.mHeight = getMeasuredHeight();
+
         setVisibleHeight(0);
     }
 
@@ -81,7 +75,7 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
         // 是否正在刷新
         boolean isOnRefresh = false;
         // 可见高度
-        int height = getVisibleHeight();
+//        int height = visibleHeight;
         // 此次释放后，需要进入的目标高度
         int destHeight = 0;
 
@@ -91,7 +85,7 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
         }
 
         // 如果释放的时候，大于刷新视图的高度值且未进入刷新状态，则需要进入刷新状态
-        if (height > this.mHeight && this.mCurState < STATE_EXECUTING) {
+        if (visibleHeight > this.mHeight && this.mCurState < STATE_EXECUTING) {
             setState(STATE_EXECUTING);
             destHeight = this.mHeight;
             isOnRefresh = true;
@@ -106,6 +100,10 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
      * @param delta 垂直增量
      */
     public void onMove(int visibleHeight, float delta) {
+
+        LogUtils.i(TAG, "[visibleHeight: " + visibleHeight + "; " +
+                "delta: " + delta + "]");
+
         //需要符合：1、可见高度大于0，即用户已有向下拉动；2、拉动距离要大于0
         if (visibleHeight > 0 || delta > 0) {
             setVisibleHeight((int) (visibleHeight + delta));
@@ -130,7 +128,7 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
             }
 
             mMoveInfo.setViewHeight(mHeight);
-            mMoveInfo.setDragHeight(getVisibleHeight());
+            mMoveInfo.setDragHeight(visibleHeight);
             mMoveInfo.setPercent(height * 100 / mHeight);
 
             onMoving(mMoveInfo);
