@@ -41,7 +41,7 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
         this.mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
 
 //        this.mAdapter.setIsOpenLoadMore(false);
-        this.mAdapter.setIsOpenRefresh(false);
+//        this.mAdapter.setIsOpenRefresh(false);
 
         this.mAdapter.setOnLoadMoreListener(new JRefreshAndLoadMoreAdapter.OnLoadMoreListener() {
             @Override

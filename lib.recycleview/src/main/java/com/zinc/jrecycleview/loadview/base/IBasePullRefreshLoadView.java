@@ -2,8 +2,11 @@ package com.zinc.jrecycleview.loadview.base;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
@@ -41,9 +44,23 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
     }
 
     @Override
-    protected View wrapper(Context context, View view) {
+    protected void wrapper(Context context, View view) {
 
-        return view;
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setLayoutParams(
+                new LinearLayoutCompat.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        linearLayout.addView(view);
+        linearLayout.setGravity(Gravity.BOTTOM);
+        linearLayout.setOrientation(VERTICAL);
+
+        addView(linearLayout);
+
+        measure(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        this.mHeight = getMeasuredHeight();
+        setVisibleHeight(0);
     }
 
     public void setOnRefreshListener(JRefreshAndLoadMoreAdapter.OnRefreshListener listener) {
@@ -57,9 +74,10 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
     /**
      * 释放动作，会进入两种状态：1、等待刷新；2、正在刷新；
      *
+     * @param visibleHeight 可见高度
      * @return 是否正在刷新
      */
-    public boolean releaseAction() {
+    public boolean releaseAction(int visibleHeight) {
         // 是否正在刷新
         boolean isOnRefresh = false;
         // 可见高度
@@ -87,16 +105,16 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
     /**
      * @param delta 垂直增量
      */
-    public void onMove(float delta) {
+    public void onMove(int visibleHeight, float delta) {
         //需要符合：1、可见高度大于0，即用户已有向下拉动；2、拉动距离要大于0
-        if (getVisibleHeight() > 0 || delta > 0) {
-            setVisibleHeight((int) (getVisibleHeight() + delta));
+        if (visibleHeight > 0 || delta > 0) {
+            setVisibleHeight((int) (visibleHeight + delta));
 
             //当前状态为1、下拉刷新；2、释放刷新
-            if (this.mCurState <= STATE_RELEASE_TO_ACTION) {
+            if (mCurState <= STATE_RELEASE_TO_ACTION) {
 
                 //小于loadView高度
-                if (getVisibleHeight() <= super.mHeight) {
+                if (visibleHeight <= mHeight) {
                     setState(STATE_PULL_TO_ACTION);
                 } else {
                     setState(STATE_RELEASE_TO_ACTION);
@@ -105,15 +123,15 @@ public abstract class IBasePullRefreshLoadView extends IBaseWrapperView {
             }
 
             int height;
-            if (getVisibleHeight() >= super.mHeight) {
-                height = super.mHeight;
+            if (visibleHeight >= mHeight) {
+                height = mHeight;
             } else {
-                height = getVisibleHeight();
+                height = visibleHeight;
             }
 
-            mMoveInfo.setViewHeight(super.mHeight);
+            mMoveInfo.setViewHeight(mHeight);
             mMoveInfo.setDragHeight(getVisibleHeight());
-            mMoveInfo.setPercent(height * 100 / super.mHeight);
+            mMoveInfo.setPercent(height * 100 / mHeight);
 
             onMoving(mMoveInfo);
 

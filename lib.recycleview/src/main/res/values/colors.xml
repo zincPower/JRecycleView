@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="jrecycle_tip_color">#bfbfbf</color>
-    <color name="jrecycle_dark_gray_color">#696969</color>
-    <color name="jrecycle_light_gray_color">#F5F5F5</color>
+    <color name="j_recycle_text_color">#bfbfbf</color>
+    <color name="j_recycle_balling_color">#bfbfbf</color>
 
 </resources>

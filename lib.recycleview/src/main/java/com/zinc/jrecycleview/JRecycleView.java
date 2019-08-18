@@ -16,6 +16,7 @@ import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBasePullRefreshLoadView;
 import com.zinc.jrecycleview.stick.IStick;
 import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
+import com.zinc.jrecycleview.utils.LogUtils;
 
 /**
  * author       : Jiang zinc
@@ -30,10 +31,13 @@ import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 public class JRecycleView extends RecyclerView {
 
     private static final String TAG = JRecycleView.class.getSimpleName();
-    //最后拖动Y的坐标
+    // 最后拖动Y的坐标
     private float mLastY = -1;
 
     private static final float DRAG_FACTOR = 1.5f;
+
+    // 刷新视图的下标
+    private int mRefreshViewPos = 0;
 
     private final Rect mFrame;
     private boolean mIsTouching = false;
@@ -92,28 +96,35 @@ public class JRecycleView extends RecyclerView {
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
-        if (this.mLastY == -1) {
-            this.mLastY = e.getRawY();
+        if (mLastY == -1) {
+            mLastY = e.getRawY();
         }
 
         switch (e.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                this.mLastY = e.getRawY();
+                mLastY = e.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                this.mIsTouching = true;
+                mIsTouching = true;
 
                 if (getRefreshLoadView() != null && isScrolledTop()) {
                     float deltaY = e.getRawY() - mLastY;
 
-                    this.getRefreshLoadView().onMove(deltaY / DRAG_FACTOR);
+                    LogUtils.i(TAG, "refreshLoadView: [rawY: " + e.getRawY() + "; " +
+                            "lastY: " + mLastY + "; " +
+                            "deltaY: " + deltaY + "]");
+
+                    int visibleHeight = getRefreshVisibleHeight();
+                    if (visibleHeight != -1) {
+                        getRefreshLoadView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                    }
 
                     mLastY = e.getRawY();
 
                     //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，
                     // 需要RecycleView不捕获该事件，否则会有问题
-                    if (this.getRefreshLoadView().getVisibleHeight() > 0 &&
-                            this.getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
+                    if (getRefreshLoadView().getVisibleHeight() > 0 &&
+                            getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
                         return false;
                     }
                 }
@@ -124,9 +135,9 @@ public class JRecycleView extends RecyclerView {
                     int visibleHeight = getLoadMoreVisibleHeight();
                     if (visibleHeight != -1) {
                         if (deltaY > 0) {   //向上滑动
-                            this.getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                            getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
                         } else {            //向下滑动
-                            this.getLoadMoreView().onMove(visibleHeight, deltaY);
+                            getLoadMoreView().onMove(visibleHeight, deltaY);
                         }
                     }
 
@@ -137,20 +148,12 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_OUTSIDE:
-                this.mLastY = -1;
+                mLastY = -1;
 
-                if (this.getRefreshLoadView() != null) {
-                    if (this.getRefreshLoadView().releaseAction()) {
-
-                        if (this.getRefreshLoadView().getOnRefreshListener() != null) {
-                            this.getRefreshLoadView().getOnRefreshListener().onRefreshing();
-                        }
-                    }
-                }
-
+                handleRefreshLoad();
                 handleLoadMore();
 
-                this.mIsTouching = false;
+                mIsTouching = false;
 
                 if (isScrolling) {
 
@@ -167,13 +170,41 @@ public class JRecycleView extends RecyclerView {
     }
 
     /**
+     * 处理下拉刷新的逻辑
+     *
+     * @return true 说明进行处理；false 不进行处理
+     */
+    private boolean handleRefreshLoad() {
+
+        if (getRefreshLoadView() == null) {
+            return false;
+        }
+
+        int visibleHeight = getRefreshVisibleHeight();
+
+        if (visibleHeight == -1) {
+            return false;
+        }
+
+        if (getRefreshLoadView().releaseAction(visibleHeight)) {
+            if (getRefreshLoadView().getOnRefreshListener() != null) {
+                getRefreshLoadView().getOnRefreshListener().onRefreshing();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * 处理加载更多的逻辑
      *
      * @return true 说明进行处理；false 不进行处理
      */
     private boolean handleLoadMore() {
 
-        if (this.getLoadMoreView() == null) {
+        if (getLoadMoreView() == null) {
             return false;
         }
 
@@ -183,9 +214,9 @@ public class JRecycleView extends RecyclerView {
             return false;
         }
 
-        if (this.getLoadMoreView().releaseAction(visibleHeight)) {
-            if (this.getLoadMoreView().getOnLoadMoreListener() != null) {
-                this.getLoadMoreView().getOnLoadMoreListener().onLoading();
+        if (getLoadMoreView().releaseAction(visibleHeight)) {
+            if (getLoadMoreView().getOnLoadMoreListener() != null) {
+                getLoadMoreView().getOnLoadMoreListener().onLoading();
             }
 
             return true;
@@ -194,8 +225,43 @@ public class JRecycleView extends RecyclerView {
         return false;
     }
 
+    /**
+     * 获取下拉刷新视图 高度
+     *
+     * @return -1 说明有问题
+     */
+    private int getRefreshVisibleHeight() {
+        if (getRefreshLoadView() == null) {
+            return -1;
+        }
+
+        int childCount = getLayoutManager().getChildCount();
+        if (childCount <= 0) {
+            return -1;
+        }
+
+        View view = getLayoutManager().getChildAt(mRefreshViewPos);
+        if (view == null) {
+            return -1;
+        }
+
+        if (view != getRefreshLoadView()) {
+            return -1;
+        }
+
+        int top = view.getTop();
+        int bottom = view.getBottom();
+
+        return bottom - top;
+    }
+
+    /**
+     * 获取加载更多视图 高度
+     *
+     * @return -1 说明有问题
+     */
     private int getLoadMoreVisibleHeight() {
-        if (this.getLoadMoreView() == null) {
+        if (getLoadMoreView() == null) {
             return -1;
         }
 
@@ -231,8 +297,7 @@ public class JRecycleView extends RecyclerView {
 
         boolean isInAction = false;
 
-        if (this.getRefreshLoadView() != null
-                && this.getRefreshLoadView().releaseAction()) {
+        if (handleRefreshLoad()) {
             isInAction = true;
         }
 

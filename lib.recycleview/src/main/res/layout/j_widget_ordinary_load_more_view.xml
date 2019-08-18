@@ -19,7 +19,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="12.5dp"
         android:layout_marginEnd="5dp"
-        android:src="@drawable/jrecycle_icon_reload"
+        android:src="@drawable/j_recycle_icon_reload"
         android:visibility="gone" />
 
     <TextView
@@ -27,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16.5dp"
-        android:text="@string/jrecycle_pull_to_load"
-        android:textColor="@color/jrecycle_tip_color"
-        android:textSize="14dp" />
+        android:text="@string/j_recycle_pull_to_load"
+        android:textColor="@color/j_recycle_text_color"
+        android:textSize="@dimen/j_recycle_load_more_tip_text_size" />
 
 </LinearLayout>

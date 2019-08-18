@@ -69,7 +69,7 @@ public class BallSpinFadeLoader extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(dip2px(1));
-        mPaint.setColor(ContextCompat.getColor(context, R.color.jrecycle_tip_color));
+        mPaint.setColor(ContextCompat.getColor(context, R.color.j_recycle_balling_color));
 
         scaleAnimList = new ArrayList<>();
         alphaAnimList = new ArrayList<>();

@@ -30,8 +30,6 @@ import com.zinc.librecycleview.R;
 
 public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
 
-    private String TAG = OrdinaryPullRefreshLoadView.class.getSimpleName();
-
     private View mLoadMoreView;
     private BallSpinFadeLoader mProgressBar;
     private TextView mTvTip;
@@ -60,7 +58,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onNoMore() {
         this.mProgressBar.setVisibility(GONE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_no_more));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_no_more));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(GONE);
     }
@@ -68,7 +66,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onError() {
         this.mProgressBar.setVisibility(GONE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_reload));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_reload));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(VISIBLE);
     }
@@ -76,7 +74,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onPullToAction() {
         this.mProgressBar.setVisibility(GONE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_pull_to_load));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_pull_to_load));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(GONE);
     }
@@ -84,7 +82,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onReleaseToAction() {
         this.mProgressBar.setVisibility(GONE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_release_to_load));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_release_to_load));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(GONE);
     }
@@ -92,7 +90,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onExecuting() {
         this.mProgressBar.setVisibility(VISIBLE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_laoding));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_loading));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(GONE);
     }
@@ -100,7 +98,7 @@ public class OrdinaryLoadMoreView extends IBaseLoadMoreView {
     @Override
     protected void onDone() {
         this.mProgressBar.setVisibility(GONE);
-        this.mTvTip.setText(getContext().getString(R.string.jrecycle_loaded));
+        this.mTvTip.setText(getContext().getString(R.string.j_recycle_loaded));
         this.mTvTip.setVisibility(VISIBLE);
         this.mIvReload.setVisibility(GONE);
     }

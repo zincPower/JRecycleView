@@ -20,11 +20,11 @@ import com.zinc.jrecycleview.utils.LogUtils;
 
 public abstract class IBaseWrapperView extends LinearLayout {
 
+    protected String TAG = this.getClass().getSimpleName();
+
     protected final static int INDEX = 1;
 
     private static final int SCROLL_DURATION = 300;
-
-    private String TAG = this.getClass().getSimpleName();
 
     // 加载出错
     public final static int STATE_ERROR = INDEX;
@@ -73,17 +73,11 @@ public abstract class IBaseWrapperView extends LinearLayout {
         setLayoutParams(layoutParams);
         setPadding(0, 0, 0, 0);
 
-        View view = this.initView(context);
-
-        View resultView = wrapper(context, view);
-
-        addView(resultView);
-
-        measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        this.mHeight = getMeasuredHeight();
+        View view = initView(context);
+        wrapper(context, view);
     }
 
-    protected abstract View wrapper(Context context, View view);
+    protected abstract void wrapper(Context context, View view);
 
     public int getViewHeight() {
         return this.mHeight;
@@ -125,7 +119,8 @@ public abstract class IBaseWrapperView extends LinearLayout {
         if (height <= 0) {
             height = 0;
         }
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) this.getLoadView().getLayoutParams();
+        LinearLayout.LayoutParams layoutParams
+                = (LinearLayout.LayoutParams) this.getLoadView().getLayoutParams();
         layoutParams.height = height;
         this.getLoadView().setLayoutParams(layoutParams);
     }

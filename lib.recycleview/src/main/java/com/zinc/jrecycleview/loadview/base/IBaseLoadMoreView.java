@@ -21,8 +21,6 @@ import com.zinc.jrecycleview.utils.LogUtils;
 
 public abstract class IBaseLoadMoreView extends IBaseWrapperView {
 
-    protected static final String TAG = "IBaseLoadMoreView";
-
     protected JRefreshAndLoadMoreAdapter.OnLoadMoreListener mOnLoadMoreListener;
 
     public IBaseLoadMoreView(Context context) {
@@ -41,7 +39,7 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
     }
 
     @Override
-    protected View wrapper(Context context, View view) {
+    protected void wrapper(Context context, View view) {
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setLayoutParams(
@@ -50,7 +48,10 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
                         ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayout.addView(view);
 
-        return linearLayout;
+        addView(linearLayout);
+
+        measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        this.mHeight = getMeasuredHeight();
     }
 
     public void setOnLoadMoreListener(JRefreshAndLoadMoreAdapter.OnLoadMoreListener listener) {
