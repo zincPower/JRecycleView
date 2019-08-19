@@ -4,4 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@color/colorRed100"
-    android:orientation="vertical" />
+    android:gravity="center"
+    android:orientation="vertical"
+    android:textColor="@android:color/white"
+    android:textSize="14sp" />

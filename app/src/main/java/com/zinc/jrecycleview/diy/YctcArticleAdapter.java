@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zinc.jrecycleview.R;
-import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
+import com.zinc.jrecycleview.stick.IStick;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -61,6 +61,18 @@ public class YctcArticleAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        YctcData yctcData = mData.get(position);
+        if (holder instanceof BannerViewHolder) {
+            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
+            bannerViewHolder.tvBanner.setText(yctcData.getContent());
+        } else if (holder instanceof SortViewHolder) {
+            SortViewHolder sortViewHolder = (SortViewHolder) holder;
+            sortViewHolder.tvSort.setText(yctcData.getContent());
+        } else if (holder instanceof ContentViewHolder) {
+            ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
+            contentViewHolder.tvContent.setText(yctcData.getContent());
+        }
+
     }
 
     @Override
@@ -73,7 +85,7 @@ public class YctcArticleAdapter extends RecyclerView.Adapter {
         return mData.get(position).getType();
     }
 
-    public static class BannerViewHolder extends RecyclerView.ViewHolder {
+    public static class BannerViewHolder extends RecyclerView.ViewHolder implements IStick {
 
         private TextView tvBanner;
 

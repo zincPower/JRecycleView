@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
+import com.zinc.jrecycleview.listener.JRecycleListener;
 import com.zinc.jrecycleview.loadview.base.IBaseWrapperView;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
@@ -46,6 +47,8 @@ public class JRecycleView extends RecyclerView {
     // 是否正在滚动
     private boolean isScrolling = false;
 
+    private JRecycleListener mListener;
+
     public JRecycleView(Context context) {
         this(context, null, 0);
     }
@@ -64,6 +67,10 @@ public class JRecycleView extends RecyclerView {
         setOverScrollMode(OVER_SCROLL_NEVER);
 
         mFrame = new Rect();
+    }
+
+    public void setListener(JRecycleListener listener) {
+        this.mListener = listener;
     }
 
     @Override
@@ -111,19 +118,24 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 mIsTouching = true;
 
-                if (getRefreshLoadView() != null && isScrolledTop()) {
-                    float deltaY = e.getRawY() - mLastY;
+                float deltaY = e.getRawY() - mLastY;
 
-                    LogUtils.i(TAG, "refreshLoadView: [rawY: " + e.getRawY() + "; " +
-                            "lastY: " + mLastY + "; " +
-                            "deltaY: " + deltaY + "]");
+                LogUtils.i(TAG, "loadMoreView: [rawY: " + e.getRawY() + "; " +
+                        "lastY: " + mLastY + "; " +
+                        "deltaY: " + deltaY + "]");
+
+                mLastY = e.getRawY();
+
+                if (handleTouch(e, deltaY)) {
+                    return false;
+                }
+
+                if (getRefreshLoadView() != null && isScrolledTop()) {
 
                     int visibleHeight = getRefreshVisibleHeight();
                     if (visibleHeight != -1) {
                         getRefreshLoadView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
                     }
-
-                    mLastY = e.getRawY();
 
                     //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，
                     // 需要RecycleView不捕获该事件，否则会有问题
@@ -134,20 +146,17 @@ public class JRecycleView extends RecyclerView {
                 }
 
                 if (getLoadMoreView() != null && isScrolledBottom()) {
-                    float deltaY = mLastY - e.getRawY();
-
                     int visibleHeight = getLoadMoreVisibleHeight();
                     if (visibleHeight != -1) {
-                        if (deltaY > 0) {   //向上滑动
-                            getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                        if (deltaY < 0) {   //向上滑动
+                            getLoadMoreView().onMove(visibleHeight, -deltaY / DRAG_FACTOR);
                         } else {            //向下滑动
-                            getLoadMoreView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                            getLoadMoreView().onMove(visibleHeight, -deltaY / DRAG_FACTOR);
                         }
+                        return super.onTouchEvent(e);
                     }
-
-                    mLastY = e.getRawY();
-
                 }
+
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -165,10 +174,25 @@ public class JRecycleView extends RecyclerView {
                     }
                 }
 
+                mListener.onUp(e);
+
                 break;
         }
 
         return super.onTouchEvent(e);
+    }
+
+    private boolean handleTouch(MotionEvent e, float deltaY) {
+        if (mListener != null) {
+            LogUtils.i(TAG, "mListener.onTouch: [rawY: " + e.getRawY() + "; " +
+                    "lastY: " + mLastY + "; " +
+                    "deltaY: " + deltaY + "]");
+
+            mLastY = e.getRawY();
+            return mListener.onTouch(e, deltaY);
+        }
+
+        return false;
     }
 
     /**

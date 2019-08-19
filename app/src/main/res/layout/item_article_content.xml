@@ -5,4 +5,7 @@
     android:layout_height="120dp"
     android:layout_marginBottom="15dp"
     android:background="@color/colorLucky100"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    android:gravity="center"
     android:orientation="vertical" />

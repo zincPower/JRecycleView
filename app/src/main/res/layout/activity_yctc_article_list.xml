@@ -1,32 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_top_category"
+    <LinearLayout
+        android:id="@+id/ll_top_category"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorLucky400" />
+        android:background="@color/colorLucky400"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_sub_category"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="TOP_CATEGORY"
+            android:textColor="@color/colorRed400"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sub_category"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorLucky300" />
+        android:layout_below="@id/ll_top_category"
+        android:background="@color/colorLucky300"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="SUB_CATEGORY"
+            android:textColor="@color/colorRed400"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <com.zinc.jrecycleview.JRecycleView
         android:id="@+id/j_recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_sub_category"
+        android:layout_marginBottom="51dp"
         android:background="@color/colorLucky200" />
+
+    <include
+        layout="@layout/item_article_sort"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/ll_sub_category" />
 
     <TextView
         android:id="@+id/tv_tab"
         android:layout_width="match_parent"
         android:layout_height="51dp"
-        android:background="@color/colorLucky400" />
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorLucky400"
+        android:gravity="center"
+        android:text="TAB"
+        android:textColor="@color/colorRed400"
+        android:textSize="14sp" />
 
-</LinearLayout>
+</RelativeLayout>

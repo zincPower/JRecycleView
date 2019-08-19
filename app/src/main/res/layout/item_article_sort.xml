@@ -3,4 +3,7 @@
     android:id="@+id/tv_sort"
     android:layout_width="match_parent"
     android:layout_height="30dp"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    android:gravity="center"
     android:background="@color/colorRed200" />
