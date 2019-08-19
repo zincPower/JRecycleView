@@ -1,6 +1,7 @@
 package com.zinc.jrecycleview.stick.content;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,30 +16,30 @@ import com.zinc.jrecycleview.stick.IStick;
 import java.util.List;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/3/17
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-03-17 23:45
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class StickContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mLayoutInflater;
+    private final List<String> mData;
+    private final LayoutInflater mLayoutInflater;
 
     private Context context;
 
-    public StickContentAdapter(Context context, List<String> data) {
+    StickContentAdapter(Context context, List<String> data) {
         this.mData = data;
         mLayoutInflater = LayoutInflater.from(context);
         this.context = context;
     }
 
-    public void setData(List<String> mData) {
-        this.mData = mData;
-    }
-
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                      int viewType) {
         if (viewType == 1) {
             return new StickHolder(mLayoutInflater
                     .inflate(R.layout.stick_item, parent, false));
@@ -49,12 +50,15 @@ public class StickContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,
+                                 int position) {
+
+        final String content = mData.get(position);
+
         if (holder instanceof TestHolder) {
 
-            final String content = mData.get(position);
             TestHolder testHolder = (TestHolder) holder;
-            testHolder.mTvContent.setText(content);
+            testHolder.tvContent.setText(content);
             testHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,6 +66,11 @@ public class StickContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Toast.makeText(context, content, Toast.LENGTH_LONG).show();
                 }
             });
+
+        } else if (holder instanceof StickHolder) {
+
+            StickHolder stickHolder = (StickHolder) holder;
+            stickHolder.tvStick.setText(content);
 
         }
     }
@@ -82,18 +91,21 @@ public class StickContentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     class TestHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTvContent;
+        private TextView tvContent;
 
-        public TestHolder(View itemView) {
+        TestHolder(View itemView) {
             super(itemView);
-            mTvContent = itemView.findViewById(R.id.tv_content);
+            tvContent = itemView.findViewById(R.id.tv_content);
         }
     }
 
     class StickHolder extends RecyclerView.ViewHolder implements IStick {
 
-        public StickHolder(View itemView) {
+        private TextView tvStick;
+
+        StickHolder(View itemView) {
             super(itemView);
+            tvStick = itemView.findViewById(R.id.tv_stick);
         }
     }
 

@@ -4,12 +4,13 @@ import android.app.Application;
 
 import com.zinc.jrecycleview.anim.AnimFactory;
 import com.zinc.jrecycleview.config.JRecycleViewManager;
-import com.zinc.jrecycleview.util.ToastUtil;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/8
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-08 23:07
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class MyApp extends Application {
@@ -17,8 +18,6 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ToastUtil.init(this);
 
         JRecycleViewManager.getInstance()
                 .setItemAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_RIGHT))

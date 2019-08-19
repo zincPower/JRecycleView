@@ -1,4 +1,4 @@
-package com.zinc.jrecycleview.refreshAndLoad;
+package com.zinc.jrecycleview.widget;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;

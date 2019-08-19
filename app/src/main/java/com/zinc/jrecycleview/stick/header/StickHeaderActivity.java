@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,23 +25,23 @@ import java.util.List;
  */
 public class StickHeaderActivity extends AppCompatActivity {
 
+    private static final float OFFSET = 600;
+    private static final int PAGE_SIZE = 20;
+
+    private final List<String> mData = new ArrayList<>();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+
     private JRecycleView mJRecycleView;
     private TextView mTextView;
 
     private JRefreshAndLoadMoreAdapter mAdapter;
-    private List<String> data = new ArrayList<>();
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-
-    private int count = 20;
-
-    private static final float OFFSET = 600;
     private float mRvOffset = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_refresh_and_load);
+        setContentView(R.layout.activity_stick);
 
         mJRecycleView = findViewById(R.id.j_recycle_view);
         mTextView = findViewById(R.id.tv_header);
@@ -50,45 +49,29 @@ public class StickHeaderActivity extends AppCompatActivity {
         mTextView.setAlpha(0);
         mTextView.setText("Zinc");
 
-        data = getInitData();
+        getInitData();
 
-        RecyclerView.Adapter adapter = new StickHeaderAdapter(this, data);
+        RecyclerView.Adapter adapter = new StickHeaderAdapter(this, mData);
         this.mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
 
-        this.mAdapter.setIsOpenLoadMore(false);
-        this.mAdapter.setIsOpenRefresh(true);
+        this.mAdapter.setIsOpenRefresh(false);
 
-        this.mAdapter.setOnLoadMoreListener(new JRefreshAndLoadMoreAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoading() {
-                Toast.makeText(StickHeaderActivity.this, "触发加载更多", Toast.LENGTH_SHORT).show();
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count > 40) {
-                            mAdapter.setLoadError();
-                        } else {
-                            addData();
-                            mAdapter.setLoadComplete();
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, 2000);
-            }
-        });
-        this.mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener() {
-            @Override
-            public void onRefreshing() {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getInitData();
-                        mAdapter.setIsOpenLoadMore(true);
-                        mAdapter.resetLoadMore();
-                        mAdapter.setRefreshComplete(true);
-                    }
-                }, 2000);
-            }
+        this.mAdapter.setOnLoadMoreListener(() -> {
+            Toast.makeText(StickHeaderActivity.this,
+                    "触发加载更多",
+                    Toast.LENGTH_SHORT)
+                    .show();
+
+            mHandler.postDelayed(() -> {
+                if (mData.size() > 2 * PAGE_SIZE) {
+                    mAdapter.setLoadError();
+                } else {
+                    int size = mData.size();
+                    addData();
+                    mAdapter.setLoadComplete();
+                    mAdapter.notifyItemRangeInserted(size, PAGE_SIZE);
+                }
+            }, 2000);
         });
 
         mJRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -116,20 +99,17 @@ public class StickHeaderActivity extends AppCompatActivity {
 
     }
 
-    public List<String> getInitData() {
-        this.data.clear();
-        count = 20;
-        for (int i = 1; i <= count; ++i) {
-            data.add("zinc Power" + i);
+    public void getInitData() {
+        this.mData.clear();
+        for (int i = 1; i <= PAGE_SIZE; ++i) {
+            mData.add("zinc Power" + i);
         }
-        ++count;
-        return data;
     }
 
     public void addData() {
-        for (int i = 1; i <= 15; ++i) {
-            data.add("zinc Power" + count);
-            ++count;
+        int size = mData.size();
+        for (int i = 1; i <= PAGE_SIZE; ++i) {
+            mData.add("zinc Power" + (i + size));
         }
     }
 

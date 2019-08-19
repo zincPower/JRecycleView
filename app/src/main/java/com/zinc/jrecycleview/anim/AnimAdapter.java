@@ -1,6 +1,7 @@
 package com.zinc.jrecycleview.anim;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,33 +15,35 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/8
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-08 22:25
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class AnimAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mLayoutInflater;
+    private final List<String> mData;
+    private final LayoutInflater mLayoutInflater;
 
-    public AnimAdapter(Context context,
-                       List<String> data) {
-        this.mData = data;
+    AnimAdapter(Context context,
+                List<String> data) {
         mLayoutInflater = LayoutInflater.from(context);
+        mData = data;
     }
 
-    public void setData(List<String> mData) {
-        this.mData = mData;
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                      int viewType) {
+        return new TestHolder(
+                mLayoutInflater
+                        .inflate(R.layout.refresh_and_load_view_item, parent, false));
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new TestHolder(mLayoutInflater.inflate(R.layout.refresh_and_load_view_item, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         String content = mData.get(position);
         TestHolder testHolder = (TestHolder) holder;
         testHolder.mTvContent.setText(content);
@@ -55,7 +58,7 @@ public class AnimAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {
 
         private TextView mTvContent;
 
-        public TestHolder(View itemView) {
+        TestHolder(View itemView) {
             super(itemView);
             mTvContent = itemView.findViewById(R.id.tv_content);
         }

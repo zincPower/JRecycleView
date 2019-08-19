@@ -1,4 +1,4 @@
-package com.zinc.jrecycleview.refreshAndLoad;
+package com.zinc.jrecycleview.anim;
 
 import android.animation.ObjectAnimator;
 import android.view.View;

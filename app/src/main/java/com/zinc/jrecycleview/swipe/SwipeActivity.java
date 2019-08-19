@@ -7,25 +7,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
-import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
-import com.zinc.jrecycleview.anim.AnimFactory;
-import com.zinc.jrecycleview.config.JRecycleConfig;
 import com.zinc.jrecycleview.data.SwipeData;
-import com.zinc.jrecycleview.refreshAndLoad.RefreshAndLoadAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/8
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-08 22:27
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class SwipeActivity extends Activity {
 
+    private static final int PAGE_SIZE = 20;
+
     private RecyclerView mJRecycleView;
-    private List<SwipeData> data = new ArrayList<>();
+    private final List<SwipeData> mData = new ArrayList<>();
     private SwipeAdapter mAdapter;
 
     @Override
@@ -35,28 +35,25 @@ public class SwipeActivity extends Activity {
 
         mJRecycleView = findViewById(R.id.j_recycle_view);
 
-        data = getInitData();
+        getInitData();
 
-        this.mAdapter = new SwipeAdapter(this, data);
-        this.mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        this.mJRecycleView.setAdapter(this.mAdapter);
+        mAdapter = new SwipeAdapter(this, mData);
+        mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        mJRecycleView.setAdapter(this.mAdapter);
 
     }
 
-    public List<SwipeData> getInitData() {
-        this.data.clear();
-        int count = 20;
-        for (int i = 1; i <= count; ++i) {
+    public void getInitData() {
+        mData.clear();
+        for (int i = 1; i <= PAGE_SIZE; ++i) {
             if (i % 4 == 1) {
-                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_RIGHT, "只有右菜单" + i, i));
+                mData.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_RIGHT, "只有右菜单" + i, i));
             } else if (i % 4 == 2) {
-                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_LEFT, "只有左菜单" + i, i));
+                mData.add(new SwipeData(SwipeAdapter.SWIPE_TYPE_ONLY_LEFT, "只有左菜单" + i, i));
             } else {
-                data.add(new SwipeData(SwipeAdapter.SWIPE_TYPE, "两个菜单" + i, i));
+                mData.add(new SwipeData(SwipeAdapter.SWIPE_TYPE, "两个菜单" + i, i));
             }
         }
-        ++count;
-        return data;
     }
 
 }

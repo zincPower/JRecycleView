@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.config.JRecycleConfig;
 import com.zinc.jrecycleview.data.SwipeData;
-import com.zinc.jrecycleview.util.ToastUtil;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -26,16 +27,20 @@ import java.util.List;
 
 public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int SWIPE_TYPE = 0x10001;
-    public static final int SWIPE_TYPE_ONLY_RIGHT = 0x10002;
-    public static final int SWIPE_TYPE_ONLY_LEFT = 0x10003;
-    private List<SwipeData> swipeData;
+    static final int SWIPE_TYPE = 0x10001;
+    static final int SWIPE_TYPE_ONLY_RIGHT = 0x10002;
+    static final int SWIPE_TYPE_ONLY_LEFT = 0x10003;
 
-    private LayoutInflater mLayoutInflater;
+    private final List<SwipeData> mSwipeData;
 
-    public SwipeAdapter(Context context, List<SwipeData> swipeData) {
-        this.swipeData = swipeData;
-        this.mLayoutInflater = LayoutInflater.from(context);
+    private final LayoutInflater mLayoutInflater;
+
+    private final WeakReference<Context> mContext;
+
+    SwipeAdapter(Context context, List<SwipeData> data) {
+        mSwipeData = data;
+        mLayoutInflater = LayoutInflater.from(context);
+        mContext = new WeakReference<>(context);
     }
 
     @NonNull
@@ -59,87 +64,60 @@ public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        final SwipeData swipeData = this.mSwipeData.get(position);
+
         if (holder instanceof MyContentViewHolder) {
+
             final MyContentViewHolder myContentViewHolder = (MyContentViewHolder) holder;
             myContentViewHolder.tvRightMenu.setText("test Right");
-            myContentViewHolder.tvRightMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("Right menu");
-                    //关闭菜单
-                    myContentViewHolder.getSwipeItemLayout().close();
-                }
+            myContentViewHolder.tvRightMenu.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "Right menu", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                myContentViewHolder.getSwipeItemLayout().close();
             });
 
             myContentViewHolder.tvRightMenuTwo.setText("test Right 2");
-            myContentViewHolder.tvRightMenuTwo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("Right 2 menu");
-                    //关闭菜单
-                    myContentViewHolder.getSwipeItemLayout().close();
-                }
+            myContentViewHolder.tvRightMenuTwo.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "Right 2 menu", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                myContentViewHolder.getSwipeItemLayout().close();
             });
 
             myContentViewHolder.tvLeftMenu.setText("test Left");
-            myContentViewHolder.tvLeftMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("Left menu");
-                    //关闭菜单
-                    myContentViewHolder.getSwipeItemLayout().close();
-                }
+            myContentViewHolder.tvLeftMenu.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "Left menu", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                myContentViewHolder.getSwipeItemLayout().close();
+            });
+
+            myContentViewHolder.tvLeftMenuTwo.setText("test Left 2");
+            myContentViewHolder.tvLeftMenuTwo.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "Left 2 menu", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                myContentViewHolder.getSwipeItemLayout().close();
             });
 
             myContentViewHolder
                     .tvContent
-                    .setText(swipeData.get(position).getContent());
-            myContentViewHolder.tvContent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("Content");
-                }
-            });
+                    .setText(this.mSwipeData.get(position).getContent());
+            myContentViewHolder.tvContent.setOnClickListener(v ->
+                    Toast.makeText(mContext.get(), swipeData.getContent(), Toast.LENGTH_SHORT).show());
 
-            //防QQ小红点
-//            if (swipeData != null) {
-//                myContentViewHolder.point.setVisibility(swipeData.get(position).getReadNum() != 0 ? View.VISIBLE : View.INVISIBLE);
-//                myContentViewHolder.point.setText(String.valueOf((swipeData.get(position).getReadNum())));
-//                myContentViewHolder.point.setOnDragListener(new QQBezierView.onDragStatusListener() {
-//                    @Override
-//                    public void onDrag() {
-//                    }
-//
-//                    @Override
-//                    public void onMove() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onRestore() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onDismiss() {
-//                        swipeData.get(position).setReadNum(0);
-//                    }
-//                });
-//            }
         } else if (holder instanceof OnlyLeftViewHolder) {
 
             final OnlyLeftViewHolder onlyLeftViewHolder = (OnlyLeftViewHolder) holder;
 
-            onlyLeftViewHolder.tvContent.setText(swipeData.get(position).getContent());
+            onlyLeftViewHolder.tvContent.setText(this.mSwipeData.get(position).getContent());
 
-            onlyLeftViewHolder.tvLeftMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("点击了左菜单");
-                    //关闭菜单
-                    onlyLeftViewHolder.getSwipeItemLayout().close();
-                }
+            onlyLeftViewHolder.tvLeftMenu.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "点击了左菜单", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                onlyLeftViewHolder.getSwipeItemLayout().close();
             });
+
+            onlyLeftViewHolder.tvContent.setOnClickListener(v ->
+                    Toast.makeText(mContext.get(), swipeData.getContent(), Toast.LENGTH_SHORT).show());
 
         } else if (holder instanceof OnlyRightViewHolder) {
 
@@ -147,39 +125,33 @@ public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             final int fPos = position;
 
-            onlyRightViewHolder.getSwipeItemLayout().setSwipeEnable(false);
+            // 关闭侧滑
+//            onlyRightViewHolder.getSwipeItemLayout().setSwipeEnable(false);
 
-            onlyRightViewHolder.tvContent.setText(swipeData.get(position).getContent());
+            onlyRightViewHolder.tvContent.setText(this.mSwipeData.get(position).getContent());
 
-            onlyRightViewHolder.tvRightMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("点击了右菜单");
-                    //关闭菜单
-                    swipeData.remove(fPos);
-                    notifyDataSetChanged();
-                    onlyRightViewHolder.getSwipeItemLayout().close();
-                }
+            onlyRightViewHolder.tvRightMenu.setOnClickListener(v -> {
+                Toast.makeText(mContext.get(), "点击了右菜单，删除", Toast.LENGTH_SHORT).show();
+                //关闭菜单
+                this.mSwipeData.remove(fPos);
+                onlyRightViewHolder.getSwipeItemLayout().close();
+                notifyItemRemoved(fPos);
             });
 
-            onlyRightViewHolder.tvContent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ToastUtil.show("Content");
-                }
-            });
+            onlyRightViewHolder.tvContent.setOnClickListener(v ->
+                    Toast.makeText(mContext.get(), swipeData.getContent(), Toast.LENGTH_SHORT).show());
 
         }
     }
 
     @Override
     public int getItemCount() {
-        return swipeData.size();
+        return mSwipeData.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        return swipeData.get(position).getType();
+        return mSwipeData.get(position).getType();
     }
 
     class MyContentViewHolder extends JSwipeViewHolder {
@@ -188,8 +160,7 @@ public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView tvRightMenu;
         private TextView tvContent;
         private TextView tvRightMenuTwo;
-
-//        private QQBezierView point;
+        private TextView tvLeftMenuTwo;
 
         MyContentViewHolder(View itemView) {
             super(itemView);
@@ -213,6 +184,7 @@ public class SwipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         @Override
         public void initLeftMenuItem(FrameLayout flLeftMenu) {
             tvLeftMenu = flLeftMenu.findViewById(R.id.tv_left_menu);
+            tvLeftMenuTwo = flLeftMenu.findViewById(R.id.tv_left_menu_two);
         }
 
         @Override

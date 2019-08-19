@@ -1,12 +1,9 @@
 package com.zinc.jrecycleview.stick.content;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
@@ -26,7 +23,7 @@ public class StickContentActivity extends AppCompatActivity {
     private JRecycleView mJRecycleView;
 
     private JRefreshAndLoadMoreAdapter mAdapter;
-    private List<String> data = new ArrayList<>();
+    private final List<String> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +32,24 @@ public class StickContentActivity extends AppCompatActivity {
 
         mJRecycleView = findViewById(R.id.j_recycle_view);
 
-        data = getInitData();
+        getInitData();
 
-        RecyclerView.Adapter adapter = new StickContentAdapter(this, data);
-        this.mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
+        RecyclerView.Adapter adapter = new StickContentAdapter(this, mData);
+        mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
 
-        this.mAdapter.setIsOpenLoadMore(false);
-        this.mAdapter.setIsOpenRefresh(false);
+        mAdapter.setIsOpenLoadMore(false);
+        mAdapter.setIsOpenRefresh(false);
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mJRecycleView.setAdapter(mAdapter);
 
     }
 
-    public List<String> getInitData() {
-        this.data.clear();
+    public void getInitData() {
+        mData.clear();
         for (int i = 1; i <= 20; ++i) {
-            data.add("zinc Power" + i);
+            mData.add("zinc Power" + i);
         }
-        return data;
     }
 
 }

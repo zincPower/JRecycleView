@@ -37,21 +37,21 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
 
     public JRefreshAndLoadMoreAdapter(Context context,
                                       RecyclerView.Adapter adapter) {
-        this.mRealAdapter = adapter;
+        mRealAdapter = adapter;
 
-        if (this.mRefreshLoadView == null) {
+        if (mRefreshLoadView == null) {
             if (JRecycleViewManager.getInstance().getRefreshLoadView() == null) {
-                this.mRefreshLoadView = new OrdinaryRefreshLoadView(context);
+                mRefreshLoadView = new OrdinaryRefreshLoadView(context);
             } else {
-                this.mRefreshLoadView = JRecycleViewManager.getInstance().getRefreshLoadView();
+                mRefreshLoadView = JRecycleViewManager.getInstance().getRefreshLoadView();
             }
         }
 
-        if (this.mLoadMoreView == null) {
+        if (mLoadMoreView == null) {
             if (JRecycleViewManager.getInstance().getLoadMoreView() == null) {
-                this.mLoadMoreView = new OrdinaryLoadMoreView(context);
+                mLoadMoreView = new OrdinaryLoadMoreView(context);
             } else {
-                this.mLoadMoreView = JRecycleViewManager.getInstance().getLoadMoreView();
+                mLoadMoreView = JRecycleViewManager.getInstance().getLoadMoreView();
             }
         }
 
@@ -64,7 +64,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      *                      false：关闭下拉刷新
      */
     public void setIsOpenRefresh(boolean isOpenRefresh) {
-        this.mIsOpenRefresh = isOpenRefresh;
+        mIsOpenRefresh = isOpenRefresh;
     }
 
     /**
@@ -74,21 +74,21 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      *                       false：关闭上拉加载
      */
     public void setIsOpenLoadMore(boolean isOpenLoadMore) {
-        this.mIsOpenLoadMore = isOpenLoadMore;
+        mIsOpenLoadMore = isOpenLoadMore;
     }
 
     /**
      * 添加上拉加载更多侦听器
      */
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        this.mOnLoadMoreListener = onLoadMoreListener;
+        mOnLoadMoreListener = onLoadMoreListener;
     }
 
     /**
      * 添加下拉刷新侦听器
      */
-    public void setOnRefreshListener(OnRefreshListener mOnRefreshListener) {
-        this.mOnRefreshListener = mOnRefreshListener;
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
+        mOnRefreshListener = onRefreshListener;
     }
 
     /**
@@ -109,14 +109,14 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      * 设置刷新视图
      */
     public void setRefreshLoadView(IBaseRefreshLoadView refreshLoadView) {
-        this.mRefreshLoadView = refreshLoadView;
+        mRefreshLoadView = refreshLoadView;
     }
 
     /**
      * 设置加载视图
      */
-    public void setLoadMoreView(IBaseLoadMoreView mLoadMoreView) {
-        this.mLoadMoreView = mLoadMoreView;
+    public void setLoadMoreView(IBaseLoadMoreView loadMoreView) {
+        mLoadMoreView = loadMoreView;
     }
 
     @Override
@@ -149,17 +149,17 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == JRecycleConfig.HEAD) {
 
-            if (this.mOnRefreshListener != null) {
-                this.mRefreshLoadView.setOnRefreshListener(mOnRefreshListener);
+            if (mOnRefreshListener != null) {
+                mRefreshLoadView.setOnRefreshListener(mOnRefreshListener);
             }
-            return new JRefreshViewHolder(this.mRefreshLoadView);
+            return new JRefreshViewHolder(mRefreshLoadView);
 
         } else if (viewType == JRecycleConfig.FOOT) {
 
-            if (this.mOnLoadMoreListener != null) {
-                this.mLoadMoreView.setOnLoadMoreListener(mOnLoadMoreListener);
+            if (mOnLoadMoreListener != null) {
+                mLoadMoreView.setOnLoadMoreListener(mOnLoadMoreListener);
             }
-            return new JLoadMoreViewHolder(this.mLoadMoreView);
+            return new JLoadMoreViewHolder(mLoadMoreView);
 
         } else {
             return mRealAdapter.onCreateViewHolder(parent, viewType);
@@ -174,17 +174,17 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
         } else if (holder instanceof JLoadMoreViewHolder) {
 
         } else {
-            this.mRealAdapter.onBindViewHolder(holder, _getRealPosition(position));
+            mRealAdapter.onBindViewHolder(holder, _getRealPosition(position));
         }
     }
 
     @Override
     public int getItemCount() {
-        int count = this.mRealAdapter.getItemCount();
-        if (this.mIsOpenRefresh) {
+        int count = mRealAdapter.getItemCount();
+        if (mIsOpenRefresh) {
             ++count;
         }
-        if (this.mIsOpenLoadMore) {
+        if (mIsOpenLoadMore) {
             ++count;
         }
         return count;
@@ -194,41 +194,45 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      * 获取真正数据的下标
      */
     private int _getRealPosition(int position) {
-        return this.mIsOpenRefresh ? position - 1 : position;
+        return mIsOpenRefresh ? position - 1 : position;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && this.mIsOpenRefresh) {
+        if (position == 0 && mIsOpenRefresh) {
             return JRecycleConfig.HEAD;
-        } else if (position == getItemCount() - 1 && this.mIsOpenLoadMore) {
+        } else if (position == getItemCount() - 1 && mIsOpenLoadMore) {
             return JRecycleConfig.FOOT;
         } else {
             return mRealAdapter.getItemViewType(_getRealPosition(position));
         }
     }
 
+    public int getRealPosition(int position) {
+        return mIsOpenRefresh ? position + 1 : position;
+    }
+
     //================================设置刷新完成的状态 start========================================
 
-    /**
-     * 刷新结束，不刷新
-     * 默认为【下拉刷新】
-     */
-    public void setRefreshComplete() {
-        setRefreshComplete(false);
-    }
+//    /**
+//     * 刷新结束，不刷新
+//     * 默认为【下拉刷新】
+//     */
+//    public void setRefreshComplete() {
+//        setRefreshComplete(false);
+//    }
 
     /**
      * 重载方法，如果不想让其自动刷新，参数传false
      * 默认为【下拉刷新】
      */
-    public void setRefreshComplete(boolean isRefreshRightNow) {
-        if (this.getRefreshLoadView() != null) {
-            this.getRefreshLoadView().refreshComplete();
+    public void setRefreshComplete() {
+        if (getRefreshLoadView() != null) {
+            getRefreshLoadView().refreshComplete();
 
-            if (isRefreshRightNow) {
-                notifyDataSetChanged();
-            }
+//            if (isRefreshRightNow) {
+            notifyDataSetChanged();
+//            }
         }
     }
 
@@ -246,7 +250,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      */
     public void setLoadComplete() {
         if (mIsOpenLoadMore) {
-            this.mLoadMoreView.loadComplete();
+            mLoadMoreView.loadComplete();
         }
     }
 
@@ -255,7 +259,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      */
     public void setLoadError() {
         if (mIsOpenLoadMore) {
-            this.mLoadMoreView.loadError();
+            mLoadMoreView.loadError();
         }
     }
 
@@ -265,7 +269,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      */
     public void resetLoadMore() {
         if (mIsOpenLoadMore) {
-            this.mLoadMoreView.reset();
+            mLoadMoreView.reset();
         }
     }
 
@@ -275,7 +279,7 @@ public class JRefreshAndLoadMoreAdapter extends JBaseRecycleAdapter<RecyclerView
      */
     public void setNoMore() {
         if (mIsOpenLoadMore) {
-            this.mLoadMoreView.noMore();
+            mLoadMoreView.noMore();
         }
     }
     //================================设置加载更多的状态 end==========================================

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="5dp"/>
+            <solid android:color="#35a8ee"/>
+        </shape>
+    </item>
+
     <item android:state_focused="true">
         <shape>
             <corners android:radius="5dp"/>
-            <solid android:color="@color/colorPrimaryDark"/>
+            <solid android:color="#35a8ee"/>
         </shape>
     </item>
 
     <item android:state_selected="true">
         <shape>
             <corners android:radius="5dp"/>
-            <solid android:color="@color/colorPrimaryDark"/>
-        </shape>
-    </item>
-
-    <item android:state_pressed="true">
-        <shape>
-            <corners android:radius="5dp"/>
-            <solid android:color="@color/colorPrimaryDark"/>
+            <solid android:color="#35a8ee"/>
         </shape>
     </item>
 
     <item>
         <shape>
             <corners android:radius="5dp"/>
-            <solid android:color="@color/colorPrimary"/>
+            <solid android:color="#1296db"/>
         </shape>
     </item>
 

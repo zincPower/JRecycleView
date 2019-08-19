@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_stick"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:text="White"
-        android:textColor="@color/white"
-        android:textSize="14dp" />
-
-</LinearLayout>
+    android:background="@color/colorAccent"
+    android:gravity="center"
+    android:text="Stick Content"
+    android:textColor="@android:color/white"
+    android:textSize="14sp" />

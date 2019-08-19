@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_left_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="left_menu"
-        android:gravity="center"
-        android:background="@color/blue500"
-        />
+        style="@style/item_swipe_menu"
+        android:background="@color/colorRed400"
+        android:text="左菜单1" />
+
+    <TextView
+        android:id="@+id/tv_left_menu_two"
+        style="@style/item_swipe_menu"
+        android:background="@color/colorRed300"
+        android:text="左菜单2" />
 
 </LinearLayout>

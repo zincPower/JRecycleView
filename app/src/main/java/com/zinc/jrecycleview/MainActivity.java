@@ -13,9 +13,11 @@ import com.zinc.jrecycleview.stick.header.StickHeaderActivity;
 import com.zinc.jrecycleview.swipe.SwipeActivity;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/16
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-16 22:20
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class MainActivity extends Activity implements View.OnClickListener {

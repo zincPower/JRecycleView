@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#303030</color>
-    <color name="colorPrimaryDark">#292929</color>
-
-    <color name="colorPrimaryPress">#232323</color>
-
+    <color name="colorPrimary">#35a8ee</color>
+    <color name="colorPrimaryDark">#1296db</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="gray">#e1e1e1</color>
+    <color name="colorRed">#f54e5b</color>
+    <color name="colorGreen">#2ab00a</color>
+    <color name="colorOrange">#f89b4b</color>
 
-    <color name="red500">#F44336</color>
-    <color name="blue500">#2196f3</color>
-    <color name="orange500">#FF9800</color>
+    <color name="colorRed100">#fe9191</color>
+    <color name="colorRed200">#e4406f</color>
+    <color name="colorRed300">#ca2374</color>
+    <color name="colorRed400">#9c297f</color>
 
-    <color name="primaryText">@color/primary_text_default_material_light</color>
+    <color name="colorGrayAlpha">#88333333</color>
+
+    <color name="colorLucky100">#ffe6eb</color>
+    <color name="colorLucky200">#defcfc</color>
+    <color name="colorLucky300">#cbf1f5</color>
+    <color name="colorLucky400">#a6e3e9</color>
 
 </resources>

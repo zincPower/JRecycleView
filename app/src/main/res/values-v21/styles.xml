@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<style name="TranslucentNoTitle" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--&lt;!&ndash; 不显示title，作用于 Activity 上 &ndash;&gt;-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--&lt;!&ndash; 不显示title，作用于 AppCompatActivity 上 &ndash;&gt;-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--&lt;!&ndash; 窗口背景色，设置成半透明的即可 &ndash;&gt;-->
+        <!--<item name="android:windowBackground">@color/colorGrayAlpha</item>-->
+        <!--&lt;!&ndash; 不开沉浸式 &ndash;&gt;-->
+        <!--<item name="android:windowFullscreen">false</item>-->
+        <!--&lt;!&ndash; 背景缓存颜色 &ndash;&gt;-->
+        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
+        <!--&lt;!&ndash; 是否悬浮在activity上，设置了就没有占满整个屏幕 &ndash;&gt;-->
+        <!--<item name="android:windowIsFloating">false</item>-->
+        <!--<item name="android:statusBarColor">@color/color_gray_alpha</item>-->
+        <!--<item name="android:colorPrimaryDark">@color/color_gray_alpha</item>-->
+    <!--</style>-->
+
+</resources>

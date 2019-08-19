@@ -80,14 +80,15 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
      */
     public void loadComplete() {
         setState(STATE_DONE);
-        reset(super.mHeight);
+        reset(mHeight);
     }
 
     /**
      * 重置
      */
     public void reset() {
-        super.reset(super.mHeight);
+        setState(STATE_PULL_TO_ACTION);
+        reset(mHeight);
     }
 
     /**
@@ -102,7 +103,7 @@ public abstract class IBaseLoadMoreView extends IBaseWrapperView {
      */
     public void noMore() {
         setState(STATE_NO_MORE);
-        smoothScrollTo(super.mHeight);
+        smoothScrollTo(mHeight);
     }
 
     @Override

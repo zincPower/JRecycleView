@@ -1,7 +1,7 @@
 package com.zinc.jrecycleview.refreshAndLoad;
 
 import android.os.Handler;
-import android.os.Message;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,22 +11,29 @@ import android.widget.Toast;
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
-import com.zinc.jrecycleview.config.JRecycleViewManager;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author       : Jiang zinc
+ * time         : 2018-03-17 21:59
+ * email        : 56002982@qq.com
+ * desc         : 下拉刷新、上拉加载
+ * version      : 1.0.0
+ */
+
 public class RefreshAndLoadActivity extends AppCompatActivity {
+
+    private static final int PAGE_SIZE = 20;
 
     private JRecycleView mJRecycleView;
 
     private JRefreshAndLoadMoreAdapter mAdapter;
-    private List<String> data = new ArrayList<>();
 
-    private Handler mHandler = new MyHandler(this);
+    private final List<String> mData = new ArrayList<>();
 
-    private int count = 20;
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,82 +42,75 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
 
         mJRecycleView = findViewById(R.id.j_recycle_view);
 
-        data = getInitData();
+        getInitData();
 
-        RecyclerView.Adapter adapter = new RefreshAndLoadAdapter(this, data);
+        // 原始 Adapter
+        RecyclerView.Adapter adapter = new RefreshAndLoadAdapter(this, mData);
+        // 使用 JRefreshAndLoadMoreAdapter 进行包装
         this.mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
 
-//        this.mAdapter.setIsOpenLoadMore(false);
-//        this.mAdapter.setIsOpenRefresh(false);
+        this.mAdapter.setOnLoadMoreListener(() -> {
+            Toast.makeText(RefreshAndLoadActivity.this,
+                    "触发加载更多",
+                    Toast.LENGTH_SHORT)
+                    .show();
 
-        this.mAdapter.setOnLoadMoreListener(new JRefreshAndLoadMoreAdapter.OnLoadMoreListener() {
-            @Override
-            public void onLoading() {
-                Toast.makeText(RefreshAndLoadActivity.this, "触发加载更多", Toast.LENGTH_SHORT).show();
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count > 40) {
-                            mAdapter.setLoadError();
-                        } else {
-                            addData();
-                            mAdapter.setLoadComplete();
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, 2000);
-            }
+            mHandler.postDelayed(() -> {
+
+                if (mData.size() > 2 * PAGE_SIZE) {
+                    // 错误
+                    mAdapter.setLoadError();
+                } else {
+                    int size = mData.size();
+
+                    addData();
+                    // 加载成功
+                    mAdapter.setLoadComplete();
+                    // 刷新
+                    mAdapter.notifyItemRangeInserted(mAdapter.getRealPosition(size), PAGE_SIZE);
+                }
+
+            }, 2000);
+
         });
 
-        this.mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener() {
-            @Override
-            public void onRefreshing() {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getInitData();
-                        mAdapter.resetLoadMore();
-                        mAdapter.setRefreshComplete(true);
-                    }
-                }, 2000);
-            }
-        });
+        this.mAdapter.setOnRefreshListener(() -> {
+            mHandler.postDelayed(() -> {
 
-//        this.mAdapter.setOpenAnim(true);
+                getRefreshData();
+                // 将 "上拉加载更多" 重置
+                mAdapter.resetLoadMore();
+                // 将 "下拉刷新"
+                mAdapter.setRefreshComplete();
+                // 刷新数据
+                mAdapter.notifyDataSetChanged();
+
+            }, 2000);
+        });
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mJRecycleView.setAdapter(mAdapter);
 
     }
 
-    public List<String> getInitData() {
-        this.data.clear();
-        count = 20;
-        for (int i = 1; i <= count; ++i) {
-            data.add("zinc Power" + i);
+    public void getInitData() {
+        mData.clear();
+        for (int i = 1; i <= PAGE_SIZE; ++i) {
+            mData.add("zinc Power" + i);
         }
-        ++count;
-        return data;
+    }
+
+    public void getRefreshData() {
+        mData.clear();
+        for (int i = 1; i <= 15; ++i) {
+            mData.add("zinc Power" + i);
+        }
     }
 
     public void addData() {
-        for (int i = 1; i <= 15; ++i) {
-            data.add("zinc Power" + count);
-            ++count;
-        }
-    }
-
-    private static class MyHandler extends Handler {
-
-        private WeakReference<RefreshAndLoadActivity> weakReference;
-
-        public MyHandler(RefreshAndLoadActivity activity) {
-            weakReference = new WeakReference<RefreshAndLoadActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            RefreshAndLoadActivity refreshAndLoadActivity = weakReference.get();
+        int size = mData.size();
+        for (int i = 1; i <= PAGE_SIZE; ++i) {
+            mData.add("zinc Power" + (size + i));
         }
     }
 
