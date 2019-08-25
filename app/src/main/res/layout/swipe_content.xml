@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/tv_content"
-        style="@style/text_view_button"
+        style="@style/TextViewButton"
         android:layout_height="120dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"

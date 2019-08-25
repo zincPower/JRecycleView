@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_sort"
+    android:id="@+id/tv_content"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:background="@color/colorRed200"
+    android:layout_height="50dp"
     android:gravity="center"
-    android:text="sort"
-    android:textColor="@android:color/white"
+    android:textColor="@color/colorPrimary"
     android:textSize="14sp" />

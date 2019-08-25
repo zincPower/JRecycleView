@@ -13,29 +13,28 @@ import android.widget.Toast;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.stick.IStick;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/3/17
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-03-17 21:20
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class StickHeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<String> mData;
-    private LayoutInflater mLayoutInflater;
+    private final List<String> mData;
+    private final LayoutInflater mLayoutInflater;
 
-    private Context context;
+    private final WeakReference<Context> context;
 
     public StickHeaderAdapter(Context context, List<String> data) {
         this.mData = data;
-        mLayoutInflater = LayoutInflater.from(context);
-        this.context = context;
-    }
-
-    public void setData(List<String> mData) {
-        this.mData = mData;
+        this.mLayoutInflater = LayoutInflater.from(context);
+        this.context = new WeakReference<>(context);
     }
 
     @NonNull
@@ -61,7 +60,7 @@ public class StickHeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 @Override
                 public void onClick(View v) {
                     Log.i("zincPower", "onClick: " + content);
-                    Toast.makeText(context, content, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context.get(), content, Toast.LENGTH_LONG).show();
                 }
             });
 

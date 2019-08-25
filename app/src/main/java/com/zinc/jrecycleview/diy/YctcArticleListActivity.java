@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -115,28 +116,29 @@ public class YctcArticleListActivity extends AppCompatActivity {
             }
         });
 
-//        jRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                Log.i(TAG, "onScrolled: [dx: " + dx + "; dy: " + dy + "]");
-//
-//                int absDy = Math.abs(dy);
-//
-//                if (absDy == OFFSET) {
-//                    return;
-//                }
-//
-//                handleScroll(dy);
-//
-//            }
-//        });
+        jRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                View firstView = recyclerView.getLayoutManager().getChildAt(0);
+                if (firstView == null) {
+                    return;
+                }
+
+                RecyclerView.ViewHolder childViewHolder = recyclerView.getChildViewHolder(firstView);
+
+                if (childViewHolder == null) {
+                    return;
+                }
+
+                if (childViewHolder instanceof YctcArticleAdapter.SortViewHolder
+                        || childViewHolder instanceof YctcArticleAdapter.ContentViewHolder) {
+                    tvSort.setVisibility(View.VISIBLE);
+                } else {
+                    tvSort.setVisibility(View.GONE);
+                }
+            }
+        });
 
         initData();
 

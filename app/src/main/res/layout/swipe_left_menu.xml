@@ -6,13 +6,13 @@
 
     <TextView
         android:id="@+id/tv_left_menu"
-        style="@style/item_swipe_menu"
+        style="@style/ItemSwipeMenu"
         android:background="@color/colorRed400"
         android:text="左菜单1" />
 
     <TextView
         android:id="@+id/tv_left_menu_two"
-        style="@style/item_swipe_menu"
+        style="@style/ItemSwipeMenu"
         android:background="@color/colorRed300"
         android:text="左菜单2" />
 

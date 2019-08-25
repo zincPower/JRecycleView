@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".diy.YctcArticleListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,8 @@
         <activity android:name=".stick.content.StickContentActivity" />
         <activity android:name=".stick.header.StickHeaderActivity" />
 
-        <!--<activity android:name=".diy.YctcArticleListActivity" />-->
+        <activity android:name=".diy.YctcArticleListActivity" />
+        <activity android:name=".mix.MixActivity" />
 
     </application>
 

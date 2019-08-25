@@ -166,6 +166,10 @@ public class JRecycleView extends RecyclerView {
                 handleRefreshLoad();
                 handleLoadMore();
 
+                if (mListener != null) {
+                    mListener.onUp(e);
+                }
+
                 mIsTouching = false;
 
                 if (isScrolling) {
@@ -173,8 +177,6 @@ public class JRecycleView extends RecyclerView {
                         return true;
                     }
                 }
-
-                mListener.onUp(e);
 
                 break;
         }

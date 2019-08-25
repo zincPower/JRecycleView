@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tv_left_menu"
-    style="@style/item_swipe_menu"
+    style="@style/ItemSwipeMenu"
     android:background="@color/colorRed400"
     android:text="只有左菜单" />

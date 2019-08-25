@@ -1,9 +1,11 @@
 package com.zinc.jrecycleview.data;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/8
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-08 21:19
+ * email        : 56002982@qq.com
+ * desc         :
+ * version      : 1.0.0
  */
 
 public class SwipeData {

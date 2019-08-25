@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="350dp"
+    android:background="@drawable/shape_dialog_bg"
+    android:orientation="vertical">
+
+    <com.zinc.jrecycleview.JRecycleView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/tv_go"
+        style="@style/TextViewButton"
+        android:layout_margin="10dp"
+        android:text="开始表演" />
+
+</LinearLayout>

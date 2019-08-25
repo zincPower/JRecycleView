@@ -1,5 +1,7 @@
 package com.zinc.jrecycleview.anim;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,16 +22,29 @@ import java.util.List;
 
 public class AnimActivity extends AppCompatActivity {
 
+    private static final String TYPE = "ANIM_TYPE";
+
     private final static int PAGE_SIZE = 100;
     private RecyclerView mRecycleView;
 
     private AnimAdapter mAdapter;
     private final List<String> data = new ArrayList<>();
+    private int mType;
+
+    public static void startActivity(Context context, int type) {
+        Intent intent = new Intent(context, AnimActivity.class);
+
+        intent.putExtra(TYPE, type);
+
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anim);
+
+        mType = getIntent().getIntExtra(TYPE, AnimFactory.SLIDE_TOP);
 
         mRecycleView = findViewById(R.id.recycle_view);
 
@@ -37,7 +52,7 @@ public class AnimActivity extends AppCompatActivity {
 
         mAdapter = new AnimAdapter(this, data);
         //加入视图动画
-//        mAdapter.setAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_BOTTOM));
+        mAdapter.setAnimations(AnimFactory.getAnimSet(mType));
         mAdapter.setOpenAnim(true);
 
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));

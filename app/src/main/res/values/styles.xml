@@ -30,16 +30,7 @@
         <item name="android:textSize">15dp</item>
     </style>
 
-    <!--<style name="ItemSquareStyle">-->
-    <!--<item name="android:layout_width">match_parent</item>-->
-    <!--<item name="android:layout_height">60dp</item>-->
-    <!--<item name="android:gravity">center</item>-->
-    <!--<item name="android:background">@drawable/selector_background_square</item>-->
-    <!--<item name="android:textColor">@android:color/white</item>-->
-    <!--<item name="android:textSize">15dp</item>-->
-    <!--</style>-->
-
-    <style name="text_view_button">
+    <style name="TextViewButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:background">@drawable/selector_blue_round_5dp</item>
@@ -48,7 +39,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="text_view_title">
+    <style name="TextViewTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
@@ -56,7 +47,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="item_swipe_menu">
+    <style name="ItemSwipeMenu">
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
@@ -64,7 +55,7 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="cb_item">
+    <style name="CbItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
@@ -72,19 +63,19 @@
         <item name="android:textColor">@color/colorPrimaryDark</item>
     </style>
 
-    <!--<style name="TranslucentNoTitle" parent="Theme.AppCompat.Light.NoActionBar">-->
-        <!--&lt;!&ndash; 不显示title，作用于 Activity 上 &ndash;&gt;-->
-        <!--<item name="android:windowNoTitle">true</item>-->
-        <!--&lt;!&ndash; 不显示title，作用于 AppCompatActivity 上 &ndash;&gt;-->
-        <!--<item name="windowNoTitle">true</item>-->
-        <!--&lt;!&ndash; 窗口背景色，设置成半透明的即可 &ndash;&gt;-->
-        <!--<item name="android:windowBackground">@color/colorGrayAlpha</item>-->
-        <!--&lt;!&ndash; 不开沉浸式 &ndash;&gt;-->
-        <!--<item name="android:windowFullscreen">false</item>-->
-        <!--&lt;!&ndash; 背景缓存颜色 &ndash;&gt;-->
-        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
-        <!--&lt;!&ndash; 是否悬浮在activity上，设置了就没有占满整个屏幕 &ndash;&gt;-->
-        <!--<item name="android:windowIsFloating">false</item>-->
-    <!--</style>-->
+    <style name="BitFrameDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <!-- 背景缓存颜色 -->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:gravity">center</item>
+        <!-- 不显示title，作用于 Activity 上 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 不显示title，作用于 AppCompatActivity 上 -->
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>
