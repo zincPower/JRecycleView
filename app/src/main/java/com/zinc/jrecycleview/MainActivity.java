@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.tv_mix).setOnClickListener(this);
         findViewById(R.id.tv_load_and_refresh).setOnClickListener(this);
+        findViewById(R.id.tv_diy_refresh).setOnClickListener(this);
         findViewById(R.id.tv_anim).setOnClickListener(this);
         findViewById(R.id.tv_swipe).setOnClickListener(this);
         findViewById(R.id.tv_stick_header).setOnClickListener(this);
@@ -54,7 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mMixDialog.show(getSupportFragmentManager(), "Mix");
                 break;
             case R.id.tv_load_and_refresh:
-                go(RefreshAndLoadActivity.class);
+                Intent intent1 = new Intent(this, RefreshAndLoadActivity.class);
+                intent1.putExtra(RefreshAndLoadActivity.IS_DIY, false);
+                startActivity(intent1);
+                break;
+            case R.id.tv_diy_refresh:
+                Intent intent2 = new Intent(this, RefreshAndLoadActivity.class);
+                intent2.putExtra(RefreshAndLoadActivity.IS_DIY, true);
+                startActivity(intent2);
                 break;
             case R.id.tv_swipe:
                 go(SwipeActivity.class);

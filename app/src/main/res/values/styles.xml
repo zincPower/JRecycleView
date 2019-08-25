@@ -12,7 +12,7 @@
 
     <style name="MainPageItemStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/selector_background_round</item>
         <item name="android:layout_margin">15dp</item>

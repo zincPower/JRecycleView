@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
+import com.zinc.jrecycleview.config.JRecycleViewManager;
+import com.zinc.jrecycleview.widget.MyRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
 
     private static final int PAGE_SIZE = 20;
 
+    public static final String IS_DIY = "isDiy";
+
     private JRecycleView mJRecycleView;
 
     private JRefreshAndLoadMoreAdapter mAdapter;
@@ -39,6 +43,8 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refresh_and_load);
+
+        boolean isDiy = getIntent().getBooleanExtra(IS_DIY, false);
 
         mJRecycleView = findViewById(R.id.j_recycle_view);
 
@@ -87,6 +93,10 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
 
             }, 2000);
         });
+
+        if (isDiy) {
+            mAdapter.setRefreshLoadView(new MyRefreshView(getBaseContext()));
+        }
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mJRecycleView.setAdapter(mAdapter);

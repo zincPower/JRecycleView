@@ -67,11 +67,10 @@ public class MyRefreshView extends IBaseRefreshLoadView {
 
     @Override
     protected View initView(Context context) {
-        this.mLoadView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.view_my_refresh, null, false);
-
-        //将loadView视图添加进RecycleView，且将其高度设置为0
-//        addView(mLoadView, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
-//        setGravity(Gravity.BOTTOM);
+        this.mLoadView = (RelativeLayout) LayoutInflater.from(context)
+                .inflate(R.layout.view_my_refresh,
+                        this,
+                        false);
 
         this.mIvMeituan = this.mLoadView.findViewById(R.id.iv_meituan);
         this.mIvMeituan.setBackgroundResource(R.drawable.meituan_pull_image);

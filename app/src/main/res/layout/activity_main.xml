@@ -4,39 +4,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_mix"
-        style="@style/MainPageItemStyle"
-        android:text="混合Demo" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_load_and_refresh"
-        style="@style/MainPageItemStyle"
-        android:text="刷新和加载Demo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_swipe"
-        style="@style/MainPageItemStyle"
-        android:text="侧滑Demo" />
+            <TextView
+                android:id="@+id/tv_mix"
+                style="@style/MainPageItemStyle"
+                android:text="混合Demo" />
 
-    <TextView
-        android:id="@+id/tv_anim"
-        style="@style/MainPageItemStyle"
-        android:text="动画进入Demo" />
+            <TextView
+                android:id="@+id/tv_load_and_refresh"
+                style="@style/MainPageItemStyle"
+                android:text="刷新和加载Demo" />
 
-    <TextView
-        android:id="@+id/tv_stick_header"
-        style="@style/MainPageItemStyle"
-        android:text="粘性头部Demo" />
+            <TextView
+                android:id="@+id/tv_diy_refresh"
+                style="@style/MainPageItemStyle"
+                android:text="自定义刷新Demo" />
 
-    <TextView
-        android:id="@+id/tv_stick_content"
-        style="@style/MainPageItemStyle"
-        android:text="粘性内容Demo" />
+            <TextView
+                android:id="@+id/tv_swipe"
+                style="@style/MainPageItemStyle"
+                android:text="侧滑Demo" />
 
-    <TextView
-        android:id="@+id/tv_diy"
-        style="@style/MainPageItemStyle"
-        android:text="DIY联动" />
+            <TextView
+                android:id="@+id/tv_anim"
+                style="@style/MainPageItemStyle"
+                android:text="动画进入Demo" />
+
+            <TextView
+                android:id="@+id/tv_stick_header"
+                style="@style/MainPageItemStyle"
+                android:text="粘性头部Demo" />
+
+            <TextView
+                android:id="@+id/tv_stick_content"
+                style="@style/MainPageItemStyle"
+                android:text="粘性内容Demo" />
+
+            <TextView
+                android:id="@+id/tv_diy"
+                style="@style/MainPageItemStyle"
+                android:text="DIY联动" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
