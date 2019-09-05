@@ -29,12 +29,9 @@ public class StickHeaderActivity extends AppCompatActivity {
     private static final int PAGE_SIZE = 20;
 
     private final List<String> mData = new ArrayList<>();
-    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private JRecycleView mJRecycleView;
     private TextView mTextView;
-
-    private JRefreshAndLoadMoreAdapter mAdapter;
 
     private float mRvOffset = 0;
 
@@ -52,27 +49,6 @@ public class StickHeaderActivity extends AppCompatActivity {
         getInitData();
 
         RecyclerView.Adapter adapter = new StickHeaderAdapter(this, mData);
-        this.mAdapter = new JRefreshAndLoadMoreAdapter(this, adapter);
-
-        this.mAdapter.setIsOpenRefresh(false);
-
-        this.mAdapter.setOnLoadMoreListener(() -> {
-            Toast.makeText(StickHeaderActivity.this,
-                    "触发加载更多",
-                    Toast.LENGTH_SHORT)
-                    .show();
-
-            mHandler.postDelayed(() -> {
-                if (mData.size() > 2 * PAGE_SIZE) {
-                    mAdapter.setLoadError();
-                } else {
-                    int size = mData.size();
-                    addData();
-                    mAdapter.setLoadComplete();
-                    mAdapter.notifyItemRangeInserted(size, PAGE_SIZE);
-                }
-            }, 2000);
-        });
 
         mJRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -95,7 +71,7 @@ public class StickHeaderActivity extends AppCompatActivity {
         });
 
         mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        mJRecycleView.setAdapter(mAdapter);
+        mJRecycleView.setAdapter(adapter);
 
     }
 
@@ -103,13 +79,6 @@ public class StickHeaderActivity extends AppCompatActivity {
         this.mData.clear();
         for (int i = 1; i <= PAGE_SIZE; ++i) {
             mData.add("zinc Power" + i);
-        }
-    }
-
-    public void addData() {
-        int size = mData.size();
-        for (int i = 1; i <= PAGE_SIZE; ++i) {
-            mData.add("zinc Power" + (i + size));
         }
     }
 

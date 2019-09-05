@@ -51,7 +51,8 @@ public class AnimActivity extends AppCompatActivity {
         getInitData();
 
         mAdapter = new AnimAdapter(this, data);
-        //加入视图动画
+        // 加入视图动画
+        // 设置动画（设置动画会默认开启动画）
         mAdapter.setAnimations(AnimFactory.getAnimSet(mType));
         mAdapter.setOpenAnim(true);
 

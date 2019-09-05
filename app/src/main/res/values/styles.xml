@@ -15,7 +15,10 @@
         <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/selector_background_round</item>
-        <item name="android:layout_margin">15dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">15dp</item>
     </style>

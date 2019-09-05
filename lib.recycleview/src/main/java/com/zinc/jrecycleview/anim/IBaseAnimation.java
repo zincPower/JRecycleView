@@ -17,7 +17,7 @@ import com.zinc.jrecycleview.config.JRecycleConfig;
 
 public abstract class IBaseAnimation {
 
-    private AnimatorSet set;
+    protected AnimatorSet mAnimSet;
 
     /**
      * 需要加载动画的视图，一般为ViewHolder中的itemView
@@ -25,27 +25,27 @@ public abstract class IBaseAnimation {
      */
     public AnimatorSet getAnimators(View view) {
 
-        set = new AnimatorSet();
+        mAnimSet = new AnimatorSet();
 
         initAnimatorSet();
         init(view);
 
-        return set;
+        return mAnimSet;
     }
 
     /**
      * 初始化动画集合
      */
     private void initAnimatorSet() {
-        set.setDuration(JRecycleConfig.ANIM_DURATION);
-        set.setInterpolator(new LinearInterpolator());
+        mAnimSet.setDuration(JRecycleConfig.ANIM_DURATION);
+        mAnimSet.setInterpolator(new LinearInterpolator());
     }
 
     /**
      * 增加同步动画
      */
     protected void addAnimTogether(Animator animator) {
-        set.playTogether(animator);
+        mAnimSet.playTogether(animator);
     }
 
     /**

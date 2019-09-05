@@ -93,14 +93,14 @@ public abstract class IBaseRefreshLoadView extends IBaseWrapperView {
     /**
      * @param delta 垂直增量
      */
-    public void onMove(int visibleHeight, float delta) {
+    public void onMove(int visibleHeight, int delta) {
 
         LogUtils.i(TAG, "[visibleHeight: " + visibleHeight + "; " +
                 "delta: " + delta + "]");
 
         //需要符合：1、可见高度大于0，即用户已有向下拉动；2、拉动距离要大于0
         if (visibleHeight > 0 || delta > 0) {
-            setVisibleHeight((int) (visibleHeight + delta));
+            setVisibleHeight((visibleHeight + delta));
 
             //当前状态为1、下拉刷新；2、释放刷新
             if (mCurState <= STATE_RELEASE_TO_ACTION) {

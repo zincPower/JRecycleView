@@ -14,9 +14,11 @@ import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 
 /**
- * @author Jiang zinc
- * @date 创建时间：2018/4/17
- * @description
+ * author       : Jiang zinc
+ * time         : 2018-04-17 16:55
+ * email        : 56002982@qq.com
+ * desc         : 仿美团下拉
+ * version      : 1.0.0
  */
 
 public class MyRefreshView extends IBaseRefreshLoadView {
@@ -34,6 +36,19 @@ public class MyRefreshView extends IBaseRefreshLoadView {
 
     public MyRefreshView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected View initView(Context context) {
+        this.mLoadView = (RelativeLayout) LayoutInflater.from(context)
+                .inflate(R.layout.view_my_refresh,
+                        this,
+                        false);
+
+        this.mIvMeituan = this.mLoadView.findViewById(R.id.iv_meituan);
+        this.mIvMeituan.setBackgroundResource(R.drawable.meituan_pull_image);
+
+        return mLoadView;
     }
 
     @Override
@@ -63,19 +78,6 @@ public class MyRefreshView extends IBaseRefreshLoadView {
     protected void onDone() {
         this.mIvMeituan.clearAnimation();
         this.mIvMeituan.setBackgroundResource(R.drawable.meituan_pull_image);
-    }
-
-    @Override
-    protected View initView(Context context) {
-        this.mLoadView = (RelativeLayout) LayoutInflater.from(context)
-                .inflate(R.layout.view_my_refresh,
-                        this,
-                        false);
-
-        this.mIvMeituan = this.mLoadView.findViewById(R.id.iv_meituan);
-        this.mIvMeituan.setBackgroundResource(R.drawable.meituan_pull_image);
-
-        return mLoadView;
     }
 
     @Override

@@ -1,37 +1,63 @@
-# JRecycleView
-封装RecycleView中常用的一些控件
+# JRecycleView——简单的让RecycleView更有趣
 
 >目录
-1、目前已实现功能和效果图
-2、如何导入
-3、如何使用
-4、高级设置
+一、功能介绍
+1、上拉加载，下拉刷新（可自定义视图）
+2、侧滑
+3、item显示动画
+4、item粘性
+5、混合使用
+6、DIY使用
+二、如何导入
+三、如何使用
+四、高级设置
 
-## 目前已实现功能：
-#### 1、上拉加载，下拉刷新（可自定义视图）
+## 一、简介
+封装工作中通常需要使用的列表功能(基于RecycleView)，在作者的实际项目中已使用有一年多。主要是为了让使用者更加专注于业务逻辑，同时又不失去界面交互性，达到JRecycleView的核心：**简单的让RecycleView更有趣**。
 
-框架自带默认下拉刷新和上拉加载更多效果图
+## 二、功能介绍：
+### 1、上拉加载，下拉刷新（可自定义视图）
 
-![默认视图](https://github.com/zincPower/JRecycleView/blob/master/pull_and_load.gif)
+#### (1) 框架自带默认下拉刷新和上拉加载更多效果图
 
-定义下拉刷新效果图
+![默认视图](https://github.com/zincPower/JRecycleView/blob/master/img/pull_and_load.gif)
 
-![自定义刷新视图](https://github.com/zincPower/JRecycleView/blob/master/diy_pull.gif)
+#### (2) 自定义下拉刷新效果图
 
-#### 2、侧滑
+![自定义刷新视图](https://github.com/zincPower/JRecycleView/blob/master/img/diy_pull_and_load.gif)
 
-侧滑效果图（可自行设置需要做有菜单）
+### 2、侧滑
 
-![侧滑](https://github.com/zincPower/JRecycleView/blob/master/swipe_multi.gif)
+侧滑效果图（可自行定义菜单）
 
-#### 3、item显示动画
+![侧滑](https://github.com/zincPower/JRecycleView/blob/master/img/swipe.gif)
 
-给item添加动画效果图（可自行定义，也可使用框架带的效果）
+### 3、item显示动画
 
-![item动画](https://github.com/zincPower/JRecycleView/blob/master/anim_item.gif)
+#### (1) 给item添加动画效果图（可自行定义，也可使用框架带的效果）
 
-## 如何导入
-#### 1、在项目的根gradle中加入如下代码：
+![item动画](https://github.com/zincPower/JRecycleView/blob/master/img/anim_item.gif)
+
+### 4、item粘性
+
+#### (1) 粘性头部效果
+
+![粘性头部效果](https://github.com/zincPower/JRecycleView/blob/master/img/stick_head.gif)
+
+#### (2) 粘性内容效果
+
+![粘性内容效果](https://github.com/zincPower/JRecycleView/blob/master/img/stick_content.gif)
+
+### 5、混合使用
+
+![混合使用](https://github.com/zincPower/JRecycleView/blob/master/img/multi_use.gif)
+
+### 6、DIY使用
+![diy](https://github.com/zincPower/JRecycleView/blob/master/img/diy.gif)
+
+## 二、如何导入
+
+### 1、在项目的根gradle中加入 jitpack 仓库：
 ```
 allprojects {
 	repositories {
@@ -40,22 +66,27 @@ allprojects {
 	}
 }
 ```
-#### 2、在library或app的gradle中添加如下代码：
+
+### 2、在library或app的gradle中添加如下代码：
 ```
 dependencies {
-    compile 'com.github.zincPower:JRecycleview:0.1.2'
+    compile 'com.github.zincPower:JRecycleview:latest.release'
 }
 ```
 
-## 如何使用
-#### 1、使用**下拉刷**和**上拉加载更多**效果的两个步骤：
+## 三、如何使用
 
-（1）包装您的adapter，此过程您的adapter中的逻辑无需任何改动
+### 1、使用 **下拉刷新** 和 **上拉加载更多** 效果的两个步骤：
+
+#### (1) 包装您的Adapter
+
+> 此过程您的原先使用的Adapter无需任何改动，不会与业务逻辑耦合
+
 ```
-//只需将你所编写的adapter传入JRefreshAndLoadMoreAdapter
-JRefreshAndLoadMoreAdapter mAdapter = new JRefreshAndLoadMoreAdapter(this, yourAdapter);
+// 只需将你所编写的 Adapter 替换此处的 "YourAdapter" 传入 JRefreshAndLoadMoreAdapter
+JRefreshAndLoadMoreAdapter mAdapter = new JRefreshAndLoadMoreAdapter(this, YourAdapter);
 
-//设置下拉刷新监听
+// 设置下拉刷新监听
 mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener() {
     @Override
     public void onRefreshing() {
@@ -63,7 +94,7 @@ mAdapter.setOnRefreshListener(new JRefreshAndLoadMoreAdapter.OnRefreshListener()
     }
 });
 
-//设置加载更多监听
+// 设置加载更多监听
 mAdapter.setOnLoadMoreListener(new JRefreshAndLoadMoreAdapter.OnLoadMoreListener() {
     @Override
     public void onLoading() {
@@ -74,15 +105,21 @@ mAdapter.setOnLoadMoreListener(new JRefreshAndLoadMoreAdapter.OnLoadMoreListener
 mJRecycleView.setLayoutManager(new LinearLayoutManager(this));
 mJRecycleView.setAdapter(mAdapter);
 ```
-(2)布局中的RecycleView需使用JRecycleView
+
+#### (2) 布局中的 RecycleView 需使用JRecycleView
+
 ```
 <com.zinc.jrecycleview.JRecycleView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</com.zinc.jrecycleview.JRecycleView>
+    android:layout_height="match_parent"/>
 ```
-如此便可使用**下拉刷新**和**上拉加载更多**效果，如果需要关闭其中一个功能，可通过如下代码
+
+至此便可使用 **下拉刷新** 和 **上拉加载更多** 效果😄
+
+#### (3) 按需关闭其中一个功能，可通过如下代码
+
+> 默认为开启 "下拉刷新" 和 "上拉加载更多" 功能
+
 ```
 //关闭加载更多
 this.mAdapter.setIsOpenLoadMore(false);
@@ -90,227 +127,360 @@ this.mAdapter.setIsOpenLoadMore(false);
 this.mAdapter.setIsOpenRefresh(false);
 ```
 
-(3)更多操作
-下拉刷新结束，即数据刷新完时，调用如下代码结束刷新
-```
-//如果有上拉加载更多，调用此句重置上拉加载状态
-mAdapter.resetLoadMore();
+#### (4) "下拉刷新" 状态更新
 
+```
+// 将 "下拉刷新" 状态置为刷新完成 (下拉刷新结束，即数据刷新完时，调用如下代码结束刷新)
 mAdapter.setRefreshComplete(true);
 ```
 
-上拉加载更多完成后的操作
+#### (5) "上拉加载更多" 状态更新
+
 ```
-//加载完毕，但还未加载全部数据
+// 加载完毕，但还未加载全部数据
 mAdapter.setLoadComplete();
 
-//加载出错
+// 加载出错
 mAdapter.setLoadError();
 
-//没有更多数据
+// 没有更多数据
 mAdapter.setNoMore();
 ```
 
+### 2、使用侧滑效果
 
-#### 2、使用侧滑效果
-
-（1）adapter中需要使用侧滑的ViewHolder继承JSwipeViewHolder，需要实现以下几个方法
+#### (1) Adapter 中需要使用侧滑的 ViewHolder 继承 JSwipeViewHolder，按需实现以下几个方法
 ```
+// 让你的 ViewHolder 继承 JSwipeViewHolder
 class MyContentViewHolder extends JSwipeViewHolder {
 
-    public MyContentViewHolder(View itemView) {
+    MyContentViewHolder(View itemView) {
         super(itemView);
     }
 
-    //传递左菜单的布局，如果该ViewHolder不需要左菜单则传递 NONE(该值在父类中已定义) 
+    // 传递左菜单的布局，如果不需要左菜单，则重写该方法即可
     @Override
     public int getLeftMenuLayout() {
         return R.layout.swipe_left_menu;
     }
 
-	  //传递右菜单的布局，如果该ViewHolder不需要右菜单则传递 NONE(该值在父类中已定义) 
+    // 传递右菜单的布局，如果不需要右菜单，则重写该方法即可
     @Override
     public int getRightMenuLayout() {
         return R.layout.swipe_right_menu;
     }
 
-	  //传递内容视图
+    // 传递你的内容布局
     @Override
     public int getContentLayout() {
         return R.layout.swipe_content;
     }
-
-    //初始化左菜单视图的控件
+    
+    // 初始化左菜单视图的控件，
     @Override
     public void initLeftMenuItem(FrameLayout flLeftMenu) {
+        tvLeftMenu = flLeftMenu.findViewById(R.id.tv_left_menu);
+        tvLeftMenuTwo = flLeftMenu.findViewById(R.id.tv_left_menu_two);
     }
 
-	  //初始化右菜单视图的控件
+
     @Override
     public void initRightMenuItem(FrameLayout flRightMenu) {
-        
+        tvRightMenu = flRightMenu.findViewById(R.id.tv_right_menu);
+        tvRightMenuTwo = flRightMenu.findViewById(R.id.tv_right_menu_two);
     }
 
-	  //初始化内容视图的控件
     @Override
-    public void initContentMenuItem(FrameLayout flContent) {
-        
+    public void initContentItem(FrameLayout flContent) {
+        tvContent = flContent.findViewById(R.id.tv_content);
+    }
+
+    /**
+     * 初始化你的视图控件（包括左右菜单和内容）
+     *
+     * 也可以选择重写以下方法，在各自的方法中初始化各自负责的控件：
+     * 1、initLeftMenuItem：初始化左菜单视图的控件
+     * 2、initRightMenuItem：初始化右菜单视图的控件
+     * 3、initContentItem：初始化内容视图的控件
+     **/
+    @Override
+    public void initItem(FrameLayout frameLayout) {
+
     }
 }
 ```
-（2）在onCreateViewHolder中，使用的layout需为JRecycleConfig.SWIPE_LAYOUT
+
+#### (2) 在 onCreateViewHolder 中，使用的 layout 需为 JRecycleConfig.SWIPE_LAYOUT
 ```
 @Override
 public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     switch (viewType) {
         case 你自己定义的对应的type:
         	//侧滑的view，此处必须要传JRecycleConfig.SWIPE_LAYOUT
-            return new MyContentViewHolder(mLayoutInflater.inflate(JRecycleConfig.SWIPE_LAYOUT, parent, false));
+            return new MyContentViewHolder(
+                    mLayoutInflater.inflate(JRecycleConfig.SWIPE_LAYOUT, parent, false)
+            );
 
         ······ more ······
     }
 }
 ```
-(3)布局中的RecycleView需使用JRecycleView
+
+#### (3) 布局中的 RecycleView 需使用 JRecycleView
 ```
 <com.zinc.jrecycleview.JRecycleView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</com.zinc.jrecycleview.JRecycleView>
+    android:layout_height="match_parent"/>
 ```
-如此便可使用**侧滑**效果
 
-#### 3、动画效果
+至此便可使用 **侧滑** 效果
 
-(1)将您的 adapter 继承 **JBaseRecycleAdapter**
+#### (4) 将侧滑出来的菜单关闭
+```
+myContentViewHolder.getSwipeItemLayout().close();
+```
+
+#### (5) 禁止侧滑
+
+有时因某些业务需求，需要禁止原本有侧滑效果的 item 能侧滑，则使用下面代码
+
+```
+myContentViewHolder.getSwipeItemLayout().setSwipeEnable(false);
+```
+
+但需要重新开启侧滑效果时，只需要重新将其设置为true，即如下
+
+```
+myContentViewHolder.getSwipeItemLayout().setSwipeEnable(true);
+```
+
+### 3、动画效果
+
+#### (1) 将您的 Adapter 继承 **JBaseRecycleAdapter**
 ```
 public class YourAdapter extends JBaseRecycleAdapter<RecyclerView.ViewHolder> {
 	······
 }
 ```
-(2)开启动画
-```
-//设置动画（设置动画会默认开启动画）
-adapter.setAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_BOTTOM));
-//开启动画（如果不设置动画，便使用默认效果 AnimFactory.SLIDE_BOTTOM ）
-adapter.setOpenAnim(true);
 
+#### (2) 开启动画
 ```
-(3)布局中的RecycleView需使用JRecycleView
+// 开启动画，默认效果 AnimFactory.SLIDE_BOTTOM（从底部进入）
+adapter.setOpenAnim(true);
+```
+
+#### (3) 布局中的RecycleView需使用JRecycleView
 ```
 <com.zinc.jrecycleview.JRecycleView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</com.zinc.jrecycleview.JRecycleView>
-```
-如此便可使用**动画效果**
-
-## 高级设置
-#### 1、自定义 刷新视图 和 加载更多 视图
-（1）继承 IBaseRefreshLoadView（下拉刷新）或 IBaseLoadMoreView（上拉加载）类
-
-IBaseRefreshLoadView（下拉刷新）需重写以下方法
-```
-//获取 刷新 的视图
-View getLoadView();
-
-//初始化 刷新 的视图
-void initView();
-
-//下拉刷新（下拉超过视图高度前）
-void onPullToAction();
-
-//释放刷新（下拉超过视图高度后）
-void onReleaseToAction();
-
-//执行刷新
-void onExecuting();
-
-//执行完
-void onDone();
-
-//这个方法是下拉过程中（手指未释放）回调，
-//是为了更加细致的控制视图中的动画效果（可替换onPullToAction和onReleaseToAction）
-void onMoving(MoveInfo moveInfo);
+    android:layout_height="match_parent"/>
 ```
 
-IBaseLoadMoreView（上拉加载）需重写以下方法
-```
-//获取 加载更多 的视图
-View getLoadView();
+至此便可使用 **动画效果**
 
-//初始化 加载更多 的视图
-void initView();
-
-//上拉加载（上拉超过视图高度前）
-void onPullToAction();
-
-//上拉刷新（上拉超过视图高度后）
-void onReleaseToAction();
-
-//执行中
-void onExecuting();
-
-//执行完
-void onDone();
-
-//这个方法是下拉过程中（手指未释放）回调，
-//是为了更加细致的控制视图中的动画效果（可替换onPullToAction和onReleaseToAction）
-void onMoving(MoveInfo moveInfo);
-
-//加载出错
-void onError();
-
-//没有更多数据
-void onNoMore();
+#### (4) 设置动画效果
 ```
-
-(2)将自定义的视图设置（全局使用和部分视图）
-全局设置，可在任何地方设置，包括Application，但是只有运行该代码后才有效果，否则运行该代码前使用的还是默认视图
-```
-//下拉刷新
-JRecycleViewManager.getInstance().setBaseRefreshLoadView(new MyRefreshView(getBaseContext()));
-//上拉加载
-JRecycleViewManager.getInstance().setBaseLoadMoreView(LoadMoreView);
-```
-针对某个View做自定义视图
-```
-//下拉刷新
-this.mAdapter.setRefreshLoadView(new MyRefreshView(this));
-//上拉加载
-this.mAdapter.setLoadMoreView(LoadMoreView);
-```
-
-#### 2、自定义动画
-(1)继承IBaseAnimation，重写init(View view)方法，编写自己的动画逻辑
-```
-public class SlideInTopAnimation extends IBaseAnimation {
-    @Override
-    protected void init(View view) {
-        //定义你的动画，使用addAnimTogether方法，将动画添加进动画组
-    }
-}
-```
-(2)使用IBaseAnimation[]{}将第一步的类包装，可以设置多个，item会按照顺序使用动画
-```
-IBaseAnimation[] set = new IBaseAnimation[]{new SlideInTopAnimation()};
-```
-(3)使用动画
-```
-//执行了这句后，全部的默认动画遍使用了该动画
-JRecycleViewManager.getInstance().setItemAnimations(YOUR ANIM);
-
-//针对某个视图使用特定动画
+// 设置动画（设置动画会默认开启动画）
 adapter.setAnimations(AnimFactory.getAnimSet(AnimFactory.SLIDE_BOTTOM));
 ```
 
+### 4、item粘性
 
+**任何一个item** 都能支持粘性
 
+> tip：如果只是需要粘性功能，不需要使用"改动"或"装饰"原来的Adapter
 
+#### (1) 让 ViewHolder 实现 IStick 接口
+```
+class StickHolder extends RecyclerView.ViewHolder implements IStick {
+    StickHolder(View itemView) {
+        super(itemView);
+    }
+}
+```
 
+#### (2) 布局中的RecycleView需使用JRecycleView
+```
+<com.zinc.jrecycleview.JRecycleView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+```
 
+至此便可使用 **item粘性效果**
 
+## 四、高级设置
 
+### 1、自定义 "刷新视图" 和 "加载更多视图"
 
+#### (1) 自定义 "刷新视图"
+**第一步**：继承 IBaseRefreshLoadView
+
+**第二步**：重写以下方法
+```
+/**
+ * 初始化 刷新 的视图
+ */
+protected View initView(Context context) {
+    return mLoadView;
+}
+
+/**
+ * 获取 刷新 的视图
+ */
+protected View getLoadView() {
+    return mLoadView;
+}
+
+/**
+ * 等待上拉 或 等待下拉的状态 视图表现
+ */
+@Override
+protected void onPullToAction() {}
+
+/**
+ * 释放执行（释放刷新 或 释放加载更多）视图表现
+ */
+@Override
+protected void onReleaseToAction() {}
+
+/**
+ * 执行中 视图表现
+ */
+@Override
+protected void onExecuting() {}
+
+/**
+ * 执行完视图表现
+ */
+@Override
+protected void onDone() {}
+
+/**
+ * 初始化视图，用于加载自己的视图
+ * 拉动过程中的回调，可以更加细微的处理动画（可替换 onPullToAction 和 onReleaseToAction ）
+ */
+@Override
+protected void onMoving(MoveInfo moveInfo) {}
+```
+
+**第三步**：通过以下代码进行设置自定义的下拉刷新效果
+
+**全局生效**
+```
+// MyRefreshView 即为你定义的类
+JRecycleViewManager.getInstance().setRefreshLoadView(new MyRefreshView(getBaseContext()));
+```
+
+**单页面生效**
+```
+// MyRefreshView 即为你定义的类
+mAdapter.setRefreshLoadView(new MyRefreshView(getBaseContext()));
+```
+
+#### (2) 自定义 "上拉加载更多"
+**第一步**：继承 IBaseLoadMoreView
+
+**第二步**：重写以下方法
+```
+/**
+ * 获取 加载更多 的视图
+ */
+@Override
+protected View getLoadView() {
+    return ....;
+}
+
+/**
+ * 初始化 加载更多 的视图
+ */
+@Override
+protected View initView(Context context) {
+    return ....;
+}
+
+/**
+ * 上拉加载（上拉超过视图高度前）
+ */
+@Override
+protected void onPullToAction() {}
+
+/**
+ * 释放刷新（上拉超过视图高度后）
+ */
+@Override
+protected void onReleaseToAction() {}
+
+/**
+ * 执行中
+ */
+@Override
+protected void onExecuting() {}
+
+/**
+ * 执行完
+ */
+@Override
+protected void onDone() {}
+
+/**
+ * 加载出错
+ */
+@Override
+protected void onError() {}
+
+/**
+ * 没有更多数据
+ */
+@Override
+protected void onNoMore() {}
+  
+```
+
+**第三步**：通过以下代码进行设置自定义的上拉加载更多效果
+
+**全局生效**
+> 可在任何地方设置，包括Application，但是只有运行该代码后才有效果，否则运行该代码前使用的还是默认视图
+```
+JRecycleViewManager.getInstance().setLoadMoreView(LoadMoreView);
+```
+
+**单页面生效**
+```
+mAdapter.setLoadMoreView(LoadMoreView);
+```
+
+### 2、自定义动画
+
+#### (1) 编写动画
+**第一步**：继承 IBaseAnimation
+
+**第二步**：重写下以下方法，编写自己的动画逻辑
+```
+@Override
+protected void init(View view) {}
+```
+
+**第三步**：通过成员对象 mAnimSet 进行设置动画
+
+#### (2) 设置动画
+
+**=====全局设置=====**
+
+**第一步**：使用 IBaseAnimation[]{} 将上面的类包装
+
+> 可以设置多个，item会按照顺序使用动画
+```
+// SlideInTopAnimation 为你编写的类
+IBaseAnimation[] set = new IBaseAnimation[]{new SlideInTopAnimation()};
+```
+**第二步**：使用动画
+
+```
+JRecycleViewManager.getInstance().setItemAnimations(set);
+```
+
+**=====单页面设置======**
+```
+// SlideInTopAnimation 为你编写的类
+mAdapter.setAnimations(new SlideInTopAnimation());
+```

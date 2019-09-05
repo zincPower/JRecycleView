@@ -35,7 +35,7 @@ public class JRecycleView extends RecyclerView {
     // 最后拖动Y的坐标
     private float mLastY = -1;
 
-    private static final float DRAG_FACTOR = 2f;
+    private static final int DRAG_FACTOR = 1;
 
     // 刷新视图的下标
     private int mRefreshViewPos = 0;
@@ -118,7 +118,7 @@ public class JRecycleView extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 mIsTouching = true;
 
-                float deltaY = e.getRawY() - mLastY;
+                int deltaY = (int) (e.getRawY() - mLastY);
 
                 LogUtils.i(TAG, "loadMoreView: [rawY: " + e.getRawY() + "; " +
                         "lastY: " + mLastY + "; " +
@@ -134,7 +134,7 @@ public class JRecycleView extends RecyclerView {
 
                     int visibleHeight = getRefreshVisibleHeight();
                     if (visibleHeight != -1) {
-                        getRefreshLoadView().onMove(visibleHeight, deltaY / DRAG_FACTOR);
+                        getRefreshLoadView().onMove(visibleHeight, deltaY >> DRAG_FACTOR);
                     }
 
                     //当refresh视图出现 且 当前状态为"下拉刷新"或"释放刷新"时，
@@ -149,9 +149,9 @@ public class JRecycleView extends RecyclerView {
                     int visibleHeight = getLoadMoreVisibleHeight();
                     if (visibleHeight != -1) {
                         if (deltaY < 0) {   //向上滑动
-                            getLoadMoreView().onMove(visibleHeight, -deltaY / DRAG_FACTOR);
+                            getLoadMoreView().onMove(visibleHeight, -deltaY >> DRAG_FACTOR);
                         } else {            //向下滑动
-                            getLoadMoreView().onMove(visibleHeight, -deltaY / DRAG_FACTOR);
+                            getLoadMoreView().onMove(visibleHeight, -deltaY >> DRAG_FACTOR);
                         }
                         return super.onTouchEvent(e);
                     }
@@ -172,10 +172,8 @@ public class JRecycleView extends RecyclerView {
 
                 mIsTouching = false;
 
-                if (isScrolling) {
-                    if (isScrollStick()) {
-                        return true;
-                    }
+                if (isScrollStick()) {
+                    return true;
                 }
 
                 break;
@@ -320,6 +318,10 @@ public class JRecycleView extends RecyclerView {
      */
     private boolean isScrollStick() {
 
+        if (!isScrolling) {
+            return false;
+        }
+
         View theFirstView = getChildAt(0);
 
         if (theFirstView == null) {
@@ -349,6 +351,8 @@ public class JRecycleView extends RecyclerView {
         if (isInAction) {
             return false;
         }
+
+        stopScroll();
 
         float y = theFirstView.getY();
         int height = theFirstView.getHeight();

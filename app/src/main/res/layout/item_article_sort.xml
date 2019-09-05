@@ -5,6 +5,6 @@
     android:layout_height="30dp"
     android:background="@color/colorRed200"
     android:gravity="center"
-    android:text="sort"
+    android:text="Sort"
     android:textColor="@android:color/white"
     android:textSize="14sp" />

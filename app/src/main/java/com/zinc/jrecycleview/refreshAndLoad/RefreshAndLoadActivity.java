@@ -1,9 +1,9 @@
 package com.zinc.jrecycleview.refreshAndLoad;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
-import com.zinc.jrecycleview.config.JRecycleViewManager;
 import com.zinc.jrecycleview.widget.MyRefreshView;
 
 import java.util.ArrayList;
@@ -86,10 +85,8 @@ public class RefreshAndLoadActivity extends AppCompatActivity {
                 getRefreshData();
                 // 将 "上拉加载更多" 重置
                 mAdapter.resetLoadMore();
-                // 将 "下拉刷新"
+                // 将 "下拉刷新" 状态置为刷新完成
                 mAdapter.setRefreshComplete();
-                // 刷新数据
-                mAdapter.notifyDataSetChanged();
 
             }, 2000);
         });
