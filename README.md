@@ -70,7 +70,7 @@ allprojects {
 ### 2、在library或app的gradle中添加如下代码：
 ```
 dependencies {
-    compile 'com.github.zincPower:JRecycleview:latest.release'
+    implementation 'com.github.zincPower:JRecycleview:latest.release'
 }
 ```
 
