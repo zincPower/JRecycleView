@@ -11,6 +11,7 @@
 二、如何导入<br/>
 三、如何使用<br/>
 四、高级设置<br/>
+五、作者简介<br/>
 
 ## 一、简介
 封装工作中通常需要使用的列表功能(基于RecycleView)，在作者的实际项目中已使用有一年多。主要是为了让使用者更加专注于业务逻辑，同时又不失去界面交互性，达到JRecycleView的核心：**简单的让RecycleView更有趣**。
@@ -464,7 +465,7 @@ protected void init(View view) {}
 
 #### (2) 设置动画
 
-**=====全局设置=====**
+**全局设置**
 
 **第一步**：使用 IBaseAnimation[]{} 将上面的类包装
 
@@ -479,8 +480,24 @@ IBaseAnimation[] set = new IBaseAnimation[]{new SlideInTopAnimation()};
 JRecycleViewManager.getInstance().setItemAnimations(set);
 ```
 
-**=====单页面设置======**
+**单页面设置**
 ```
 // SlideInTopAnimation 为你编写的类
 mAdapter.setAnimations(new SlideInTopAnimation());
 ```
+
+## 五、作者简介
+### 1、个人博客
+掘金：[https://juejin.im/user/5c3033ef51882524ec3a88ba/posts](https://juejin.im/user/5c3033ef51882524ec3a88ba/posts)
+
+csdn：[https://blog.csdn.net/weixin_37625173](https://blog.csdn.net/weixin_37625173)
+
+github：[https://github.com/zincPower](https://github.com/zincPower)
+
+### 2、联系方式
+微信 
+![](https://github.com/zincPower/JRecycleView/blob/master/img/zincWx.jpg)
+
+### 3、赞赏
+如果觉得该框架对您有所帮助，那就赞赏一下吧😄
+![](https://github.com/zincPower/JRecycleView/blob/master/img/zincPay.jpg)
