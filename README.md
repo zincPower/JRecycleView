@@ -495,9 +495,13 @@ csdn：[https://blog.csdn.net/weixin_37625173](https://blog.csdn.net/weixin_3762
 github：[https://github.com/zincPower](https://github.com/zincPower)
 
 ### 2、联系方式
+
 微信 
+
 ![](https://github.com/zincPower/JRecycleView/blob/master/img/zincWx.jpg)
 
 ### 3、赞赏
+
 如果觉得该框架对您有所帮助，那就赞赏一下吧😄
+
 ![](https://github.com/zincPower/JRecycleView/blob/master/img/zincPay.jpg)
