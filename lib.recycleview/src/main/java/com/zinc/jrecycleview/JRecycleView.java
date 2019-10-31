@@ -127,6 +127,8 @@ public class JRecycleView extends RecyclerView {
                 mLastY = e.getRawY();
 
                 if (handleTouch(e, deltaY)) {
+                    e.setAction(MotionEvent.ACTION_DOWN);
+                    super.onTouchEvent(e);
                     return false;
                 }
 
@@ -141,6 +143,10 @@ public class JRecycleView extends RecyclerView {
                     // 需要RecycleView不捕获该事件，否则会有问题
                     if (visibleHeight > 0 &&
                             getRefreshLoadView().getCurState() < IBaseWrapperView.STATE_EXECUTING) {
+
+                        e.setAction(MotionEvent.ACTION_DOWN);
+                        super.onTouchEvent(e);
+
                         return false;
                     }
                 }
