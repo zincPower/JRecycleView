@@ -74,7 +74,9 @@ public class YctcArticleListActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(MotionEvent event, float deltaY) {
 
-                int height = llSubCategory.getHeight();
+                // 这里要使用 llSubCategory.getLayoutParams().height;
+                // 因为 llSubCategory.getHeight() 的值为可见值，操作过快会有可能和预期不同
+                int height = llSubCategory.getLayoutParams().height;
 
                 Log.i(TAG, "onTouch: [height:" + height + "; deltaY:" + deltaY + "]");
 
@@ -91,7 +93,9 @@ public class YctcArticleListActivity extends AppCompatActivity {
             @Override
             public boolean onUp(MotionEvent event) {
 
-                int curHeight = llSubCategory.getHeight();
+                int curHeight = llSubCategory.getLayoutParams().height;
+
+                Log.i(TAG, "activity onUp: " + curHeight);
 
                 if (curHeight >= mSubHeight || curHeight <= 0) {
                     return false;
@@ -102,8 +106,6 @@ public class YctcArticleListActivity extends AppCompatActivity {
                 if (mAnim.isRunning()) {
                     mAnim.cancel();
                 }
-
-                mAnim.setIntValues();
 
                 if (curHeight > halfHeight) {
                     mAnim.setIntValues(curHeight, mSubHeight);
@@ -183,19 +185,12 @@ public class YctcArticleListActivity extends AppCompatActivity {
     }
 
     private void initAnim() {
-        mAnim = ValueAnimator.ofInt(0, mSubHeight);
+        mAnim = new ValueAnimator();
         mAnim.setDuration(DURATION);
         mAnim.addUpdateListener(animation -> {
             int value = (int) animation.getAnimatedValue();
             setSubCateHeight(value);
         });
-
-//        mHideAnim = ValueAnimator.ofInt(mSubHeight, 0);
-//        mHideAnim.setDuration(DURATION);
-//        mHideAnim.addUpdateListener(animation -> {
-//            int value = (int) animation.getAnimatedValue();
-//            setSubCateHeight(value);
-//        });
     }
 
     private void setSubCateHeight(int height) {
@@ -212,61 +207,20 @@ public class YctcArticleListActivity extends AppCompatActivity {
         llSubCategory.setLayoutParams(layoutParams);
     }
 
-//    /**
-//     * 处理滚动
-//     *
-//     * @param dy 滚动量
-//     */
-//    private void handleScroll(int dy) {
-//
-//        if (dy > 0) {   // 向上滑动
-//            handleScrollToTop(dy);
-//        } else {        // 向下滑动
-//            handleScrollToDown(dy);
-//        }
-//
-//    }
-//
-//    private void handleScrollToDown(int dy) {
-//        if (mHideAnim.isRunning()) {
-//            mHideAnim.cancel();
-//        }
-//
-//        if (mShowAnim.isRunning()) {
-//            return;
-//        }
-//
-//        if (llSubCategory.getHeight() >= mSubHeight) {
-//            Log.i(TAG, "handleScrollToDown: [height: " + llSubCategory.getHeight() + "; "
-//                    + "subHeight: " + mSubHeight + "]");
-//            return;
-//        }
-//
-//        Log.i(TAG, "handleScrollToDown");
-//        mShowAnim.start();
-//    }
-//
-//    private void handleScrollToTop(int dy) {
-//
-//        if (mShowAnim.isRunning()) {
-//            mShowAnim.cancel();
-//        }
-//
-//        if (mHideAnim.isRunning()) {
-//            return;
-//        }
-//
-//        if (llSubCategory.getHeight() <= 0) {
-//            return;
-//        }
-//
-//        Log.i(TAG, "handleScrollToTop");
-//        mHideAnim.start();
-//    }
-
     private void initData() {
         mData.clear();
-        mData.add(new YctcData(YctcArticleAdapter.BANNER, "Banner"));
+        mData.add(new YctcData(YctcArticleAdapter.BANNER,
+                "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner" +
+                        "BannerBannerBannerBannerBanner"));
         mData.add(new YctcData(YctcArticleAdapter.SORT, "Sort"));
         for (int i = 1; i <= PAGE_SIZE; ++i) {
             mData.add(new YctcData(YctcArticleAdapter.CONTENT, "Content " + i));
