@@ -3,21 +3,18 @@ package com.zinc.jrecycleview.widget;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.zinc.librecycleview.R;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 15:35
  * email        : 56002982@qq.com
  * desc         : loading

@@ -6,7 +6,7 @@ import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2019-04-17 12:31
  * email        : 56002982@qq.com
  * desc         : JRecycleView 的配置管理

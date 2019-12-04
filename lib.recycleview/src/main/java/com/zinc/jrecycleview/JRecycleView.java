@@ -2,25 +2,26 @@ package com.zinc.jrecycleview;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.listener.JRecycleListener;
-import com.zinc.jrecycleview.loadview.base.IBaseWrapperView;
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
+import com.zinc.jrecycleview.loadview.base.IBaseWrapperView;
 import com.zinc.jrecycleview.stick.IStick;
 import com.zinc.jrecycleview.swipe.JSwipeItemLayout;
 import com.zinc.jrecycleview.utils.LogUtils;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17
  * email        : 56002982@qq.com
  * desc         : 丰富的RecycleView:
@@ -375,10 +376,7 @@ public class JRecycleView extends RecyclerView {
     //========================下拉刷新更多 start==============================
 
     /**
-     * @date 创建时间 2018/3/18
-     * @author Jiang zinc
-     * @Description 是否滚至最顶端
-     * @version
+     * 是否滚至最顶端
      */
     private boolean isScrolledTop() {
         // 20181126 修复

@@ -1,7 +1,7 @@
 package com.zinc.jrecycleview.anim;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-12 12:24
  * email        : 56002982@qq.com
  * desc         : 动画工厂

@@ -3,9 +3,10 @@ package com.zinc.jrecycleview.anim;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-17 22:23
  * email        : 56002982@qq.com
  * desc         : 动画

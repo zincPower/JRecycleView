@@ -1,10 +1,11 @@
 package com.zinc.jrecycleview.mix.dialog;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-24 23:33
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 混合选择列表数据
+ * version      : 1.0.0
  */
 public class MixShowInfoData {
 
@@ -12,7 +13,7 @@ public class MixShowInfoData {
     private String name;
     private boolean isSelect;
 
-    public MixShowInfoData(int type, String name) {
+    MixShowInfoData(int type, String name) {
         this.type = type;
         this.name = name;
         this.isSelect = false;

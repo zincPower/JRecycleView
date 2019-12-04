@@ -1,15 +1,16 @@
 package com.zinc.jrecycleview.adapter;
 
 import android.animation.AnimatorSet;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.anim.IBaseAnimation;
 import com.zinc.jrecycleview.config.JRecycleConfig;
 import com.zinc.jrecycleview.config.JRecycleViewManager;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-12 10:28
  * email        : 56002982@qq.com
  * desc         : JBaseRecycleAdapter

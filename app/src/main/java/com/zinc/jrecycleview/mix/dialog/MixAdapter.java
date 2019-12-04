@@ -1,13 +1,14 @@
 package com.zinc.jrecycleview.mix.dialog;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 
@@ -15,10 +16,11 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-24 22:03
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 混合适配器
+ * version      : 1.0.0
  */
 public class MixAdapter extends RecyclerView.Adapter<MixAdapter.AnimViewHolder> {
 
@@ -26,8 +28,8 @@ public class MixAdapter extends RecyclerView.Adapter<MixAdapter.AnimViewHolder> 
     private final LayoutInflater mInflater;
     private final List<MixShowInfoData> mData;
 
-    public MixAdapter(Context context,
-                      List<MixShowInfoData> data) {
+    MixAdapter(Context context,
+               List<MixShowInfoData> data) {
         this.mContext = new WeakReference<>(context);
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;

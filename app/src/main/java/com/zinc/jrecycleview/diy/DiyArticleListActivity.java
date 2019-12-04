@@ -4,16 +4,17 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
@@ -24,16 +25,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-19 11:51
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 自定义联动视图
+ * version      : 1.0.0
  */
-public class YctcArticleListActivity extends AppCompatActivity {
+public class DiyArticleListActivity extends AppCompatActivity {
 
-    private static final String TAG = "YctcArticleListActivity";
+    private static final String TAG = "DiyArticleListActivity";
 
-    private static final int OFFSET = 0;
     private static final int DURATION = 200;
 
     private int mSubHeight;
@@ -46,8 +47,8 @@ public class YctcArticleListActivity extends AppCompatActivity {
     private TextView tvTab;
     private TextView tvSort;
 
-    private YctcArticleAdapter mAdapter;
-    private final List<YctcData> mData = new ArrayList<>();
+    private DiyArticleAdapter mAdapter;
+    private final List<DiyData> mData = new ArrayList<>();
 
     private ValueAnimator mAnim;
 
@@ -133,8 +134,8 @@ public class YctcArticleListActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (childViewHolder instanceof YctcArticleAdapter.SortViewHolder
-                        || childViewHolder instanceof YctcArticleAdapter.ContentViewHolder) {
+                if (childViewHolder instanceof DiyArticleAdapter.SortViewHolder
+                        || childViewHolder instanceof DiyArticleAdapter.ContentViewHolder) {
                     tvSort.setVisibility(View.VISIBLE);
                 } else {
                     tvSort.setVisibility(View.GONE);
@@ -144,7 +145,7 @@ public class YctcArticleListActivity extends AppCompatActivity {
 
         initData();
 
-        YctcArticleAdapter yctcArticleAdapter = new YctcArticleAdapter(this, mData);
+        DiyArticleAdapter yctcArticleAdapter = new DiyArticleAdapter(this, mData);
         JRefreshAndLoadMoreAdapter adapter
                 = new JRefreshAndLoadMoreAdapter(this, yctcArticleAdapter);
 
@@ -209,7 +210,7 @@ public class YctcArticleListActivity extends AppCompatActivity {
 
     private void initData() {
         mData.clear();
-        mData.add(new YctcData(YctcArticleAdapter.BANNER,
+        mData.add(new DiyData(DiyArticleAdapter.BANNER,
                 "BannerBannerBannerBannerBanner" +
                         "BannerBannerBannerBannerBannerBanner" +
                         "BannerBannerBannerBannerBanner" +
@@ -221,16 +222,16 @@ public class YctcArticleListActivity extends AppCompatActivity {
                         "BannerBannerBannerBannerBanner" +
                         "BannerBannerBannerBannerBanner" +
                         "BannerBannerBannerBannerBanner"));
-        mData.add(new YctcData(YctcArticleAdapter.SORT, "Sort"));
+        mData.add(new DiyData(DiyArticleAdapter.SORT, "Sort"));
         for (int i = 1; i <= PAGE_SIZE; ++i) {
-            mData.add(new YctcData(YctcArticleAdapter.CONTENT, "Content " + i));
+            mData.add(new DiyData(DiyArticleAdapter.CONTENT, "Content " + i));
         }
     }
 
     private void addData() {
         int size = mData.size();
         for (int i = 1; i < PAGE_SIZE; ++i) {
-            mData.add(new YctcData(YctcArticleAdapter.CONTENT, "Content " + (size + i)));
+            mData.add(new DiyData(DiyArticleAdapter.CONTENT, "Content " + (size + i)));
         }
     }
 

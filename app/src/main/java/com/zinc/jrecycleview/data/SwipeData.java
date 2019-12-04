@@ -1,10 +1,10 @@
 package com.zinc.jrecycleview.data;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-08 21:19
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 测滑数据
  * version      : 1.0.0
  */
 

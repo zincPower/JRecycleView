@@ -2,15 +2,16 @@ package com.zinc.jrecycleview.loadview.base;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
+
 import com.zinc.jrecycleview.utils.LogUtils;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-16 14:28
  * email        : 56002982@qq.com
  * desc         : 上拉和下拉基类

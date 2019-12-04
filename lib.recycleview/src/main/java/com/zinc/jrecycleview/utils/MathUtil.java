@@ -3,7 +3,7 @@ package com.zinc.jrecycleview.utils;
 import android.graphics.PointF;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-16 10:26
  * email        : 56002982@qq.com
  * desc         :

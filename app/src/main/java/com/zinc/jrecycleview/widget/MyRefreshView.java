@@ -2,19 +2,20 @@ package com.zinc.jrecycleview.widget;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-17 16:55
  * email        : 56002982@qq.com
  * desc         : 仿美团下拉

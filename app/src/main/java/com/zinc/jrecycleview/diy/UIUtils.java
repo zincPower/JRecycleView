@@ -5,8 +5,13 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 /**
- * Created by zinc on 16/7/15.
+ * author       : Jiang Pengyong
+ * time         : 2016-07-15 14:33
+ * email        : 56002982@qq.com
+ * desc         : UI 工具
+ * version      : 1.0.0
  */
+
 public class UIUtils {
 
 	public static int dip2px(Context context, float dipValue) {
@@ -26,13 +31,15 @@ public class UIUtils {
 
 	public static int getScreenWidth(Context context) {
 		DisplayMetrics metrics = new DisplayMetrics();
-		((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
+		((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+				.getMetrics(metrics);
 		return metrics.widthPixels;
 	}
 
 	public static int getScreenHeight(Context context) {
 		DisplayMetrics metrics = new DisplayMetrics();
-		((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
+		((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
+				.getMetrics(metrics);
 		return metrics.heightPixels;
 	}
 

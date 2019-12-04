@@ -3,8 +3,6 @@ package com.zinc.jrecycleview.anim;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-import com.zinc.jrecycleview.anim.IBaseAnimation;
-
 public class ScaleToMissAnimation extends IBaseAnimation {
 
     @Override

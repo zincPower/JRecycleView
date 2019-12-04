@@ -3,10 +3,11 @@ package com.zinc.jrecycleview.refreshAndLoad;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
@@ -17,13 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 21:59
  * email        : 56002982@qq.com
  * desc         : 下拉刷新、上拉加载
  * version      : 1.0.0
  */
-
 public class RefreshAndLoadActivity extends AppCompatActivity {
 
     private static final int PAGE_SIZE = 20;

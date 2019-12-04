@@ -1,15 +1,15 @@
 package com.zinc.jrecycleview.mix;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.config.JRecycleConfig;
@@ -20,10 +20,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 22:15
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 混合适配器
  * version      : 1.0.0
  */
 
@@ -100,7 +100,7 @@ public class MixAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return mData.get(position).getType();
     }
 
-    class NormalHolder extends RecyclerView.ViewHolder {
+    static class NormalHolder extends RecyclerView.ViewHolder {
 
         private TextView tvContent;
 
@@ -110,7 +110,7 @@ public class MixAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    class StickHolder extends RecyclerView.ViewHolder implements IStick {
+    static class StickHolder extends RecyclerView.ViewHolder implements IStick {
 
         private TextView tvStick;
 
@@ -121,12 +121,12 @@ public class MixAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    class SwipeHolder extends JSwipeViewHolder {
+    static class SwipeHolder extends JSwipeViewHolder {
 
         private TextView tvRightMenu;
         private TextView tvContent;
 
-        public SwipeHolder(View itemView) {
+        SwipeHolder(View itemView) {
             super(itemView);
         }
 

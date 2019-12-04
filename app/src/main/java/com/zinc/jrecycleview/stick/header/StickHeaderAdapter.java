@@ -1,14 +1,15 @@
 package com.zinc.jrecycleview.stick.header;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.stick.IStick;
@@ -17,10 +18,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 21:20
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 粘性头部适配器
  * version      : 1.0.0
  */
 

@@ -12,25 +12,27 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.zinc.jrecycleview.utils.MathUtil;
 import com.zinc.jrecycleview.utils.PointEvaluator;
 import com.zinc.librecycleview.R;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-12 15:37
  * email        : 56002982@qq.com
  * desc         : 粘性点
  * version      : 1.0.0
  */
 
-public class StickDotView extends android.support.v7.widget.AppCompatTextView {
+public class StickDotView extends AppCompatTextView {
 
     public DragView dragView;
     private float mWidth, mHeight;//View的宽和高

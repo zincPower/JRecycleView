@@ -2,9 +2,10 @@ package com.zinc.jrecycleview.swipe;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.data.SwipeData;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-08 22:27
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 测滑视图
  * version      : 1.0.0
  */
 

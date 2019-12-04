@@ -4,7 +4,7 @@ import android.animation.TypeEvaluator;
 import android.graphics.PointF;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-16 10:25
  * email        : 56002982@qq.com
  * desc         : 点的估值器

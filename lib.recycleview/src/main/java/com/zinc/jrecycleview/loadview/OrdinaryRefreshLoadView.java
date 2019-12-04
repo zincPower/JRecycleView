@@ -1,7 +1,6 @@
 package com.zinc.jrecycleview.loadview;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.zinc.jrecycleview.loadview.base.IBaseRefreshLoadView;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 import com.zinc.jrecycleview.utils.LogUtils;
@@ -17,7 +18,7 @@ import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
 import com.zinc.librecycleview.R;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 14:35
  * email        : 56002982@qq.com
  * desc         : 最为普通的下拉刷新头部

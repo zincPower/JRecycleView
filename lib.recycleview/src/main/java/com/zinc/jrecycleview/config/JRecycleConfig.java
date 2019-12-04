@@ -3,7 +3,7 @@ package com.zinc.jrecycleview.config;
 import com.zinc.librecycleview.R;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-12 12:30
  * email        : 56002982@qq.com
  * desc         : JRecycle的一些配置

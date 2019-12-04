@@ -1,10 +1,11 @@
 package com.zinc.jrecycleview.mix;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-24 23:34
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 可选择的类型
+ * version      : 1.0.0
  */
 public interface Constant {
 

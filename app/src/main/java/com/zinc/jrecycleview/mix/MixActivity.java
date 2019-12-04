@@ -5,26 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
-import com.zinc.jrecycleview.refreshAndLoad.RefreshAndLoadActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-24 22:49
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 混合视图
+ * version      : 1.0.0
  */
 public class MixActivity extends AppCompatActivity {
 

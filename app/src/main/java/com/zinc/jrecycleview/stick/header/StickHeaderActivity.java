@@ -1,25 +1,23 @@
 package com.zinc.jrecycleview.stick.header;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
-import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-07-26 14:09
+ * email        : 56002982@qq.com
  * desc         : 粘性头
  * version      : 1.0.0
  */

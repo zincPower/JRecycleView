@@ -1,13 +1,25 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+    ext {
+        // app 版本信息
+        versionName = '1.1.0'
+        versionCode = 1100
+        minSdkVersion = 19
+        targetSdkVersion = 29
+        compileSdkVersion = 29
+
+        androidx = "1.1.0"
+
+        junitVersion = '4.12'
+    }
+
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.5.2'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'//ADD
         // NOTE: Do not place your application dependencies here; they belong
@@ -26,15 +38,3 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-ext {
-    // app 版本信息
-    versionName = '1.0.0'
-    versionCode = 1000
-    minSdkVersion = 19
-    targetSdkVersion = 27
-    compileSdkVersion = 27
-
-    // v7包版本
-    v7_version = '27.1.1'
-    junitVersion = '4.12'
-}

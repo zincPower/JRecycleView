@@ -1,16 +1,17 @@
 package com.zinc.jrecycleview.loadview.base;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.zinc.jrecycleview.adapter.JRefreshAndLoadMoreAdapter;
 import com.zinc.jrecycleview.loadview.bean.MoveInfo;
 import com.zinc.jrecycleview.utils.LogUtils;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-17 15:54
  * email        : 56002982@qq.com
  * desc         : 下拉刷新

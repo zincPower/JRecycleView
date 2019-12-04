@@ -4,7 +4,7 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2019-04-12 12:29
  * email        : 56002982@qq.com
  * desc         :

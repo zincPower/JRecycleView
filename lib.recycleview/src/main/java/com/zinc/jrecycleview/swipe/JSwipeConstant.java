@@ -1,7 +1,7 @@
 package com.zinc.jrecycleview.swipe;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-18 15:11
  * email        : 56002982@qq.com
  * desc         : 侧滑常量

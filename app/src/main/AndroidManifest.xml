@@ -24,7 +24,7 @@
         <activity android:name=".stick.content.StickContentActivity" />
         <activity android:name=".stick.header.StickHeaderActivity" />
 
-        <activity android:name=".diy.YctcArticleListActivity" />
+        <activity android:name=".diy.DiyArticleListActivity" />
         <activity android:name=".mix.MixActivity" />
 
     </application>

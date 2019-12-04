@@ -1,7 +1,7 @@
 package com.zinc.jrecycleview.loadview.bean;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-17 16:07
  * email        : 56002982@qq.com
  * desc         : 移动信息

@@ -1,19 +1,20 @@
 package com.zinc.jrecycleview.loadview;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.zinc.jrecycleview.loadview.base.IBaseLoadMoreView;
 import com.zinc.jrecycleview.widget.BallSpinFadeLoader;
 import com.zinc.librecycleview.R;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-03-19 16:09
  * email        : 56002982@qq.com
  * desc         : 普通的加载更多

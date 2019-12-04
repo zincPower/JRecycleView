@@ -1,9 +1,10 @@
 package com.zinc.jrecycleview.stick.content;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.JRecycleView;
 import com.zinc.jrecycleview.R;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-07-26 14:09
- * desc         :
- * version      :
+ * desc         : 粘性效果视图
+ * version      : 1.0.0
  */
 public class StickContentActivity extends AppCompatActivity {
 

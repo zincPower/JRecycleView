@@ -5,7 +5,7 @@ import android.util.Log;
 import com.zinc.jrecycleview.config.JRecycleViewManager;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-16 14:09
  * desc         : 日志打印
  * version      : 1.0.0

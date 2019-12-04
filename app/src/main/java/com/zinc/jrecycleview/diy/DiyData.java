@@ -1,17 +1,17 @@
 package com.zinc.jrecycleview.diy;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-19 12:13
- * desc         :
- * version      :
+ * desc         : 自定义联动数据
+ * version      : 1.0.0
  */
-public class YctcData {
+public class DiyData {
 
     private int type;
     private String content;
 
-    public YctcData(int type, String content) {
+    DiyData(int type, String content) {
         this.type = type;
         this.content = content;
     }

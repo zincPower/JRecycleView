@@ -1,15 +1,14 @@
 package com.zinc.jrecycleview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.zinc.jrecycleview.anim.AnimActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zinc.jrecycleview.anim.dialog.AnimDialog;
-import com.zinc.jrecycleview.diy.YctcArticleListActivity;
+import com.zinc.jrecycleview.diy.DiyArticleListActivity;
 import com.zinc.jrecycleview.mix.dialog.MixDialog;
 import com.zinc.jrecycleview.refreshAndLoad.RefreshAndLoadActivity;
 import com.zinc.jrecycleview.stick.content.StickContentActivity;
@@ -17,10 +16,10 @@ import com.zinc.jrecycleview.stick.header.StickHeaderActivity;
 import com.zinc.jrecycleview.swipe.SwipeActivity;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-16 22:20
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 主视图
  * version      : 1.0.0
  */
 
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 go(StickContentActivity.class);
                 break;
             case R.id.tv_diy:
-                go(YctcArticleListActivity.class);
+                go(DiyArticleListActivity.class);
                 break;
         }
     }

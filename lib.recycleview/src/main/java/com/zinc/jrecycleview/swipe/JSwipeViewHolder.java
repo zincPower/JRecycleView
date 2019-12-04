@@ -1,14 +1,15 @@
 package com.zinc.jrecycleview.swipe;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zinc.librecycleview.R;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-08 14:37
  * email        : 56002982@qq.com
  * desc         : 侧滑的ViewHolder

@@ -3,7 +3,7 @@ package com.zinc.jrecycleview.listener;
 import android.view.MotionEvent;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-19 15:34
  * desc         : JRecycleListener
  * version      : 1.0.0

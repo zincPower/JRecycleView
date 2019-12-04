@@ -1,12 +1,13 @@
 package com.zinc.jrecycleview.anim;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.adapter.JBaseRecycleAdapter;
@@ -15,10 +16,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * author       : Jiang zinc
+ * author       : Jiang Pengyong
  * time         : 2018-04-08 22:25
  * email        : 56002982@qq.com
- * desc         :
+ * desc         : 动画适配器
  * version      : 1.0.0
  */
 

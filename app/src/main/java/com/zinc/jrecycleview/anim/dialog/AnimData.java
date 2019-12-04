@@ -1,10 +1,11 @@
 package com.zinc.jrecycleview.anim.dialog;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-24 22:07
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 动画数据
+ * version      : 1.0.0
  */
 public class AnimData {
 

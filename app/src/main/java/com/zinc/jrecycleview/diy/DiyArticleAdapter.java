@@ -1,38 +1,37 @@
 package com.zinc.jrecycleview.diy;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zinc.jrecycleview.R;
 import com.zinc.jrecycleview.stick.IStick;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
- * author       : zinc
+ * author       : Jiang Pengyong
  * time         : 2019-08-19 12:05
- * desc         :
- * version      :
+ * email        : 56002982@qq.com
+ * desc         : 自定义联动适配器
+ * version      : 1.0.0
  */
-public class YctcArticleAdapter extends RecyclerView.Adapter {
+public class DiyArticleAdapter extends RecyclerView.Adapter {
 
-    public static final int BANNER = 1;
-    public static final int SORT = 2;
-    public static final int CONTENT = 3;
+    static final int BANNER = 1;
+    static final int SORT = 2;
+    static final int CONTENT = 3;
 
-    private final List<YctcData> mData;
-    private final WeakReference<Context> mContext;
+    private final List<DiyData> mData;
     private final LayoutInflater mInflater;
 
-    public YctcArticleAdapter(Context context, List<YctcData> data) {
+    DiyArticleAdapter(Context context, List<DiyData> data) {
         mData = data;
-        mContext = new WeakReference<>(context);
         mInflater = LayoutInflater.from(context);
     }
 
@@ -61,7 +60,7 @@ public class YctcArticleAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        YctcData yctcData = mData.get(position);
+        DiyData yctcData = mData.get(position);
         if (holder instanceof BannerViewHolder) {
             BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
             bannerViewHolder.tvBanner.setText(yctcData.getContent());
@@ -96,7 +95,7 @@ public class YctcArticleAdapter extends RecyclerView.Adapter {
 
     }
 
-    public static class SortViewHolder extends RecyclerView.ViewHolder {
+    static class SortViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvSort;
 
@@ -107,7 +106,7 @@ public class YctcArticleAdapter extends RecyclerView.Adapter {
 
     }
 
-    public static class ContentViewHolder extends RecyclerView.ViewHolder {
+    static class ContentViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvContent;
 
