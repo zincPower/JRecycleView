@@ -16,7 +16,14 @@
 ## 一、简介
 封装工作中通常需要使用的列表功能(基于RecycleView)，在作者的实际项目中已使用有一年多。主要是为了让使用者更加专注于业务逻辑，同时又不失去界面交互性，达到JRecycleView的核心：**简单的让RecycleView更有趣**。
 
-## 二、功能介绍：
+## 二、关于 AndroidX
+
+- 主分支（即master）已经全面升级为AndroidX
+- release_android_v7 分支为旧版本，为 V7 包。
+
+> 后续新功能会在 master 叠加，release_android_v7分支只进行 bug 修复。
+
+## 三、功能介绍：
 ### 1、上拉加载，下拉刷新（可自定义视图）
 
 #### (1) 框架自带默认下拉刷新和上拉加载更多效果图
@@ -71,7 +78,11 @@ allprojects {
 ### 2、在library或app的gradle中添加如下代码：
 ```
 dependencies {
-    implementation 'com.github.zincPower:JRecycleview:latest.release'
+    // v7 包的导入
+    implementation 'com.github.zincPower:JRecycleview:1.0.0'
+
+    // AndroidX 的导入
+    implementation 'com.github.zincPower:JRecycleview:2.0.0'
 }
 ```
 
