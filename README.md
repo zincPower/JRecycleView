@@ -1,17 +1,19 @@
 # JRecycleView——简单的让RecycleView更有趣
 
 >目录<br/>
-一、功能介绍<br/>
+一、简介<br/>
+二、关于 AndroidX<br/>
+三、功能介绍<br/>
 ----1、上拉加载，下拉刷新（可自定义视图）<br/>
 ----2、侧滑<br/>
 ----3、item显示动画<br/>
 ----4、item粘性<br/>
 ----5、混合使用<br/>
 ----6、DIY使用<br/>
-二、如何导入<br/>
-三、如何使用<br/>
-四、高级设置<br/>
-五、作者简介<br/>
+四、如何导入<br/>
+五、如何使用<br/>
+六、高级设置<br/>
+七、作者简介<br/>
 
 ## 一、简介
 封装工作中通常需要使用的列表功能(基于RecycleView)，在作者的实际项目中已使用有一年多。主要是为了让使用者更加专注于业务逻辑，同时又不失去界面交互性，达到JRecycleView的核心：**简单的让RecycleView更有趣**。
@@ -63,7 +65,7 @@
 ### 6、DIY使用
 ![diy](https://github.com/zincPower/JRecycleView/blob/master/img/diy.gif)
 
-## 二、如何导入
+## 四、如何导入
 
 ### 1、在项目的根gradle中加入 jitpack 仓库：
 ```
@@ -86,7 +88,7 @@ dependencies {
 }
 ```
 
-## 三、如何使用
+## 五、如何使用
 
 ### 1、使用 **下拉刷新** 和 **上拉加载更多** 效果的两个步骤：
 
@@ -320,7 +322,7 @@ class StickHolder extends RecyclerView.ViewHolder implements IStick {
 
 至此便可使用 **item粘性效果**
 
-## 四、高级设置
+## 六、高级设置
 
 ### 1、自定义 "刷新视图" 和 "加载更多视图"
 
@@ -497,7 +499,7 @@ JRecycleViewManager.getInstance().setItemAnimations(set);
 mAdapter.setAnimations(new SlideInTopAnimation());
 ```
 
-## 五、作者简介
+## 七、作者简介
 ### 1、个人博客
 掘金：[https://juejin.im/user/5c3033ef51882524ec3a88ba/posts](https://juejin.im/user/5c3033ef51882524ec3a88ba/posts)
 
